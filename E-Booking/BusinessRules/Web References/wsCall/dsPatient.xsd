@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsPatient.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsPatient.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsPatient.xsd" id="dsPatient" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsPatient">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Client">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementStep="-1" name="ClientID" type="xs:int" />
+              <xs:element name="ClientType" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="UserID" type="xs:int" />
+              <xs:element msdata:Caption="MarkasDeleted" name="MarkAsDeleted" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Patient">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element minOccurs="0" name="TitleID" type="xs:int" />
+              <xs:element name="FirstName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SurName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Gender" type="xs:int" />
+              <xs:element minOccurs="0" name="DOB" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="PhoneNo" type="xs:string" />
+              <xs:element minOccurs="0" name="MobileNo" type="xs:string" />
+              <xs:element minOccurs="0" name="UserID" type="xs:int" />
+              <xs:element minOccurs="0" name="NationalID">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="VerifyNationID" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PatientCardInfoID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsChoroanicDisease" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Age" type="xs:int" />
+              <xs:element minOccurs="0" name="NextofKin">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="DeceasedDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="AgeUnit">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="" name="NHSNO" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PaymentPlan">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementStep="-1" name="PaymentPlanID" type="xs:int" />
+              <xs:element name="PaymentPlanTypeID" type="xs:unsignedByte" />
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element name="Priority" type="xs:unsignedByte" />
+              <xs:element name="UserID" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PatientAffiliation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="PaymentPlanID" type="xs:int" />
+              <xs:element name="HospitalID" type="xs:int" />
+              <xs:element name="AffiliationNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PONumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AuthorizedBy">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AuthorizationDetails">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PaymentPlanTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Priority" type="xs:int" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsinUse" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PatientInsurance">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="PaymentPlanID" type="xs:int" />
+              <xs:element minOccurs="0" name="InsuranceCompanyID" type="xs:int" />
+              <xs:element minOccurs="0" name="PlanType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PolicyNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="JoiningDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ExpiryDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="Subscriber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="RelationshipID" type="xs:int" />
+              <xs:element minOccurs="0" name="PaymentPlanTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Priority" type="xs:int" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsinUse" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ClientBank">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="PaymentPlanID" type="xs:int" />
+              <xs:element name="BankID" type="xs:int" />
+              <xs:element name="IBAN">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AccountNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AccountTitle">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BankAccountTypeID" type="xs:int" />
+              <xs:element name="MaximumWithdrawal" type="xs:int" />
+              <xs:element minOccurs="0" name="PaymentPlanTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Priority" type="xs:int" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsinUse" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CreditCard">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="PaymentPlanID" type="xs:int" />
+              <xs:element name="CardType" type="xs:unsignedByte" />
+              <xs:element name="CardHolderName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CardNumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CVSNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ExpiryDate" type="xs:dateTime" />
+              <xs:element name="CardHolderAddress">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MaximumWithdrawal" type="xs:int" />
+              <xs:element minOccurs="0" name="PaymentPlanTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Priority" type="xs:int" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsinUse" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MapClientAddress">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element name="AddressID" type="xs:int" />
+              <xs:element name="IsPrimary" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ClientContact">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="ClientContactID" type="xs:int" />
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element name="ContactName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Designation">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Email">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PhoneNo" type="xs:string" />
+              <xs:element minOccurs="0" name="MobileNo" type="xs:string" />
+              <xs:element minOccurs="0" name="RelationshipID" type="xs:int" />
+              <xs:element name="IsPrimary" type="xs:boolean" />
+              <xs:element name="SendAlert" type="xs:unsignedByte" />
+              <xs:element name="UserID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ContactInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="ContactID" type="xs:int" />
+              <xs:element name="ContactNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="17" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ContactType" type="xs:unsignedByte" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MapClientContactInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element name="ContactID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MapClientContactContactInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientContactID" type="xs:int" />
+              <xs:element name="ContactID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Address">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementStep="-1" name="AddressID" type="xs:int" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element minOccurs="0" name="AddressLine1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine2">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine3">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine4">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CityID" type="xs:int" />
+              <xs:element minOccurs="0" name="StateOrProvinceID" type="xs:int" />
+              <xs:element minOccurs="0" name="CountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="PostCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="IsPublicAddress" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsPrimary" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Country" type="xs:string" />
+              <xs:element minOccurs="0" name="State" type="xs:string" />
+              <xs:element minOccurs="0" name="City" type="xs:string" />
+              <xs:element minOccurs="0" name="PublicAddressType" type="xs:string" />
+              <xs:element minOccurs="0" name="PublicAddressTitle" type="xs:string" />
+              <xs:element minOccurs="0" name="PublicAddressCode" type="xs:string" />
+              <xs:element minOccurs="0" name="PostCodeID" type="xs:int" />
+              <xs:element minOccurs="0" name="AreaID" type="xs:int" />
+              <xs:element minOccurs="0" name="AreaName" type="xs:string" />
+              <xs:element minOccurs="0" name="Isinuse" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsBilling" type="xs:boolean" />
+              <xs:element minOccurs="0" name="TownID" type="xs:string" />
+              <xs:element minOccurs="0" name="CountyID" type="xs:string" />
+              <xs:element minOccurs="0" name="FullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="URPN" type="xs:string" />
+              <xs:element minOccurs="0" name="GridReference" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertedAt" type="xs:string" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SelfPayer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PaymentPlanID" type="xs:int" />
+              <xs:element name="BillingCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Priority" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Customer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ClientID" type="xs:int" />
+              <xs:element name="CustomerName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CustomerTypeID" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="Notes">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="YearEstablished" type="xs:short" />
+              <xs:element minOccurs="0" name="CustomerCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PhoneNo" type="xs:string" />
+              <xs:element minOccurs="0" name="MobileNo" type="xs:string" />
+              <xs:element minOccurs="0" name="IsinUse" type="xs:short" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblCustomerPolicy">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="CustomerPolicyID" type="xs:int" />
+              <xs:element name="CustomerID" type="xs:int" />
+              <xs:element minOccurs="0" name="PolicyNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblPatientFlags">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementStep="-1" name="ID" type="xs:int" />
+              <xs:element minOccurs="0" name="FlagID" type="xs:int" />
+              <xs:element minOccurs="0" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:Client" />
+      <xs:field xpath="mstns:ClientID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="Patient_Constraint1">
+      <xs:selector xpath=".//mstns:Patient" />
+      <xs:field xpath="mstns:ClientID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="PaymentPlan_Constraint1">
+      <xs:selector xpath=".//mstns:PaymentPlan" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="PatientAffiliation_Constraint1">
+      <xs:selector xpath=".//mstns:PatientAffiliation" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="PatientInsurance_Constraint1">
+      <xs:selector xpath=".//mstns:PatientInsurance" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="ClientBank_Constraint1">
+      <xs:selector xpath=".//mstns:ClientBank" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="CreditCard_Constraint1">
+      <xs:selector xpath=".//mstns:CreditCard" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="MapClientAddress_Constraint1">
+      <xs:selector xpath=".//mstns:MapClientAddress" />
+      <xs:field xpath="mstns:ClientID" />
+      <xs:field xpath="mstns:AddressID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="ClientContact_Constraint1">
+      <xs:selector xpath=".//mstns:ClientContact" />
+      <xs:field xpath="mstns:ClientContactID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="ContactInfo_Constraint1">
+      <xs:selector xpath=".//mstns:ContactInfo" />
+      <xs:field xpath="mstns:ContactID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="MapClientContactInfo_Constraint1">
+      <xs:selector xpath=".//mstns:MapClientContactInfo" />
+      <xs:field xpath="mstns:ClientID" />
+      <xs:field xpath="mstns:ContactID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="MapClientContactContactInfo_Constraint1">
+      <xs:selector xpath=".//mstns:MapClientContactContactInfo" />
+      <xs:field xpath="mstns:ClientContactID" />
+      <xs:field xpath="mstns:ContactID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="Address_Constraint1">
+      <xs:selector xpath=".//mstns:Address" />
+      <xs:field xpath="mstns:AddressID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="SelfPayer_Constraint1">
+      <xs:selector xpath=".//mstns:SelfPayer" />
+      <xs:field xpath="mstns:PaymentPlanID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="Customer_Constraint1">
+      <xs:selector xpath=".//mstns:Customer" />
+      <xs:field xpath="mstns:ClientID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblCustomerPolicy_Constraint1">
+      <xs:selector xpath=".//mstns:tblCustomerPolicy" />
+      <xs:field xpath="mstns:CustomerPolicyID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblPatientFlags_Constraint1">
+      <xs:selector xpath=".//mstns:tblPatientFlags" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_tblPatient_tblClient" msdata:parent="Client" msdata:child="Patient" msdata:parentkey="ClientID" msdata:childkey="ClientID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="FK_tblPaymentPlan_tblClient" msdata:parent="Client" msdata:child="PaymentPlan" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblPatientAffiliation_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientAffiliation" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblPatientInsurance_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientInsurance" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblClientBank_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="ClientBank" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblCreditCard_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="CreditCard" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblMapClientAddress_tblClient" msdata:parent="Client" msdata:child="MapClientAddress" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblClientContact_tblClient" msdata:parent="Client" msdata:child="ClientContact" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblClient" msdata:parent="Client" msdata:child="MapClientContactInfo" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblClientContact" msdata:parent="ClientContact" msdata:child="MapClientContactContactInfo" msdata:parentkey="ClientContactID" msdata:childkey="ClientContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="Address_MapClientAddress" msdata:parent="Address" msdata:child="MapClientAddress" msdata:parentkey="AddressID" msdata:childkey="AddressID" />
+      <msdata:Relationship name="PaymentPlan_SelfPayer" msdata:parent="PaymentPlan" msdata:child="SelfPayer" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="Client_tblCustomer" msdata:parent="Client" msdata:child="Customer" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_tblPatient_tblClient" msdata:parent="Client" msdata:child="Patient" msdata:parentkey="ClientID" msdata:childkey="ClientID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="FK_tblPaymentPlan_tblClient" msdata:parent="Client" msdata:child="PaymentPlan" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblPatientAffiliation_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientAffiliation" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblPatientInsurance_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientInsurance" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblClientBank_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="ClientBank" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblCreditCard_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="CreditCard" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblMapClientAddress_tblClient" msdata:parent="Client" msdata:child="MapClientAddress" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblClientContact_tblClient" msdata:parent="Client" msdata:child="ClientContact" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblClient" msdata:parent="Client" msdata:child="MapClientContactInfo" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblClientContact" msdata:parent="ClientContact" msdata:child="MapClientContactContactInfo" msdata:parentkey="ClientContactID" msdata:childkey="ClientContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="Address_MapClientAddress" msdata:parent="Address" msdata:child="MapClientAddress" msdata:parentkey="AddressID" msdata:childkey="AddressID" />
+      <msdata:Relationship name="PaymentPlan_SelfPayer" msdata:parent="PaymentPlan" msdata:child="SelfPayer" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="Client_tblCustomer" msdata:parent="Client" msdata:child="Customer" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_tblPatient_tblClient" msdata:parent="Client" msdata:child="Patient" msdata:parentkey="ClientID" msdata:childkey="ClientID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="FK_tblPaymentPlan_tblClient" msdata:parent="Client" msdata:child="PaymentPlan" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblPatientAffiliation_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientAffiliation" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblPatientInsurance_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="PatientInsurance" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblClientBank_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="ClientBank" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblCreditCard_tblPaymentPlan" msdata:parent="PaymentPlan" msdata:child="CreditCard" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="FK_tblMapClientAddress_tblClient" msdata:parent="Client" msdata:child="MapClientAddress" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblClientContact_tblClient" msdata:parent="Client" msdata:child="ClientContact" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblClient" msdata:parent="Client" msdata:child="MapClientContactInfo" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+      <msdata:Relationship name="FK_tblMapClientContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblClientContact" msdata:parent="ClientContact" msdata:child="MapClientContactContactInfo" msdata:parentkey="ClientContactID" msdata:childkey="ClientContactID" />
+      <msdata:Relationship name="FK_tblMapClientContactContactInfo_tblContactInfo" msdata:parent="ContactInfo" msdata:child="MapClientContactContactInfo" msdata:parentkey="ContactID" msdata:childkey="ContactID" />
+      <msdata:Relationship name="Address_MapClientAddress" msdata:parent="Address" msdata:child="MapClientAddress" msdata:parentkey="AddressID" msdata:childkey="AddressID" />
+      <msdata:Relationship name="PaymentPlan_SelfPayer" msdata:parent="PaymentPlan" msdata:child="SelfPayer" msdata:parentkey="PaymentPlanID" msdata:childkey="PaymentPlanID" />
+      <msdata:Relationship name="Client_tblCustomer" msdata:parent="Client" msdata:child="Customer" msdata:parentkey="ClientID" msdata:childkey="ClientID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

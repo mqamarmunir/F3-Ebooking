@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsVehicle.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsVehicle.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsVehicle.xsd" id="dsVehicle" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsVehicle">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Vehicle">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="VehicleID" type="xs:int" />
+              <xs:element name="VehicleTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="StationID" type="xs:int" />
+              <xs:element name="RegistrationNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VehicleCallSign">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Model">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="IsPatientCarrier" type="xs:boolean" />
+              <xs:element name="IsActive" type="xs:boolean" />
+              <xs:element name="DisInfection" type="xs:int" />
+              <xs:element name="Maintaines" type="xs:int" />
+              <xs:element minOccurs="0" name="Station" type="xs:string" />
+              <xs:element name="Service" type="xs:int" />
+              <xs:element minOccurs="0" name="ChassisNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SIMNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Status" type="xs:int" />
+              <xs:element minOccurs="0" name="MachineID" type="xs:int" />
+              <xs:element minOccurs="0" default="&quot;&quot;" name="Signature" type="xs:string" />
+              <xs:element name="InsertedBy" type="xs:int" />
+              <xs:element name="UpdatedBy" type="xs:int" />
+              <xs:element name="InsertedAt" type="xs:dateTime" />
+              <xs:element name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsRecordLocked" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsOutofservice" type="xs:boolean" />
+              <xs:element default="false" name="MarkasDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="VehicleType" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MachineRegistration">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MachineId" type="xs:int" />
+              <xs:element minOccurs="0" name="Signature" type="xs:string" />
+              <xs:element minOccurs="0" name="RegistrationDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="MachineName" type="xs:string" />
+              <xs:element msdata:Caption="Column1" minOccurs="0" name="Status" type="xs:boolean" />
+              <xs:element minOccurs="0" name="StationId" type="xs:int" />
+              <xs:element minOccurs="0" name="Description" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:string" />
+              <xs:element minOccurs="0" name="MachineTypeId" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblVehicleSetting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VehicleID" type="xs:int" />
+              <xs:element minOccurs="0" name="CADServicesURL">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AvlServerName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:Caption="MapRefreshInterval" minOccurs="0" name="MapETAInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="EnableSatelliteTimer" type="xs:boolean" />
+              <xs:element minOccurs="0" name="SatelliteTimeInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="SyncDataInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="WSBaseURLTrackRecords">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="EnablePenFunctionality" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PenPadFilesPath">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PenVerificationFilesPath">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PenVerificationFilesInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="NewPenMessagesPath">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PenMessagesInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="CreatePenImagesLocally" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PenXSDFilesPath">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PenSMSServicesUrl">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PenSMSUserName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PenSMSPassword">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="EnableRTCLogging" type="xs:boolean" />
+              <xs:element minOccurs="0" name="RTCServerIP">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="RTCServerPort" type="xs:int" />
+              <xs:element minOccurs="0" name="GPSRTCIP">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPSRTCPort" type="xs:int" />
+              <xs:element minOccurs="0" name="GPSSendDataInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="GPRSConnectionName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPRSModemName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPRSUserName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPRSPassowrd">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPRSAPN">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="GPRSReconnect" type="xs:boolean" />
+              <xs:element minOccurs="0" name="GPRSSignalCheckInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="GPRSMaximumConnectAttempts" type="xs:int" />
+              <xs:element minOccurs="0" name="GPRSReconnectInterval" type="xs:int" />
+              <xs:element minOccurs="0" name="MinimumSignalThreshold" type="xs:int" />
+              <xs:element minOccurs="0" name="SIMPhoneNumber">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SMSValidityPeriod" type="xs:int" />
+              <xs:element minOccurs="0" name="SendSMS" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DateFormatWithTime">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="DateFormatWithFullTime">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="DateFormat">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="IPForModem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="phForModem">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SendEmailOnError" type="xs:boolean" />
+              <xs:element minOccurs="0" name="SupportAdminEmailAddress">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SupportEmailAddress">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SupportEmailPassword">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SupportEmailServicesIP">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SupportSMTPPort" type="xs:int" />
+              <xs:element minOccurs="0" name="SupportPOPPort" type="xs:int" />
+              <xs:element minOccurs="0" name="EnabledDetailedLog" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DeleteLogsAfterDays" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblClientAppSettings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="MachineID" type="xs:int" />
+              <xs:element minOccurs="0" default="null" name="WSBaseURL" type="xs:string" />
+              <xs:element minOccurs="0" name="PushMessageExpiryDays" type="xs:int" />
+              <xs:element minOccurs="0" default="null" name="PushServerIP" type="xs:string" />
+              <xs:element minOccurs="0" name="PushServerPort" type="xs:int" />
+              <xs:element minOccurs="0" default="null" name="DefLatitude" type="xs:string" />
+              <xs:element minOccurs="0" default="null" name="DefLongitude" type="xs:string" />
+              <xs:element minOccurs="0" name="ShowMap" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ShowExceptionAlerts" type="xs:boolean" />
+              <xs:element minOccurs="0" default="null" name="DateTimeFormat" type="xs:string" />
+              <xs:element minOccurs="0" default="null" name="DateFormat" type="xs:string" />
+              <xs:element minOccurs="0" name="SendToAllOrOfflineDispatcher" type="xs:boolean" />
+              <xs:element minOccurs="0" name="MinimumDistanceForLocationName" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:Vehicle" />
+      <xs:field xpath="mstns:VehicleID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="MachineRegistration_Constraint1">
+      <xs:selector xpath=".//mstns:MachineRegistration" />
+      <xs:field xpath="mstns:MachineId" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblVehicleSetting_Constraint1">
+      <xs:selector xpath=".//mstns:tblVehicleSetting" />
+      <xs:field xpath="mstns:VehicleID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" name="tblClientAppSettings_Constraint1">
+      <xs:selector xpath=".//mstns:tblClientAppSettings" />
+      <xs:field xpath="mstns:MachineID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

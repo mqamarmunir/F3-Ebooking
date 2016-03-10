@@ -1,0 +1,1849 @@
+﻿<script src="@Url.Content("~/Scripts/knockout-3.2.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.mapping.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/DropdownModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/PatientModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/DestinationAddressModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/TransportRequirementModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/RiskAssessmentModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/SpecialistTransportRequestModel.js")" type="text/javascript"></script>
+<script src="~/Scripts/KnockoutModels/CollectionAddressModel.js"></script>
+<script src="~/Scripts/KnockoutModels/HomeAddressModel.js"></script>
+@*<script type="text/javascript" src="http://ondemandapi.ordnancesurvey.co.uk/osmapapi/openspace.js?key=phefa4ur"></script>
+<script type="text/javascript" src="http://openspace.ordnancesurvey.co.uk/osmapapi/script/mapbuilder/basicmap.js"></script>
+<script type="text/javascript" src="http://openspace.ordnancesurvey.co.uk/osmapapi/script/mapbuilder/searchbox.js"></script>*@
+<script>
+
+    @functions{
+        public string TokenHeaderValue()
+        {
+            string cookieToken, formToken;
+            //AntiForgery.GetTokens()
+            AntiForgery.GetTokens(null, out cookieToken, out formToken);
+
+            return cookieToken + ":" + formToken;
+        }
+     }
+    function WizardViewModel() {
+
+        var self = this;
+        var checkvieworedit;
+        //Models Declaration
+        self.Dropdown = new DropdownModel();
+        self.Patient = new PatientModel();
+        self.HomeAddress = new HomeAddressModel();
+        self.CollectionAddress = new CollectionAddressModel();
+        self.DestinationAddress = new DestinationAddressModel();
+        self.TransportRequirement = new TransportRequirementModel();
+        self.RiskAssessment = new RiskAssessmentModel();
+        self.SpecialistTransportRequest = new SpecialistTransportRequestModel();
+        self.sendEmail = ko.observable();
+        //Temp Variables
+        self.HomeLineOneTemp = '';
+        self.HomeLineTwoTemp = '';
+        self.HomeLineThreeTemp = '';
+        self.HomeLineFourTemp = '';
+        self.HomePostCodeTemp = '';
+
+
+        self.CollectionLineOneTemp = '';
+        self.CollectionLineTwoTemp = '';
+        self.CollectionLineThreeTemp = '';
+        self.CollectionLineFourTemp = '';
+        self.CollectionPostCodeTemp = '';
+
+        self.DestinationLineOneTemp = '';
+        self.DestinationLineTwoTemp = '';
+        self.DestinationLineThreeTemp = '';
+        self.DestinationLineFourTemp = '';
+        self.DestinationPostCodeTemp = '';
+
+        self.PatientJourneyDateTemp = '';
+        self.PatientAppointmentTimeIdTemp = '';
+        self.PatientActualAppointmentTimeTemp = '';
+        self.PatientEstimatedAppointmentDurationIdTemp = '';
+
+        ShowProgressBar();
+
+        //Load Dropdowns From Server
+        $.ajax({
+            url: '@Url.Action("GetAllDropdowns", "Dropdown")',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (dropdownlists) {
+                ko.utils.arrayForEach(dropdownlists, function (dropdowns) {
+                    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+
+                        if (dropdown.DepartmentId && dropdown.DepartmentName) {
+                            self.CollectionAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                            self.DestinationAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                        }
+                        if (dropdown.ServiceTypeId && dropdown.ServiceTypeName)
+                            self.Dropdown.ServiceTypes.push(new ServiceTypeModel(dropdown));
+                        else if (dropdown.AuthorisingRoleId && dropdown.AuthorisingRoleName)
+                            self.Dropdown.AuthorisingRoles.push(new AuthorisingRoleModel(dropdown));
+                        else if (dropdown.TitleId && dropdown.TitleName)
+                            self.Dropdown.Titles.push(new TitleModel(dropdown));
+                        else if (dropdown.AppointmentTimeId && dropdown.AppointmentTimeName)
+                            self.Dropdown.AppointmentTimes.push(new AppointmentTimeModel(dropdown));
+                        else if (dropdown.EstimatedAppointmentDurationId && dropdown.EstimatedAppointmentDurationName)
+                            self.Dropdown.EstimatedAppointmentDurations.push(new EstimatedAppointmentDurationModel(dropdown));
+                        else if (dropdown.RelationshipToPatientId && dropdown.RelationshipToPatientName)
+                            self.Dropdown.RelationshipToPatient.push(new RelationshipToPatientModel(dropdown));
+                        else if (dropdown.FacilityId && dropdown.FacilityName)
+                            self.Dropdown.Facilities.push(new FacilityModel(dropdown));
+                        else if (dropdown.FacilityTypeId && dropdown.FacilityTypeName)
+                            self.Dropdown.FacilityTypes.push(new FacilityTypeModel(dropdown));
+                        else if (dropdown.GPPracticeId && dropdown.GPPracticeName)
+                            self.Dropdown.GPPractices.push(new GPPracticeModel(dropdown));
+                        else if (dropdown.PatientTypeId && dropdown.PatientTypeName)
+                            self.Dropdown.PatientTypes.push(new PatientTypeModel(dropdown));
+                        else if (dropdown.RequestTypeId && dropdown.RequestTypeName)
+                            self.Dropdown.RequestTypes.push(new RequestTypeModel(dropdown));
+                        else if (dropdown.EscortTypeId && dropdown.EscortTypeName)
+                            self.Dropdown.EscortTypes.push(new EscortTypeModel(dropdown));
+                        else if (dropdown.EscortNumberId && dropdown.EscortNumberName)
+                            self.Dropdown.EscortNumbers.push(new EscortNumberModel(dropdown));
+                        else if (dropdown.TransportRequestReasonId && dropdown.TransportRequestReasonName)
+                            self.Dropdown.TransportRequestReasons.push(new TransportRequestReasonModel(dropdown));
+                        else if (dropdown.TransportSelectionId && dropdown.TransportSelectionName)
+                            self.Dropdown.TransportSelections.push(new TransportSelectionModel(dropdown));
+                        else if (dropdown.InfectiousId && dropdown.InfectiousName)
+                            self.Dropdown.Infectious.push(new InfectiousModel(dropdown));
+                    });
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var errorMessage = '';
+                $('#message').html(jqXHR.responseText);
+                ShowErrorMessage();
+            },
+            complete: function () {
+                HideProgressBar();
+            }
+        });
+
+        //Validate The Steps
+        self.ValidateViewModel = function (wizardStep) {
+
+            var isViewModelValid = true;
+            //We have both models on single step so need to validate both
+            if (wizardStep == 0) {
+                isViewModelValid = (IsValidKnockoutModel(self.Patient) && IsValidKnockoutModel(self.HomeAddress) && IsValidKnockoutModel(self.CollectionAddress) && IsValidKnockoutModel(self.DestinationAddress));
+                if (self.Patient.IsRiskAssessmentRequired() == true && IsValidKnockoutModel(self.RiskAssessment) == false) {
+                    isViewModelValid = false;
+                    $("#wizard").steps("setStep", 3);
+                }
+            }
+            else if (wizardStep == 1) {
+                isViewModelValid = IsValidKnockoutModel(self.TransportRequirement);
+                if (self.TransportRequirement.TransportRequestReasonId() == 5 && IsValidKnockoutModel(self.SpecialistTransportRequest) == false) {
+                    isViewModelValid = false;
+                    $("#wizard").steps("setStep", 4);
+                }
+            }
+            else if (wizardStep == 3) {
+                isViewModelValid = IsValidKnockoutModel(self.RiskAssessment);
+            }
+            else if (wizardStep == 4) {
+                isViewModelValid = IsValidKnockoutModel(self.SpecialistTransportRequest);
+            }
+
+            return isViewModelValid;
+        };
+
+
+        self.LoadJourney = function () {
+            $.ajax({
+
+                url: '@Url.Action("", "JourneyWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "GET",
+
+                data: { referenceNumber: 'value2' },
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+
+                success: function (result) {
+                    //debugger;
+                    //alert(JSON.stringify(result));
+                    WizardViewModeling = ko.mapping.fromJS(result);
+                    ko.applyBindings(WizardViewModeling);
+                    $("#progressBar").hide();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+
+        self.ConfirmBooking = function () {
+            ShowProgressBar();
+            var theData = {
+                Patient: self.Patient,
+                HomeAddress: self.HomeAddress,
+                CollectionAddress: self.CollectionAddress,
+                DestinationAddress: self.DestinationAddress,
+                TransportRequirement: self.TransportRequirement,
+                RiskAssessment: self.RiskAssessment,
+                SpecialistTransportRequest: self.SpecialistTransportRequest
+            }
+            //var xxx=TokenHeaderValue().ToString();
+            //debugger;
+            //alert(JSON.stringify(theData.HomeAddress));
+            //alert('TokenHeaderValue()');
+            //alert(JSON.stringify(theData.TransportRequirement));
+            $.ajax({
+
+                url: '@Url.Action("", "JourneyWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "POST",
+
+                data: ko.toJSON(theData),
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+
+                success: function (result) {
+                   // debugger;
+                    //alert(JSON.stringify(result));
+                    //$("#EBookingCompleteDialog").dialog("open");
+                    self.TransportRequirement.Id(result.refNum);
+                    $("#txtReferenceBookingNumber").val(result.BookingNo);
+                    $("#NewJourneyAcceptanceDialog").dialog("open");
+
+                    HideProgressBar();
+                    if (self.sendEmail() == true) {
+                        //alert('Send EMail Called');
+                        SendEmailToUser();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    HideProgressBar();
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                }
+            });
+
+        }
+
+        self.MakeAnotherBookingClick = function () {
+            window.location.replace('@Url.Action("RequesterDetails", "Account", new { q = System.DateTime.Now.ToString("ddmmyy_hhmmss") + "_11" + @User.Identity.Name + "_5465424_" + @User.Identity.Name + "=="})');
+        }
+
+        ConformBookingAcceptanceClick = function () {
+            $("#NewJourneyAcceptanceDialog").dialog("close");
+            $("#EBookingCompleteDialog").dialog("open");
+            //debugger;
+            $("#EBookingCompleteDialog").focus();
+            $("#EBookingCompleteDialog, #dimBg1").show();
+        }
+
+        AppointmentDateTimeChange = function () {
+
+            if (self.Patient.JourneyDate() && self.Patient.AppointmentTimeId()) {
+                var appointmentDateTime = $("#txtPatientJourneyDate").datepicker('getDate').setHours(self.Patient.AppointmentTimeId());
+                //alert(appointmentDateTime);
+
+                if (((appointmentDateTime - (new Date)) / 36e5) < 24)
+                    $("#AppointmentDateTimeAcceptanceDialog").dialog("open");
+            }
+
+        }
+
+        CollectionAddresseIsThisPatientHomeAddressChange = function () {
+            if (self.CollectionAddress.IsThisPatientHomeAddress()) {
+
+                self.CollectionLineOneTemp = self.CollectionAddress.LineOne();
+                self.CollectionLineTwoTemp = self.CollectionAddress.LineTwo();
+                self.CollectionLineThreeTemp = self.CollectionAddress.LineThree();
+                self.CollectionLineFourTemp = self.CollectionAddress.LineFour();
+                self.CollectionPostCodeTemp = self.CollectionAddress.PostCode();
+
+                self.CollectionAddress.LineOne(self.HomeAddress.LineOne());
+                self.CollectionAddress.LineTwo(self.HomeAddress.LineTwo());
+                self.CollectionAddress.LineThree(self.HomeAddress.LineThree());
+                self.CollectionAddress.LineFour(self.HomeAddress.LineFour());
+                self.CollectionAddress.PostCode(self.HomeAddress.PostCode());
+            }
+            else {
+                self.CollectionAddress.LineOne(self.CollectionLineOneTemp);
+                self.CollectionAddress.LineTwo(self.CollectionLineTwoTemp);
+                self.CollectionAddress.LineThree(self.CollectionLineThreeTemp);
+                self.CollectionAddress.LineFour(self.CollectionLineFourTemp);
+                self.CollectionAddress.PostCode(self.CollectionPostCodeTemp);
+            }
+
+            return true;
+        }
+
+        DestinationAddresseIsThisPatientHomeAddressChange = function () {
+            if (self.DestinationAddress.IsThisPatientHomeAddress()) {
+
+                self.DestinationLineOneTemp = self.DestinationAddress.LineOne();
+                self.DestinationLineTwoTemp = self.DestinationAddress.LineTwo();
+                self.DestinationLineThreeTemp = self.DestinationAddress.LineThree();
+                self.DestinationLineFourTemp = self.DestinationAddress.LineFour();
+                self.DestinationPostCodeTemp = self.DestinationAddress.PostCode();
+
+                self.DestinationAddress.LineOne(self.HomeAddress.LineOne());
+                self.DestinationAddress.LineTwo(self.HomeAddress.LineTwo());
+                self.DestinationAddress.LineThree(self.HomeAddress.LineThree());
+                self.DestinationAddress.LineFour(self.HomeAddress.LineFour());
+                self.DestinationAddress.PostCode(self.HomeAddress.PostCode());
+            }
+            else {
+                self.DestinationAddress.LineOne(self.DestinationLineOneTemp);
+                self.DestinationAddress.LineTwo(self.DestinationLineTwoTemp);
+                self.DestinationAddress.LineThree(self.DestinationLineThreeTemp);
+                self.DestinationAddress.LineFour(self.DestinationLineFourTemp);
+                self.DestinationAddress.PostCode(self.DestinationPostCodeTemp);
+            }
+
+            return true;
+        }
+
+        HomeAddressIsNoFixAbodeChange = function () {
+            if (self.HomeAddress.IsNoFixAbode()) {
+                //alert(self.HomeAddress.IsNoFixAbode());
+                self.HomeLineOneTemp = self.DestinationAddress.LineOne();
+                self.HomeLineTwoTemp = self.DestinationAddress.LineTwo();
+                self.HomeLineThreeTemp = self.DestinationAddress.LineThree();
+                self.HomeLineFourTemp = self.DestinationAddress.LineFour();
+                self.HomePostCodeTemp = self.DestinationAddress.PostCode();
+
+                self.HomeAddress.LineOne('no fixed abode');
+                self.HomeAddress.LineTwo('no fixed abode');
+                self.HomeAddress.LineThree('no fixed abode');
+                self.HomeAddress.LineFour('no fixed abode');
+                self.HomeAddress.PostCode('no fixed abode');
+            }
+            else {
+               // alert(self.HomeAddress.IsNoFixAbode());
+                self.HomeAddress.LineOne(self.HomeLineOneTemp);
+                self.HomeAddress.LineTwo(self.HomeLineTwoTemp);
+                self.HomeAddress.LineThree(self.HomeLineThreeTemp);
+                self.HomeAddress.LineFour(self.HomeLineFourTemp);
+                self.HomeAddress.PostCode(self.HomePostCodeTemp);
+            }
+
+            return true;
+        }
+
+        TransportRequestReasonChange = function () {
+            if (self.TransportRequirement.TransportRequestReasonId() == 5)
+                $("#wizard").steps("setStep", 4);
+        }
+
+        PatientIsRiskAssessmentRequiredChange = function () {
+            if (self.Patient.IsRiskAssessmentRequired()) {
+                $("#txtPatientActualAppointmentTime").css({ 'background-color': '#DFD8D1' });
+                $("#ddlPatientAppointmentTime").css({ 'background-color': '#DFD8D1' });
+                $("#txtPatientJourneyDate").css({ 'background-color': '#DFD8D1' });
+                $("#ddlPatientEstimatedAppointmentDuration").css({ 'background-color': '#DFD8D1' });
+                $("#PatientIsRiskAssessmentRequiredConfirmationDialog").dialog("open");
+            }
+            else {
+                $("#txtPatientActualAppointmentTime").css({ 'background-color': '#fff' });
+                $("#ddlPatientAppointmentTime").css({ 'background-color': '#fff' });
+                $("#txtPatientJourneyDate").css({ 'background-color': '#fff' });
+                $("#ddlPatientEstimatedAppointmentDuration").css({ 'background-color': '#fff' });
+                $("#PatientIsRiskAssessmentRequiredNonConfirmationDialog").dialog("open");
+            }
+
+            return true;
+        }
+
+        TransportSelectionChange = function () {
+            if (self.TransportRequirement.TransportSelectionId())
+                $("#TransportSelectionConfirmationDialog").dialog("open");
+        }
+
+        self.ClickArea = "";
+        self.Confirmable = false;
+
+        LoadOSSearch = function (area) {
+            ResetMapAddress();
+            self.ClickArea = area;
+            if (area == "HomeAddress") {
+                if ($("#chkHomeAddressIsNoFixAbobe").attr("value") == "true")
+                    return false;
+            }
+            else if (area == "CollectionAddress") {
+                if ($("#chkCollectionAddressIsThisPatientHomeAddress").attr("value") == "true")
+                    return false;
+            }
+            else if (area == "DestinationAddress") {
+                if ($("#chkDestinationAddressIsThisPatientHomeAddress").attr("value") == "true")
+                    return false;
+            }
+            $("#textSearch").focus();
+            $("#searchPlaces, #dimBg").show();
+        }
+
+        HideOSSearch = function (e) {
+            ResetMapAddress();
+            $("#searchPlaces").css("left", ((parseInt($(window).width()) / 2) - (parseInt($("#searchPlaces").css("width")) / 2)));
+            $("#searchPlaces, #dimBg").hide();
+        }
+
+
+        self.addresses = null;
+
+        GetAndBindOSSearchResults = function () {
+            ResetMapAddress();
+
+            if ($.trim($("#textSearch").val()) == "") {
+                $("#textSearch").addClass("fieldError");
+                return;
+            }
+
+            var theURL = "https://api.ordnancesurvey.co.uk/places/v1/addresses/find?key=t3w60OusDA2Uy787Pt675hNyyB3v4c6J&query=" + $.trim($("#textSearch").val()) + "&dataset=LPI&format=json&maxresults=20";//85DElGPwhNsD8C964z5Ps4ZXXATOkwOb
+
+            $(".recordNotFound").text("Loading Addresses...").show();
+
+            $.ajax({
+                url: theURL,
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data != null && data.results != null) {
+                        $(".recordNotFound").text("").hide();
+                        if (data.results.length != 0) {
+                            var objAddress;
+                            for (var i in data.results) {
+
+                                objAddress = data.results[i].LPI;
+
+                                var address1 = "";
+
+                                if (objAddress.SAO_TEXT != undefined && objAddress.ORGANISATION != undefined && objAddress.SAO_TEXT == objAddress.ORGANISATION) {
+                                    address1 = address1 + ConcateAddress(objAddress.ORGANISATION);
+                                }
+                                else if (objAddress.PAO_TEXT != undefined && objAddress.ORGANISATION != undefined && objAddress.PAO_TEXT == objAddress.ORGANISATION) {
+                                    address1 = address1 + ConcateAddress(objAddress.ORGANISATION);
+                                }
+                                else {
+                                    address1 = address1 + ConcateAddress(objAddress.ORGANISATION);
+                                    address1 = address1 + ConcateAddress(objAddress.SAO_TEXT);
+                                    address1 = address1 + ConcateAddress(objAddress.PAO_TEXT);
+                                }
+
+                                if (objAddress.SAO_START_NUMBER != undefined && objAddress.SAO_END_NUMBER == undefined) {
+                                    address1 = address1 + ConcateAddress(objAddress.SAO_START_NUMBER + (objAddress.SAO_START_SUFFIX == undefined ? "" : objAddress.SAO_START_SUFFIX));
+                                }
+
+                                if (objAddress.SAO_START_NUMBER != undefined && objAddress.SAO_END_NUMBER != undefined) {
+                                    address1 = address1 + ConcateAddress(objAddress.SAO_START_NUMBER + (objAddress.SAO_START_SUFFIX == undefined ? "" : objAddress.SAO_START_SUFFIX) + "-" + objAddress.SAO_END_NUMBER + (objAddress.SAO_END_SUFFIX == undefined ? "" : objAddress.SAO_END_SUFFIX));
+                                }
+
+                                if (objAddress.PAO_START_NUMBER != undefined && objAddress.PAO_END_NUMBER == undefined) {
+                                    address1 = address1 + ConcateAddress(objAddress.PAO_START_NUMBER + (objAddress.PAO_START_SUFFIX == undefined ? "" : objAddress.PAO_START_SUFFIX));
+                                }
+
+                                if (objAddress.PAO_START_NUMBER != undefined && objAddress.PAO_END_NUMBER != undefined) {
+                                    address1 = address1 + ConcateAddress(objAddress.PAO_START_NUMBER + (objAddress.PAO_START_SUFFIX == undefined ? "" : objAddress.PAO_START_SUFFIX) + "-" + objAddress.PAO_END_NUMBER + (objAddress.PAO_END_SUFFIX == undefined ? "" : objAddress.PAO_END_SUFFIX));
+                                }
+
+                                address1 = $.trim(address1.length == 0 ? "" : address1.substr(0, (address1.length - 1)));
+
+                                var address2 = "";
+
+                                address2 = address2 + ConcateAddress(objAddress.STREET_DESCRIPTION);
+                                address2 = address2 + ConcateAddress(objAddress.LOCALITY_NAME);
+
+                                address2 = $.trim(address2.length == 0 ? "" : address2.substr(0, (address2.length - 1)));
+                                //alert(objAddress.UPRN);
+                                addPanelInSearchResults(address1, address2, objAddress.TOWN_NAME, objAddress.ADMINISTRATIVE_AREA, objAddress.POSTCODE_LOCATOR, objAddress.X_COORDINATE, objAddress.Y_COORDINATE, objAddress.ADDRESS, objAddress.UPRN);
+                            }
+                        }
+                    }
+                    else {
+                        $(".recordNotFound").text("Address Not Found. Please Try Another Address.").show();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                },
+                complete: function () {
+                }
+            });
+        }
+
+        ConcateAddress = function (newString) {
+            return (newString == null ? "" : " " + newString + ",");
+        }
+
+        ResetMapAddress = function () {
+            $(".searchResults .resultpanel").remove();
+            $("#txtAddress1").val("");
+            $("#txtAddress2").val("");
+            $("#txtAddress3").val("");
+            $("#txtAddress4").val("");
+            $("#txtPostCode").val("");
+            $("#txtEasting").val("");
+            $("#txtNorthing").val("");
+            $(".recordNotFound").text("").hide();
+            $(".loadingMap").hide();
+            $("#mapArea").empty();
+            $("#textSearch").focus();
+            self.Confirmable = false;
+        }
+
+        addPanelInSearchResults = function (address1, address2, address3, address4, postcode, lat, long, address, UPRN) {
+            // alert(UPRN);
+            $(".searchResults").append("<div class='resultpanel' title='" + address + "' onclick='clickPanel(this);' data-address1='" + address1 + "' data-address2='" + address2 + "' data-address3='" + address3 + "' data-address4='" + address4 + "' data-postcode='" + postcode + "' data-lat='" + lat + "', data-long='" + long + "', data-UPRN='" + UPRN + "'>" + address + "</div>");
+        }
+
+        clickPanel = function (elem) {
+            self.Confirmable = true;
+            $(".loadingMap").show();
+            $("#mapArea").load("../OSMap.html", function () { eBookingDrawPoint($(elem).attr("data-lat"), $(elem).attr("data-long")); });
+            //alert($(elem).attr("data-UPRN"));
+            $(elem).addClass("selected").siblings().removeClass("selected");
+
+            $("#txtAddress1").val($(elem).attr("data-address1"));
+            $("#txtAddress2").val($(elem).attr("data-address2"));
+            $("#txtAddress3").val($(elem).attr("data-address3"));
+            $("#txtAddress4").val($(elem).attr("data-address4"));
+            $("#txtPostCode").val($(elem).attr("data-postcode"));
+            $("#txtEasting").val($(elem).attr("data-lat"));
+            $("#txtNorthing").val($(elem).attr("data-long"));
+            $("#txtUPRN").val($(elem).attr("data-UPRN"));
+        }
+
+        confirmAddress = function () {
+            if (self.Confirmable == false) {
+                return;
+            }
+            if (self.ClickArea == "HomeAddress") {
+                self.HomeLineOneTemp = self.HomeAddress.LineOne();
+                self.HomeLineTwoTemp = self.HomeAddress.LineTwo();
+                self.HomeLineThreeTemp = self.HomeAddress.LineThree();
+                self.HomeLineFourTemp = self.HomeAddress.LineFour();
+                self.HomePostCodeTemp = self.HomeAddress.PostCode();
+                //  self.HomeEasting = self.HomeAddress.Easting();
+
+                self.HomeAddress.LineOne($("#txtAddress1").val());
+                self.HomeAddress.LineTwo($("#txtAddress2").val());
+                self.HomeAddress.LineThree($("#txtAddress3").val());
+                self.HomeAddress.LineFour($("#txtAddress4").val());
+                self.HomeAddress.PostCode($("#txtPostCode").val());
+
+                self.HomeAddress.Easting($("#txtEasting").val());
+                self.HomeAddress.Northing($("#txtNorthing").val());
+                self.HomeAddress.UPRN($("#txtUPRN").val());
+                $("#txtHomeAddressLineOne").prop("disabled", true);
+                $("#txtHomeAddressLineTwo").prop("disabled", true);
+                $("#txtHomeAddressLineThree").prop("disabled", true);
+                $("#txtHomeAddressLineFour").prop("disabled", true);
+                $("#txtHomeAddressPostCode").prop("disabled", true);
+            }
+            else if (self.ClickArea == "CollectionAddress") {
+
+                self.CollectionLineOneTemp = self.CollectionAddress.LineOne();
+                self.CollectionLineTwoTemp = self.CollectionAddress.LineTwo();
+                self.CollectionLineThreeTemp = self.CollectionAddress.LineThree();
+                self.CollectionLineFourTemp = self.CollectionAddress.LineFour();
+                self.CollectionPostCodeTemp = self.CollectionAddress.PostCode();
+
+                // alert(self.CollectionAddress.Northing);
+
+                self.CollectionAddress.LineOne($("#txtAddress1").val());
+                self.CollectionAddress.LineTwo($("#txtAddress2").val());
+                self.CollectionAddress.LineThree($("#txtAddress3").val());
+                self.CollectionAddress.LineFour($("#txtAddress4").val());
+                self.CollectionAddress.PostCode($("#txtPostCode").val());
+                self.CollectionAddress.Easting($("#txtEasting").val());
+                self.CollectionAddress.Northing($("#txtNorthing").val());
+                self.CollectionAddress.UPRN($("#txtUPRN").val());
+
+                $("#txtCollectionAddressLineOne").prop("disabled", true);
+                $("#txtCollectionAddressLineTwo").prop("disabled", true);
+                $("#txtCollectionAddressLineThree").prop("disabled", true);
+                $("#txtCollectionAddressLineFour").prop("disabled", true);
+                $("#txtCollectionAddressPostCode").prop("disabled", true);
+            }
+            else if (self.ClickArea == "DestinationAddress") {
+
+                self.DestinationLineOneTemp = self.DestinationAddress.LineOne();
+                self.DestinationLineTwoTemp = self.DestinationAddress.LineTwo();
+                self.DestinationLineThreeTemp = self.DestinationAddress.LineThree();
+                self.DestinationLineFourTemp = self.DestinationAddress.LineFour();
+                self.DestinationPostCodeTemp = self.DestinationAddress.PostCode();
+
+                //alert(self.CollectionAddress.Northing);
+                self.DestinationAddress.LineOne($("#txtAddress1").val());
+                self.DestinationAddress.LineTwo($("#txtAddress2").val());
+                self.DestinationAddress.LineThree($("#txtAddress3").val());
+                self.DestinationAddress.LineFour($("#txtAddress4").val());
+                self.DestinationAddress.PostCode($("#txtPostCode").val());
+                self.DestinationAddress.Easting($("#txtEasting").val());
+                self.DestinationAddress.Northing($("#txtNorthing").val());
+                self.DestinationAddress.UPRN($("#txtUPRN").val());
+
+                $("#txtDestinationAddressLineOne").prop("disabled", true);
+                $("#txtDestinationAddressLineTwo").prop("disabled", true);
+                $("#txtDestinationAddressLineThree").prop("disabled", true);
+                $("#txtDestinationAddressLineFour").prop("disabled", true);
+                $("#txtDestinationAddressPostCode").prop("disabled", true);
+            }
+            else {
+                //alert(self.CollectionAddress.Northing);
+                self.Patient.GPPracticeAddressLineOne($("#txtAddress1").val());
+                self.Patient.GPPracticeAddressLineTwo($("#txtAddress2").val());
+                self.Patient.GPPracticeAddressLineThree($("#txtAddress3").val());
+                self.Patient.GPPracticeAddressLineFour($("#txtAddress4").val());
+                self.Patient.GPPracticeAddressPostCode($("#txtPostCode").val());
+                self.Patient.Easting($("#txtEasting").val());
+                self.Patient.Northing($("#txtNorthing").val());
+                self.Patient.UPRN($("#txtUPRN").val());
+
+                $("#txtPatientGPPracticeAddressLineOne").prop("disabled", true);
+                $("#txtPatientGPPracticeAddressLineTwo").prop("disabled", true);
+                $("#txtPatientGPPracticeAddressLineThree").prop("disabled", true);
+                $("#txtPatientGPPracticeAddressLineFour").prop("disabled", true);
+                $("#txtPatientGPPracticeAddressPostCode").prop("disabled", true);
+            }
+            $("#textSearch").val("");
+            HideOSSearch();
+        }
+
+        RefreshAddress = function (area) {
+            if (area == 'HomeAddress') {
+                $("#txtHomeAddressLineOne").val('');
+                $("#txtHomeAddressLineTwo").val('');
+                $("#txtHomeAddressLineThree").val('');
+                $("#txtHomeAddressLineFour").val('');
+                $("#txtHomeAddressPostCode").val('');
+                $("#txtHomeAddressLineOne").prop("disabled", false);
+                $("#txtHomeAddressLineTwo").prop("disabled", false);
+                $("#txtHomeAddressLineThree").prop("disabled", false);
+                $("#txtHomeAddressLineFour").prop("disabled", false);
+                $("#txtHomeAddressPostCode").prop("disabled", false);
+            }
+            else if (area == 'CollectionAddress') {
+                $("#txtCollectionAddressLineOne").val('');
+                $("#txtCollectionAddressLineTwo").val('');
+                $("#txtCollectionAddressLineThree").val('');
+                $("#txtCollectionAddressLineFour").val('');
+                $("#txtCollectionAddressPostCode").val('');
+                $("#txtCollectionAddressLineOne").prop("disabled", false);
+                $("#txtCollectionAddressLineTwo").prop("disabled", false);
+                $("#txtCollectionAddressLineThree").prop("disabled", false);
+                $("#txtCollectionAddressLineFour").prop("disabled", false);
+                $("#txtCollectionAddressPostCode").prop("disabled", false);
+            }
+            else if (area == 'DestinationAddress') {
+                $("#txtDestinationAddressLineOne").val('');
+                $("#txtDestinationAddressLineTwo").val('');
+                $("#txtDestinationAddressLineThree").val('');
+                $("#txtDestinationAddressLineFour").val('');
+                $("#txtDestinationAddressPostCode").val('');
+                $("#txtDestinationAddressLineOne").prop("disabled", false);
+                $("#txtDestinationAddressLineTwo").prop("disabled", false);
+                $("#txtDestinationAddressLineThree").prop("disabled", false);
+                $("#txtDestinationAddressLineFour").prop("disabled", false);
+                $("#txtDestinationAddressPostCode").prop("disabled", false);
+            }
+            else {
+                $("#txtPatientGPPracticeAddressLineOne").val('');
+                $("#txtPatientGPPracticeAddressLineTwo").val('');
+                $("#txtPatientGPPracticeAddressLineThree").val('');
+                $("#txtPatientGPPracticeAddressLineFour").val('');
+                $("#txtPatientGPPracticeAddressPostCode").val('');
+                $("#txtPatientGPPracticeAddressLineOne").prop("disabled", false);
+                $("#txtPatientGPPracticeAddressLineTwo").prop("disabled", false);
+                $("#txtPatientGPPracticeAddressLineThree").prop("disabled", false);
+                $("#txtPatientGPPracticeAddressLineFour").prop("disabled", false);
+                $("#txtPatientGPPracticeAddressPostCode").prop("disabled", false);
+            }
+
+        }
+
+        getFacilityAddress = function (calledfrom) {
+            // alert(calledfrom);
+            ShowProgressBar();
+            var facilityId;
+            if (calledfrom == 'GPPractice') {
+                facilityId = self.Patient.GPPracticeId();
+            }
+            else if (calledfrom == 'Collection') {
+                facilityId = self.CollectionAddress.FacilityId();
+            }
+            else if (calledfrom == "Destination") {
+                facilityId = self.DestinationAddress.FacilityId();
+            }
+            else {
+                facilityId = '';
+            }
+            //debugger;
+            //alert(facilityId);
+            if (facilityId != '' && typeof facilityId != 'undefined') {
+                //alert(typeof facilityId=='undefined');
+                $.ajax({
+                    url: '@Url.Action("GetAddress", "AccountWebAPI", new {httproute=""})',
+                    type: 'GET',
+                    headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                    data: { facilityid: facilityId, isFacilityDepartment: 'false' },
+                    success: function (result) {
+                        if (calledfrom == 'GPPractice') {
+                            self.Patient.GPPracticeAddressLineOne(result.AddressLine1);
+                            self.Patient.GPPracticeAddressLineTwo(result.AddressLine2);
+                            self.Patient.GPPracticeAddressLineThree(result.AddressLine3);
+                            self.Patient.GPPracticeAddressLineFour(result.AddressLine4);
+                            self.Patient.GPPracticeAddressPostCode(result.PostCode);
+                            $("#txtPatientGPPracticeAddressLineOne").prop("disabled", true);
+                            $("#txtPatientGPPracticeAddressLineTwo").prop("disabled", true);
+                            $("#txtPatientGPPracticeAddressLineThree").prop("disabled", true);
+                            $("#txtPatientGPPracticeAddressLineFour").prop("disabled", true);
+                            $("#txtPatientGPPracticeAddressPostCode").prop("disabled", true);
+                        }
+                        else if (calledfrom == 'Collection') {
+                            self.CollectionAddress.LineOne(result.AddressLine1);
+                            self.CollectionAddress.LineTwo(result.AddressLine2);
+                            self.CollectionAddress.LineThree(result.AddressLine3);
+                            self.CollectionAddress.LineFour(result.AddressLine4);
+                            self.CollectionAddress.PostCode(result.PostCode);
+
+                            $("#txtCollectionAddressLineOne").prop("disabled", true);
+                            $("#txtCollectionAddressLineTwo").prop("disabled", true);
+                            $("#txtCollectionAddressLineThree").prop("disabled", true);
+                            $("#txtCollectionAddressLineFour").prop("disabled", true);
+                            $("#txtCollectionAddressPostCode").prop("disabled", true);
+                            self.CollectionAddress.FacilityDepartments([]);
+                            getFacilityDepartments(calledfrom);
+
+                        }
+                        else if (calledfrom == 'Destination') {
+                            self.DestinationAddress.LineOne(result.AddressLine1);
+                            self.DestinationAddress.LineTwo(result.AddressLine2);
+                            self.DestinationAddress.LineThree(result.AddressLine3);
+                            self.DestinationAddress.LineFour(result.AddressLine4);
+                            self.DestinationAddress.PostCode(result.PostCode);
+
+                            $("#txtDestinationAddressLineOne").prop("disabled", true);
+                            $("#txtDestinationAddressLineTwo").prop("disabled", true);
+                            $("#txtDestinationAddressLineThree").prop("disabled", true);
+                            $("#txtDestinationAddressLineFour").prop("disabled", true);
+                            $("#txtDestinationAddressPostCode").prop("disabled", true);
+                            self.DestinationAddress.FacilityDepartments([]);
+                            getFacilityDepartments(calledfrom);
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        debugger;
+                        var errorMessage = '';
+                        $('#message').html(jqXHR.responseText);
+                        ShowErrorMessage();
+                    },
+                    complete: function () {
+                        HideProgressBar();
+                    }
+
+                });
+            }
+        }
+
+        getFacilityDepartments = function (calledfrom) {
+            //alert('I am called');
+            ShowProgressBar();
+            var facilityId;
+            if (calledfrom == 'Collection') {
+                facilityId = self.CollectionAddress.FacilityId();
+            }
+            else if (calledfrom == "Destination") {
+                facilityId = self.DestinationAddress.FacilityId();
+            }
+            $.ajax({
+                url: '@Url.Action("GetFacilityDepartments", "DropDown")',
+                type: 'GET',
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                data: { facilityid: facilityId, isFacilityDepartment: 'false' },
+                success: function (result) {
+                    //alert(JSON.stringify(result));
+                    if (result != 'false') {
+                        if (calledfrom == 'Collection') {
+                            ko.utils.arrayForEach(result, function (dropdown) {
+                                // alert(dropdown);
+                                self.CollectionAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                            });
+                        }
+                        else if (calledfrom == 'Destination') {
+                            ko.utils.arrayForEach(result, function (dropdown) {
+                                // alert(dropdown);
+                                self.DestinationAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                            });
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+        self.CloseClick = function () {
+            //debugger;
+            window.close();
+        }
+
+    }
+
+
+    $(function () {
+
+        WizardViewModeling = new WizardViewModel();
+
+        $("#textSearch").focus(function () {
+            $("#textSearch").removeClass("fieldError");
+        });
+
+        $('#textSearch').keypress(function (e) {
+            if (e.keyCode == 13) {
+                GetAndBindOSSearchResults();
+                return false; // prevent the button click from happening
+            }
+        });
+
+       
+        
+
+        AppointmentDateTimeAcceptanceClick = function () {
+            $("#AppointmentDateTimeAcceptanceDialog").dialog("close");
+        }
+
+        PrivatePatientConfirmationClick = function () {
+            $("#PrivatePatientConfirmationDialog").dialog("close");
+        }
+
+        TransportSelectionConfirmationYesClick = function () {
+            $("#TransportSelectionConfirmationDialog").dialog("close");
+
+            $("#TransportSelectionConfirmationYesSelectedDialog").dialog("open");
+        }
+
+        TransportSelectionConfirmationNoClick = function () {
+
+            $("#TransportSelectionConfirmationDialog").dialog("close");
+
+            $("#TransportSelectionConfirmationNoSelectedDialog").dialog("open");
+        }
+
+        TransportSelectionConfirmationYesSelectedClick = function () {
+
+            $("#TransportSelectionConfirmationYesSelectedDialog").dialog("close");
+        }
+
+        TransportSelectionConfirmationNoSelectedClick = function () {
+            $("#TransportSelectionConfirmationNoSelectedDialog").dialog("close");
+
+        }
+
+        TransportRequestPatientTypeFlowChartClick = function () {
+            window.location.replace('@Url.Action("FlowChart", "Journey")');
+        }
+
+        PatientIsRiskAssessmentRequiredConfirmationClick = function () {
+            $("#PatientIsRiskAssessmentRequiredConfirmationDialog").dialog("close");
+
+            $("#wizard").steps("setStep", 3);
+        }
+
+        PatientIsRiskAssessmentRequiredNonConfirmationClick = function () {
+            $("#PatientIsRiskAssessmentRequiredNonConfirmationDialog").dialog("close");
+            WizardViewModeling.RiskAssessment = new RiskAssessmentModel();
+
+        }
+
+        EBookingCompleteClick = function () {
+            $("#EBookingCompleteDialog").dialog("close");
+        }
+     
+        SendEmailToUser = function () {
+
+            $.ajax({
+
+                url: '@Url.Action("SendPDFEmail", "Journey")',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "GET",
+
+                data: { refNumber: WizardViewModeling.Patient.BookingNo() },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+                success: function (result) {
+                    //debugger;
+                    if (result == "True") {
+                        $("#EBookingCompleteDialog").dialog("open");
+                        //$("#EBookingCompleteDialog").dialog("open");
+                        $("#EBookingCompleteDialog").focus();
+                        $("#EBookingCompleteDialog, #dimBg1").show();
+
+
+                    }
+                    else {
+                        ShowErrorMessage();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                    return false;
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+
+        ShowProgressBar();
+
+        var refNumber = '@Request.Params["q"]';
+        //debugger;
+        refNumber = refNumber.split("_", 3);
+        WizardViewModeling.checkvieworedit = refNumber[2] / 56 / 74;
+        refNumber = refNumber[1] / 498;
+        //alert(checkvieworedit);
+
+        //checkvieworedit=
+        if (refNumber == '') {
+
+        }
+        else {
+            $.ajax({
+
+                url: '@Url.Action("", "JourneyWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "GET",
+
+                data: { referenceNumber: refNumber },
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+
+                success: function (result) {
+                    //alert(result.CollectionAddress.IsThisPatientHomeAddress);
+                    //alert(result.Patient.JourneyDate);
+                    // alert(self.Patient.JourneyDate());
+                    //Patient = new PatientModel();
+                   // alert(JSON.stringify(result.Patient));
+                    ko.mapping.fromJS(result, {}, WizardViewModeling);
+                    //alert(result.Patient.JourneyDate);
+                    //alert(WizardViewModeling.Patient.JourneyDate());
+                    //alert(getDate(result.Patient.JourneyDate));
+                    //alert($.datepicker("setDate", result.Patient.JourneyDate));
+                   // var datePicker = $("#txtPatientJourneyDate").datepicker({ firstDay: 1 });
+                  //  alert(datePicker.datepicker("setDate", getDate(result.Patient.JourneyDate)));
+                    $("#txtPatientJourneyDate").datepicker("setDate", getDate(result.Patient.JourneyDate));
+                    $("#txtPatienBirthtDate").datepicker("setDate", getDate(result.Patient.BirthDate));
+                    $("#txtPatientWeighingDate").datepicker("setDate", getDate(result.Patient.WeighingDate));
+                    $('title').text(result.Patient.BookingNo);
+                    $('*').prop("title", "");
+                   //WizardViewModeling.Patient.JourneyDate(getDate(result.Patient.JourneyDate));
+                    //WizardViewModeling.Patient.BirthDate(getDate(result.Patient.BirthDate));
+                    //WizardViewModeling.Patient.WeighingDate(getDate(result.Patient.WeighingDate));
+                    if (WizardViewModeling.checkvieworedit != 1) {
+                        //debugger;
+                        $("#wizard input").prop("disabled", true);
+                        $("#wizard select").prop("disabled", true);
+                        $("#confirmBooking").prop("disabled", true);
+                        $("textarea").prop("disabled", true);
+
+                    }
+                    if (WizardViewModeling.Patient.IsRiskAssessmentRequired() == false) {
+                       //alert('I am Hiding');
+                        $("#divRiskAssessment").hide();
+                    }
+                   
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+
+
+
+        ko.applyBindings(WizardViewModeling);
+    });
+    getDate = function (date) {
+        return $.datepicker.formatDate('dd/mm/yy', new Date(date));
+    }
+    //$(document).keyup(function (e) {
+    //    if (e.keyCode == 27) {
+    //        alert('Escape Not allowed');
+    //        return false;
+    //    }
+
+    //});
+</script>
+
+<style type="text/css">
+    .ui-widget-content {
+        background-color: #fff;
+        border: 5px solid #cccccc;
+        border-radius: 10px;
+        min-height: 200px;
+        width: 600px !important;
+        margin: 0px auto;
+        display: none;
+        top: 0;
+    }
+
+    input[type=checkbox] {
+        padding: 0;
+    }
+</style>
+<div id="dimBg" class="disabledBackground"></div>
+<div id="searchPlaces">
+    <div class="popup-header">
+        <div class='popup-header-text'>Address Search</div>
+    </div>
+    <div class="searchArea">
+        <input type="text" id="textSearch" class="form-control" />
+        <div class="searchbutne" style="display:none" onclick="GetAndBindOSSearchResults();">
+            <img src="~/Images/search.png" />
+        </div>
+    </div>
+    <div class="searchResults">
+        <p class="recordNotFound"></p>
+    </div>
+    <div class="searchResultsContent">
+        <div class="contorlsArea">
+            <p style="display:none" class="controlBox"><span class="lable">UPRN:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtUPRN" /></p>
+
+            <p class="controlBox"><span class="lable">Address Line 1:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtAddress1" /></p>
+            <p class="controlBox"><span class="lable">Address Line 2:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtAddress2" /></p>
+            <p class="controlBox"><span class="lable">Address Line 3:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtAddress3" /></p>
+            <p class="controlBox"><span class="lable">Address Line 4:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtAddress4" /></p>
+            <p class="controlBox"><span class="lable">Post Code:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtPostCode" /></p>
+            <p class="controlBox"><span class="lable">Easting:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtEasting" /></p>
+            <p class="controlBox"><span class="lable">Northing:</span> <input readonly="readonly" type="text" class="form-control textbox" id="txtNorthing" /></p>
+        </div>
+        <div id="mapArea">
+            <p class="loadingMap">Loading Map...</p>
+        </div>
+    </div>
+    <div class="butonPanel">
+        <div class="button" id="btnConfirmAddress" style="margin-right:2px;" onclick='confirmAddress();'>
+            Confirm
+        </div>
+        <div class="button" onclick='$("#textSearch").val("");ResetMapAddress();'>
+            Reset
+        </div>
+        <div class="button" onclick='$("#textSearch").val(""); HideOSSearch();'>
+            Cancel
+        </div>
+    </div>
+</div>
+<div id="AppointmentDateTimeAcceptanceDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Warning</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main">
+            <div class="popupredtxt" style="margin-top: 5px; width: 100%; margin-bottom: 10px; margin-left: 0;">
+                YOU HAVE PROVIDED LESS THAN 24 HOURS NOTIFICATION FOR THIS JOURNEY!
+            </div>
+            <ul style="margin-left:-15px;">
+                <li style="list-style-type: disc;">THE PTS SERVICE MAY NOT BE ABLE TO ACCOMODATE THIS TRIP  AND RESERVE THE RIGHT TO REFUSE THIS TRIP.</li>
+                <li style="list-style-type: disc;">THE PTS SERVICE  ALSO RESERVES THE RIGHT TO CROSS CHARGE THE REQUESTING DEPARTMENT FOR ADDITIONAL COSTS INCURRED IN MEETING A LATE NOTICE REQUEST</li>
+            </ul>
+        </div>
+        <div class="popup-button" style="margin-left:0px;" data-bind="click: AppointmentDateTimeAcceptanceClick, clickBubble: false">Confirm acceptance and proceed</div>
+    </div>
+</div>
+
+<div id="PrivatePatientConfirmationDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Private Patient</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main">
+
+            <ul>
+                <li>Have you called PTS Service - using 01983 822099 Ext 3504 ?</li>
+            </ul>
+        </div>
+        <div class="popup-button" data-bind="click: PrivatePatientConfirmationClick, clickBubble: false">Yes</div>
+    </div>
+</div>
+
+<div id="TransportSelectionConfirmationDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Transport Selection</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="margin-top:5px;">
+            Have you verified the patient's transport  requirements - using the ‘Ambulance Service Transport Request Patient Type FLOW CHART’?
+        </div>
+        <div class="popup-button" style="margin-left:0px;" data-bind="click: TransportSelectionConfirmationYesClick, clickBubble: false">Yes</div>
+        <div class="popup-button" data-bind="click: TransportSelectionConfirmationNoClick, clickBubble: false">No</div>
+    </div>
+</div>
+
+<div id="TransportSelectionConfirmationYesSelectedDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Transport Selection</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="margin-top:5px;">
+            <ul style="margin-left:-25px;width:auto;">
+                <li style="list-style-type:disc;">Failure to request the correct transportation, may result in the incorrect resources being sent, therefore the patient may not be able to be conveyed</li>
+                <li style="list-style-type:disc;">will result in an abortive journey and a cross charge to the requesting department</li>
+                <li style="list-style-type:disc;">IMPORTANT: Empty Wheelchairs will not be conveyed & Electric Wheelchairs must be able to be placed in manual mode for loading and unloading.</li>
+            </ul>
+        </div>
+        <div class="popup-button" style="width:100%; margin-left:0;" data-bind="click: TransportSelectionConfirmationYesSelectedClick, clickBubble: false">Confirm and proceed</div>
+    </div>
+</div>
+
+<div id="TransportSelectionConfirmationNoSelectedDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Private Patient</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="margin-top:5px;">
+            Flow chart will be displayed here
+        </div>
+        <div class="popup-button" style="width:100%;margin-left:0;" data-bind="click: TransportSelectionConfirmationNoSelectedClick, clickBubble: false">Confirm and proceed</div>
+    </div>
+</div>
+
+<div id="PatientIsRiskAssessmentRequiredConfirmationDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Risk Assessment</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="margin:0; margin-top:5px;">
+            72 Hours are required to carry out a risk assessment - please contact the PTS Service - using 01983 822099 Ext 3504 - if journey time is within 72 hours
+        </div>
+        <div class="popup-button" style="margin-left: 0px;" data-bind="click: PatientIsRiskAssessmentRequiredConfirmationClick, clickBubble: false">Ok</div>
+    </div>
+</div>
+
+<div id="PatientIsRiskAssessmentRequiredNonConfirmationDialog" class="popup-bg">
+    <div class="popup-header">
+        <div class='popup-header-text'>Risk Assessment</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main">
+            <div class="popupredtxt" style="margin:0; margin-top:5px; width:100%;">
+                Failure to provide accurate information will delay the transfer of the patient and will result in additional charges.
+            </div>
+        </div>
+        <div class="popup-button" style="margin-left: 0px;" id="TransportRequirementIsRiskAssessmentRequiredNonConfirmation" data-bind="value:TransportRequirement.Id, event: {click: PatientIsRiskAssessmentRequiredNonConfirmationClick}, showMessageToolTip: TransportRequirement.Id">Ok</div>
+    </div>
+</div>
+<div id="dimBg1" class="disabledBackground"></div>
+<div id="EBookingCompleteDialog">
+    <div class="popup-header">
+        <div class='popup-header-text'>Booking Complete</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main">
+            <div class="popupgreentxt">Your Booking is now complete, thank you</div><br />
+            Note your booking will submitted for approval, you should receive confirmation of acceptance within one working day <br /><br />
+            Your unique booking reference is <input type="text" id="txtReferenceBookingNumber" disabled="disabled" class="form-control" style="margin-bottom:25px; width:100%;" />
+            Please quote this in any correspondence, this reference will be required should you need to amend any bookings.
+        </div>
+        <div class="popup-button" style="width:150px; margin-left:0; margin-right:10px;" id="EBookingComplete" data-bind="event: {click: MakeAnotherBookingClick}, clickBubble: false,">Logout</div>
+        <div class="popup-button" style="width:240px; margin-left:0;" id="EBookingComplete" data-bind="event: {click: MakeAnotherBookingClick}, clickBubble: false,">Make Another Booking</div>
+
+    </div>
+</div>
+
+<div class="ppopchecknewone">
+
+    <div id="NewJourneyAcceptanceDialog">
+        <div class="popup-header">
+            <div class='popup-header-text'>Important Notice</div>
+        </div>
+        <div class="popupredtxt">
+            It is your responsibility to ensure all journey details are correct and that any amendments to this jouney are advised at least 48 hours before the journey time The PTS service reserves the right to cross charge your department for any additional costs incurred as a result of
+        </div>
+        <div class="bullettop">
+            <ul style="text-transform:none;">
+                <li>Inaccurate / incomplete booking information </li>
+                <li>Incorrect transport type selection </li>
+                <li>Amendments requested with in 24 hours </li>
+                <li>Cancellation requested within 24 hours</li>
+                <li>Invalid journey (eg failure to notify change of patient status) </li>
+                <li>Risk assessment not requested with 72 hours notice</li>
+            </ul>
+        </div>
+        <div class="popup-button" data-bind="click:  ConformBookingAcceptanceClick, clickBubble: false">Confirm acceptance and proceed</div>
+        @*<div class="popup-button" data-bind="click: NewJourneyAcceptanceClick, clickBubble: false">No abdon booking</div>*@
+    </div>
+</div>
+<div id="wizard">
+    <div class="formcontaner">
+        <div class="request-heading">
+            <span class="mainheading">Patient and Appointment Details:</span>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 5px;">
+                    <label>For a mainland Repatriation</label>
+                    <input type="checkbox" id="chkPatientIsMainlandRepatriation" name="chkPatientIsMainlandRepatriation" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: Patient.IsMainlandRepatriation, checked: Patient.IsMainlandRepatriation, showMessageToolTip: Patient.IsMainlandRepatriation" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                </div>
+            </div>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 10px; margin-bottom: 15px; ">
+                    <label>If a risk assessment is required</label>
+                    <input type="checkbox" id="chkPatientIsRiskAssessmentRequired" name="chkPatientIsRiskAssessmentRequired" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: Patient.IsRiskAssessmentRequired, checked : Patient.IsRiskAssessmentRequired, event: { click: PatientIsRiskAssessmentRequiredChange }" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                </div>
+            </div>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Date of Journey *</label>
+                    <input type="text" id="txtPatientJourneyDate" name="txtPatientJourneyDate" class="form-control" data-bind="datepicker: Patient.JourneyDate, datepickerOptions: {constrainInput: false, changeYear: true, changeMonth: true, dateFormat: 'dd/mm/yy'}, event: { change: AppointmentDateTimeChange }, enable: !Patient.IsMainlandRepatriation(), showMessageToolTip: Patient.JourneyDate" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Standard Appointment Time *</label>
+                    <select id="ddlPatientAppointmentTime" name="ddlPatientAppointmentTime" class="form-control" data-bind="options:Dropdown.AppointmentTimes, optionsValue:'AppointmentTimeId', optionsText:'AppointmentTimeName', value:Patient.AppointmentTimeId, event: { change: AppointmentDateTimeChange },enable: !Patient.IsMainlandRepatriation(), optionsCaption: 'Choose...', showMessageToolTip: Patient.AppointmentTimeId"></select>
+                </div>
+            </div>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-bottom: 15px; ">
+                    <label>Other useful information if available</label>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                </div>
+            </div>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Actual Appointment Time *</label>
+                    <input type="text" id="txtPatientActualAppointmentTime" name="txtPatientActualAppointmentTime" class="form-control" data-bind="value: Patient.ActualAppointmentTime, enable: !Patient.IsMainlandRepatriation(), showMessageToolTip: Patient.ActualAppointmentTime" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Estimated Appointment Duration *</label>
+                    <select id="ddlPatientEstimatedAppointmentDuration" name="ddlPatientEstimatedAppointmentDuration" class="form-control" data-bind="options:Dropdown.EstimatedAppointmentDurations, optionsValue:'EstimatedAppointmentDurationId', optionsText:'EstimatedAppointmentDurationName', value:Patient.EstimatedAppointmentDurationId, enable: !Patient.IsMainlandRepatriation(), optionsCaption: 'Choose...', showMessageToolTip: Patient.EstimatedAppointmentDurationId"></select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mainheadingclick" style="font-size: 17px; width:100%; padding:4px">Patient Details:</div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Title *</label>
+                    <select id="ddlPatientTitle" name="ddlPatientTitle" class="form-control" data-bind="options:Dropdown.Titles, optionsValue:'TitleId', optionsText:'TitleName', value:Patient.GenderTitleId, optionsCaption: 'Choose...', showMessageToolTip: Patient.GenderTitleId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>First Name *</label>
+                    <input type="text" id="txtPatientFirstName" name="txtPatientFirstName" class="form-control" data-bind="value: Patient.FirstName, showMessageToolTip : Patient.FirstName" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Surname *</label>
+                    <input type="text" id="txtPatientSurname" name="txtPatientSurname" class="form-control" data-bind="value: Patient.Surname, showMessageToolTip : Patient.Surname" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Date of Birth *</label>
+                    <input type="text" id="txtPatienBirthtDate" name="txtPatienBirthtDate" class="form-control" data-bind="datepicker: Patient.BirthDate, datepickerOptions: {changeYear: true, changeMonth: true, yearRange: '-150:+0', dateFormat: 'dd/mm/yy', maxDate: new Date()}, showMessageToolTip : Patient.BirthDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>NHS Number:</label>
+                    <input type="text" id="txtPatientNHSNumber" name="txtPatientNHSNumber" class="form-control" data-bind="value: Patient.NHSNumber, showMessageToolTip : Patient.NHSNumber" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Isle of Wight Number *</label>
+                    <input type="text" id="txtPatientIsleOfWightNo" name="txtPatientIsleOfWightNo" class="form-control" data-bind="value: Patient.IsleOfWightNo, showMessageToolTip : Patient.IsleOfWightNo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Last recorded Patient weight (in kg) *</label>
+                    <input type="text" id="txtLastRecordedPatientPatientWeight" name="txtLastRecordedPatientPatientWeight" class="form-control" data-bind="value: Patient.LastRecordedPatientWeight, showMessageToolTip : Patient.LastRecordedPatientWeight" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Date of Weighing *</label>
+                    <input type="text" id="txtPatientWeighingDate" name="txtPatientWeighingDate" class="form-control" data-bind="datepicker: Patient.WeighingDate, datepickerOptions: {changeYear: true, changeMonth: true, yearRange: '-10:+0', dateFormat: 'dd/mm/yy', maxDate: new Date()}, showMessageToolTip : Patient.WeighingDate" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Name of GP *</label>
+                    <input type="text" id="txtPatientNameOfGP" name="txtPatientNameOfGP" class="form-control" data-bind="value: Patient.NameOfGP, showMessageToolTip : Patient.NameOfGP" />
+                    <span class="formextratxt">If the patient is not registered with a GP please contact PTS service<br />using 01983 822099 Ext 3504</span>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>GP Practice Name *</label>
+                    <select id="ddlPatientGPPractice" name="ddlPatientGPPractice" class="form-control" data-bind="options:Dropdown.GPPractices, optionsValue:'GPPracticeId', optionsText:'GPPracticeName', value:Patient.GPPracticeId, event:{change:getFacilityAddress('GPPractice')}, optionsCaption: 'Choose...', showMessageToolTip: Patient.GPPracticeId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>GP Practice Address - Line one *</label>
+                    <div class="formfieldsearch">
+
+                        <input type="text" id="txtPatientGPPracticeAddressLineOne" name="txtPatientGPPracticeAddressLineOne" class="form-control" style="width: 100%; float: left" data-bind="value: Patient.GPPracticeAddressLineOne, showMessageToolTip : Patient.GPPracticeAddressLineOne" />
+                        <div class="searchbutne" style="display:none"  onclick="RefreshAddress('');" style="width:12%">
+                            <img src="~/Images/Refresh-Icon-website-150x150.png" width="23" />
+
+                        </div>
+                        <div class="searchbutne" style="display:none" onclick="LoadOSSearch('');">
+                            <img src="~/Images/search.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>GP Practice Address - Line two</label>
+                    <input type="text" id="txtPatientGPPracticeAddressLineTwo" name="txtPatientGPPracticeAddressLineTwo" class="form-control" data-bind="value: Patient.GPPracticeAddressLineTwo, showMessageToolTip : Patient.GPPracticeAddressLineTwo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>GP Practice Address - Line three (town) *</label>
+                    <input type="text" id="txtPatientGPPracticeAddressLineThree" name="txtPatientGPPracticeAddressLineThree" class="form-control" data-bind="value: Patient.GPPracticeAddressLineThree, showMessageToolTip : Patient.GPPracticeAddressLineThree" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>GP Practice Address - Line four (county) *</label>
+                    <input type="text" id="txtPatientGPPracticeAddressLineFour" name="txtPatientGPPracticeAddressLineFour" class="form-control" data-bind="value: Patient.GPPracticeAddressLineFour, showMessageToolTip : Patient.GPPracticeAddressLineFour" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>GP Practice Address - Post Code *</label>
+
+                    <input type="text" id="txtPatientGPPracticeAddressPostCode" name="txtPatientGPPracticeAddressPostCode" class="form-control" data-bind="value: Patient.GPPracticeAddressPostCode, showMessageToolTip : Patient.GPPracticeAddressPostCode" />
+
+
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Contact Telephone Number *</label>
+                    <input type="text" id="txtPatientContactTelephoneNo" name="txtPatientContactTelephoneNo" class="form-control" data-bind="value: Patient.ContactTelephoneNo, showMessageToolTip : Patient.ContactTelephoneNo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="mainheadingclick" style="font-size: 17px; width:100%; padding:4px">Patient Home Address:</div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 5px; float:left; margin-bottom:15px;">
+                    <label>Patient has no fixed abode *</label>
+                    <input type="checkbox" id="chkHomeAddressIsNoFixAbobe" name="chkHomeAddressIsNoFixAbobe" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value:HomeAddress.IsNoFixAbode, checked : HomeAddress.IsNoFixAbode, event: { click: HomeAddressIsNoFixAbodeChange }" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Home Address - Line One *</label>
+                    <div class="formfieldsearch">
+
+                        <input type="text" id="txtHomeAddressLineOne" name="txtHomeAddressLineOne" class="form-control" style="width: 100%; float: left" data-bind="value: HomeAddress.LineOne, showMessageToolTip : HomeAddress.LineOne" />
+                        <div class="searchbutne" style="display:none" onclick="RefreshAddress('HomeAddress');" style="width:12%">
+                            <img src="~/Images/Refresh-Icon-website-150x150.png" width="23" />
+                        </div>
+                        <div class="searchbutne" style="display:none" style="width:12%" onclick="LoadOSSearch('HomeAddress');">
+                            <img src="~/Images/search.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Home Address - Line Two</label>
+                    <input type="text" id="txtHomeAddressLineTwo" name="txtHomeAddressLineTwo" class="form-control" data-bind="value: HomeAddress.LineTwo, showMessageToolTip : HomeAddress.LineTwo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Home Address - Line Three (town) *</label>
+                    <input type="text" id="txtHomeAddressLineThree" name="txtHomeAddressLineThree" class="form-control" data-bind="value: HomeAddress.LineThree, showMessageToolTip : HomeAddress.LineThree" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Home Address - Line Four (county) *</label>
+                    <input type="text" id="txtHomeAddressLineFour" name="txtHomeAddressLineFour" class="form-control" data-bind="value: HomeAddress.LineFour, showMessageToolTip : HomeAddress.LineFour" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Home Address - Post Code *</label>
+
+                    <input type="text" id="txtHomeAddressPostCode" name="txtHomeAddressPostCode" class="form-control" data-bind="value: HomeAddress.PostCode, showMessageToolTip : HomeAddress.PostCode" />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Home Telephone Number *</label>
+                    <input type="text" id="txtHomeAddressContactTelNo" name="txtHomeAddressContactTelNo" class="form-control" data-bind="value: HomeAddress.ContactTelNo, showMessageToolTip : HomeAddress.ContactTelNo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Alternative Contact Number *</label>
+                    <input type="text" id="txtAlternateHomeAddressContactTelNo" name="txtAlternateHomeAddressContactTelNo" class="form-control" data-bind="value: HomeAddress.AlternateContactTelNo, showMessageToolTip : HomeAddress.AlternateContactTelNo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Relationship to patient *</label>
+                    <select id="ddlHomeAddressRelationship" name="ddlHomeAddressRelationship" class="form-control" data-bind="options:Dropdown.RelationshipToPatient, optionsValue:'RelationshipToPatientId', optionsText:'RelationshipToPatientName', value:HomeAddress.RelationshipId, optionsCaption: 'Choose...', showMessageToolTip: HomeAddress.RelationshipId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                </div>
+            </div>
+        </div>
+
+        <div class="mainheadingclick" style="font-size: 17px; width:100%; padding:4px">Collection Address:</div>
+
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 5px; margin-bottom:15px;">
+                    <label>Is this the patient home address?</label>
+                    <input type="checkbox" id="chkCollectionAddressIsThisPatientHomeAddress" name="chkCollectionAddressIsThisPatientHomeAddress" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: CollectionAddress.IsThisPatientHomeAddress, checked : CollectionAddress.IsThisPatientHomeAddress,event: { click: CollectionAddresseIsThisPatientHomeAddressChange }" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Facility Type *</label>
+                    <select id="ddlCollectionAddressFacilityType" name="ddlCollectionAddressFacilityType" class="form-control" data-bind="options:Dropdown.FacilityTypes, optionsValue:'FacilityTypeId', optionsText:'FacilityTypeName', value:CollectionAddress.FacilityTypeId, optionsCaption: 'Choose...', showMessageToolTip: CollectionAddress.FacilityTypeId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Facility Name *</label>
+                    <select id="ddlCollectionAddressFacility" name="ddlCollectionAddressFacility" class="form-control" data-bind="options:Dropdown.Facilities, optionsValue:'FacilityId', optionsText:'FacilityName', value:CollectionAddress.FacilityId, event:{change:getFacilityAddress('Collection')}, optionsCaption: 'Choose...', showMessageToolTip: CollectionAddress.FacilityId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Department / Ward *</label>
+                    <select id="ddlCollectionAddressDepartment" name="ddlCollectionAddressDepartment" class="form-control" data-bind="options:CollectionAddress.FacilityDepartments, optionsValue:'DepartmentId', optionsText:'DepartmentName', value:CollectionAddress.DepartmentId, optionsCaption: 'Choose...', showMessageToolTip: CollectionAddress.DepartmentId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Collection Address - Line One *</label>
+                    <div class="formfieldsearch">
+
+                        <input type="text" id="txtCollectionAddressLineOne" name="txtCollectionAddressLineOne" class="form-control" style="width: 100%; float: left" data-bind="value: CollectionAddress.LineOne, showMessageToolTip : CollectionAddress.LineOne" />
+                        <div class="searchbutne" style="display:none" onclick="RefreshAddress('CollectionAddress');" style="width:12%">
+                            <img src="~/Images/Refresh-Icon-website-150x150.png" width="23" />
+
+                        </div>
+                        <div class="searchbutne" style="width:10%; display:none" onclick="LoadOSSearch('CollectionAddress');">
+                            <img src="~/Images/search.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Collection Address - Line Two</label>
+                    <input type="text" id="txtCollectionAddressLineTwo" name="txtCollectionAddressLineTwo" class="form-control" data-bind="value: CollectionAddress.LineTwo, showMessageToolTip : CollectionAddress.LineTwo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Collection Address - Line Three (town) *</label>
+                    <input type="text" id="txtCollectionAddressLineThree" name="txtCollectionAddressLineThree" class="form-control" data-bind="value: CollectionAddress.LineThree, showMessageToolTip : CollectionAddress.LineThree" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Collection Address - Line four (county) *</label>
+                    <input type="text" id="txtCollectionAddressLineFour" name="txtCollectionAddressLineFour" class="form-control" data-bind="value: CollectionAddress.LineFour, showMessageToolTip : CollectionAddress.LineFour" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Collection Address - Post Code *</label>
+
+                    <input type="text" id="txtCollectionAddressPostCode" name="txtCollectionAddressPostCode" class="form-control" data-bind="value: CollectionAddress.PostCode, showMessageToolTip : CollectionAddress.PostCode" />
+
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Contact Telephone Number *</label>
+                    <input type="text" id="txtCollectionAddressContactTelNo" name="txtCollectionAddressContactTelNo" class="form-control" data-bind="value: CollectionAddress.ContactTelNo, showMessageToolTip : CollectionAddress.ContactTelNo" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Extension number</label>
+                    <input type="text" id="txtCollectionAddressExtensionNo" name="txtCollectionAddressExtensionNo" class="form-control" data-bind="value: CollectionAddress.ExtensionNo, showMessageToolTip : CollectionAddress.ExtensionNo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6"></div>
+            </div>
+        </div>
+
+        <div class="mainheadingclick" style="font-size: 17px; width:100%; padding:4px">Destination Address:</div>
+
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 5px; margin-bottom:15px;">
+                    <label>Is this the patient home address?</label>
+                    <input type="checkbox" id="chkDestinationAddressIsThisPatientHomeAddress" name="chkDestinationAddressIsThisPatientHomeAddress" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: DestinationAddress.IsThisPatientHomeAddress, checked : DestinationAddress.IsThisPatientHomeAddress, event: { click: DestinationAddresseIsThisPatientHomeAddressChange }" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Facility Type *</label>
+                    <select id="ddlDestinationAddressFacilityType" name="ddlDestinationAddressFacilityType" class="form-control" data-bind="options:Dropdown.FacilityTypes, optionsValue:'FacilityTypeId', optionsText:'FacilityTypeName', value:DestinationAddress.FacilityTypeId, optionsCaption: 'Choose...', showMessageToolTip: DestinationAddress.FacilityTypeId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Facility Name*</label>
+                    <select id="ddlDestinationAddressFacility" name="ddlDestinationAddressFacility" class="form-control" data-bind="options:Dropdown.Facilities, optionsValue:'FacilityId', optionsText:'FacilityName', value:DestinationAddress.FacilityId, event:{change:getFacilityAddress('Destination')}, optionsCaption: 'Choose...', showMessageToolTip: DestinationAddress.FacilityId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Department / Ward *</label>
+                    <select id="ddlDestinationAddressDepartment" name="ddlDestinationAddressDepartment" class="form-control" data-bind="options:DestinationAddress.FacilityDepartments, optionsValue:'DepartmentId', optionsText:'DepartmentName', value:DestinationAddress.DepartmentId, optionsCaption: 'Choose...', showMessageToolTip: DestinationAddress.DepartmentId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Destination Address - Line One *</label>
+                    <div class="formfieldsearch">
+                        <input type="text" id="txtDestinationAddressLineOne" name="txtDestinationAddressLineOne" class="form-control" style="width:100%; float: left" data-bind="value: DestinationAddress.LineOne, showMessageToolTip : DestinationAddress.LineOne" />
+                        <div class="searchbutne" style="display:none" onclick="RefreshAddress('DestinationAddress');" style="width:12%">
+                            <img src="~/Images/Refresh-Icon-website-150x150.png" width="23" />
+
+                        </div>
+                        <div class="searchbutne" style="width:10%; display:none" onclick="LoadOSSearch('DestinationAddress');">
+                            <img src="~/Images/search.png" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Destination Address - Line Two</label>
+                    <input type="text" id="txtDestinationAddressLineTwo" name="txtDestinationAddressLineTwo" class="form-control" data-bind="value: DestinationAddress.LineTwo, showMessageToolTip : DestinationAddress.LineTwo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Destination Address - Line Three (town) *</label>
+                    <input type="text" id="txtDestinationAddressLineThree" name="txtDestinationAddressLineThree" class="form-control" data-bind="value: DestinationAddress.LineThree, showMessageToolTip : DestinationAddress.LineThree" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Destination Address - Line four (county) *</label>
+                    <input type="text" id="txtDestinationAddressLineFour" name="txtDestinationAddressLineFour" class="form-control" data-bind="value: DestinationAddress.LineFour, showMessageToolTip : DestinationAddress.LineFour" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Destination Address - Post Code *</label>
+
+                    <input type="text" id="txtDestinationAddressPostCode" name="txtDestinationAddressPostCode" class="form-control" data-bind="value: DestinationAddress.PostCode, showMessageToolTip : DestinationAddress.PostCode" />
+
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Contact Telephone Number</label>
+                    <input type="text" id="txtDestinationAddressContactTelNo" name="txtDestinationAddressContactTelNo" class="form-control" data-bind="value: DestinationAddress.ContactTelNo, showMessageToolTip : DestinationAddress.ContactTelNo" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Extension number:</label>
+                    <input type="text" id="txtDestinationAddressExtensionNo" name="txtDestinationAddressExtensionNo" class="form-control" data-bind="value: DestinationAddress.ExtensionNo, showMessageToolTip : DestinationAddress.ExtensionNo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="formcontaner">
+        <div class="request-heading">
+            <span class="mainheading">TRANSPORT REQUIREMENTS:</span>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Reason for Transport Request *</label>
+                    <select id="ddlTransportRequirementTransportRequestReason" name="ddlTransportRequirementTransportRequestReason" class="form-control" data-bind="options:Dropdown.TransportRequestReasons, optionsValue:'TransportRequestReasonId', optionsText:'TransportRequestReasonName', value:TransportRequirement.TransportRequestReasonId, optionsCaption: 'Choose...', event: { change: TransportRequestReasonChange },showMessageToolTip: TransportRequirement.TransportRequestReasonId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Transport Selection *</label>
+                    <select id="ddlTransportRequirementTransportSelection" name="ddlTransportRequirementTransportSelection" class="form-control" data-bind="options:Dropdown.TransportSelections, optionsValue:'TransportSelectionId', optionsText:'TransportSelectionName', value:TransportRequirement.TransportSelectionId, optionsCaption: 'Choose...', event: { change: TransportSelectionChange }, showMessageToolTip: TransportRequirement.TransportSelectionId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewASTChart">
+            @*<span style="font-size: 14px; margin-left: 17px; float: left; text-align: left; height: 50px; margin-bottom: -23px; line-height: 50px; margin-right: 10px;">To view the Ambulance Service Transport Request Patient Type FLOW CHART&nbsp;</span>
+            <a href="#" class="clickherebut" style="float: left; padding-top: 12px;margin-right: 15px;" data-bind="click: TransportRequestPatientTypeFlowChartClick">Click here </a>*@
+        </div>
+
+        <div class="request-heading">
+            <span class="mainheading">Additional Patient Information:</span>
+        </div>
+        <span style="font-size: 14px; margin-left: 17px; float: left; text-align: left; width: 84%">Other Relevant Patient Information and Special Patient Requirements: (e.g. nature of illness / useful information)</span>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <textarea id="txtaTransportRequirementAdditionalPatientInfo" name="txtaTransportRequirementAdditionalPatientInfo" class="form-control textareawidth" rows="3" data-bind="value: TransportRequirement.AdditionalPatientInfo, showMessageToolTip: TransportRequirement.AdditionalPatientInfo"></textarea>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6"></div>
+            </div>
+        </div>
+
+        <div class="journey-blue-text-heading">Is the Patient:</div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Infectious</label>
+                    <input type="checkbox" id="chkTransportRequirementIsInfectious" name="chkTransportRequirementIsInfectious" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsInfectious, checked: TransportRequirement.IsInfectious, showMessageToolTip: TransportRequirement.IsInfectious, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%" data-bind="visible: TransportRequirement.IsInfectious()">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 10px; margin-bottom: -10px;">
+                    <label style="padding-top:21px;">Infectious Selection *</label>
+                    <select id="ddlTransportRequirementInfectious" name="ddlTransportRequirementInfectious" class="form-control" data-bind="options:Dropdown.Infectious, optionsValue:'InfectiousId', optionsText:'InfectiousName', value:TransportRequirement.InfectiousId, optionsCaption: 'Choose...', showMessageToolTip: TransportRequirement.InfectiousId"></select>
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Travelling with own oxygen (pre-prescribed)</label>
+                    <input type="checkbox" id="chkTransportRequirementIsTravellingWithOwnOxygen" name="chkTransportRequirementIsTravellingWithOwnOxygen" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsTravellingWithOwnOxygen, checked: TransportRequirement.IsTravellingWithOwnOxygen, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Escort Travelling (medical need)</label>
+                    <input type="checkbox" id="chkTransportRequirementIsEscortTravelling" name="chkTransportRequirementIsEscortTravelling" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsEscortTravelling, checked: TransportRequirement.IsEscortTravelling, showMessageToolTip : TransportRequirement.IsEscortTravelling, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div data-bind="visible: TransportRequirement.IsEscortTravelling()">
+                <div class="row" style="float: left; width: 100%">
+                    <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 10px; margin-bottom: -10px;">
+                        <label style="padding-top:21px;">Escort Type *</label>
+                        <select id="ddlTransportRequirementEscortType" name="ddlTransportRequirementEscortType" class="form-control" data-bind="options:Dropdown.EscortTypes, optionsValue:'EscortTypeId', optionsText:'EscortTypeName', value:TransportRequirement.EscortTypeId, optionsCaption: 'Choose...', showMessageToolTip: TransportRequirement.EscortTypeId"></select>
+                    </div>
+                </div>
+                <div class="row" style="float: left; width: 100%">
+                    <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 10px; margin-bottom: -10px;">
+                        <label style="padding-top:21px;">Escort Number *</label>
+                        <select id="ddlTransportRequirementEscortNumber" name="ddlTransportRequirementEscortNumber" class="form-control" data-bind="options:Dropdown.EscortNumbers, optionsValue:'EscortNumberId', optionsText:'EscortNumberName', value:TransportRequirement.EscortNumberId, optionsCaption: 'Choose...', showMessageToolTip: TransportRequirement.EscortNumberId"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Bariatric</label>
+                    <input type="checkbox" id="chkTransportRequirementIsBariatric" name="chkTransportRequirementIsBariatric" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsBariatric, checked: TransportRequirement.IsBariatric, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Full Leg Plaster POP</label>
+                    <input type="checkbox" id="chkTransportRequirementIsFullLegPlasterPOP" name="chkTransportRequirementIsFullLegPlasterPOP" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsFullLegPlasterPOP, checked: TransportRequirement.IsFullLegPlasterPOP, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Electric Wheelchair</label>
+                    <input type="checkbox" id="chkTransportRequirementIsElectricWheelchair" name="chkTransportRequirementIsElectricWheelchair" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsElectricWheelchair, checked: TransportRequirement.IsElectricWheelchair, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Wheelchair +leg extension </label>
+                    <input type="checkbox" id="chkTransportRequirementIsWheelchairAndLegExtension" name="chkTransportRequirementIsWheelchairAndLegExtension" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsWheelchairAndLegExtension, checked: TransportRequirement.IsWheelchairAndLegExtension, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Waterlow 15+ and unable to reposition themselves</label>
+                    <input type="checkbox" id="chkTransportRequirementIsWaterlow" name="chkTransportRequirementIsWaterlow" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsWaterlow, checked: TransportRequirement.IsWaterlow, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>DNACPR</label>
+                    <input type="checkbox" id="chkTransportRequirementIsDNACPR" name="chkTransportRequirementIsDNACPR" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsDNACPR, checked: TransportRequirement.IsDNACPR, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Diabetic</label>
+                    <input type="checkbox" id="chkTransportRequirementIsDiabetic" name="chkTransportRequirementIsDiabetic" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsDiabetic, checked: TransportRequirement.IsDiabetic, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>Nuclear Medicine Radioactive Risk. (Patient must travel on own for return journey)</label>
+                    <input type="checkbox" id="chkTransportRequirementIsNuclearMedicineRadioActiveRisk" name="chkTransportRequirementIsNuclearMedicineRadioActiveRisk" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsNuclearMedicineRadioActiveRisk, checked: TransportRequirement.IsNuclearMedicineRadioActiveRisk, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+            </div>
+            <div class="row" style="float: left; width: 100%">
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;">
+                    <label>None of the Above:</label>
+                    <input type="checkbox" id="chkTransportRequirementIsNoneOfAbove" name="chkTransportRequirementIsNoneOfAbove" class="bulletbluecheckbox" style="float: left; margin-right: 386px;" data-bind="value: TransportRequirement.IsNoneOfAbove, checked: TransportRequirement.IsNoneOfAbove, validationOptions: {errorElementClass: 'checkError' }" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6" style="margin-top: 21px;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    <div id="divRiskAssessment" class="formcontaner">
+        <div class="request-heading">
+            <span class="mainheading">RISK ASSESSMENT:</span>
+        </div>
+        <div class="journey-blue-text-heading" style="margin-bottom: 10px;">Additional Information on Property / Patient for Risk Assessment:</div>
+        <div style="font-weight: bold">Please list here any information relating to <u>PROPERTY</u> risk assessment</div>
+        <div style="font-weight: normal">(i.e. High number of steps, gravel drive , difficult access etc.)</div>
+        <textarea id="RiskAssessmentPropertyRiskAssessment" name="RiskAssessmentPropertyRiskAssessment" class="form-control textareawidth" rows="7" data-bind="value: RiskAssessment.PropertyRiskAssessment, showMessageToolTip: RiskAssessment.PropertyRiskAssessment"></textarea>
+        <div style="font-weight: bold; padding-top: 20px">Please list here any information relating to <u>PATIENT</u> risk assessment</div>
+        <div style="font-weight: normal;">(i.e. Size, weight, disability, mobility etc.)</div>
+        <textarea id="RiskAssessmentPatientRiskAssessment" name="RiskAssessmentPatientRiskAssessment" class="form-control textareawidth" rows="7" data-bind="value: RiskAssessment.PatientRiskAssessment, showMessageToolTip: RiskAssessment.PatientRiskAssessment"></textarea>
+        <div style="font-weight: bold; padding-top: 20px; width: 100%;height: 56px;"> Has a full Manual Handling Profile been carried out?</div>
+        <div style="float:left; width:100%">
+            <div class="chcktit">Yes</div>
+            <div class="checkbx">
+                <input type="checkbox" id="RiskAssessmentIsManualHandlingProfileCarriedOutYes" name="RiskAssessmentIsManualHandlingProfileCarriedOutYes" data-bind="value: RiskAssessment.IsManualHandlingProfileCarriedOutYes, checked:RiskAssessment.IsManualHandlingProfileCarriedOutYes, showMessageToolTip: RiskAssessment.IsManualHandlingProfileCarriedOutYes, validationOptions: {errorElementClass: 'checkError' }" />
+            </div>
+
+            <div class="chcktit">No</div>
+            <div class="checkbx">
+                <input type="checkbox" id="RiskAssessmentIsManualHandlingProfileCarriedOutNo" name="RiskAssessmentIsManualHandlingProfileCarriedOutNo" data-bind="value: RiskAssessment.IsManualHandlingProfileCarriedOutNo, checked:RiskAssessment.IsManualHandlingProfileCarriedOutNo, showMessageToolTip: RiskAssessment.IsManualHandlingProfileCarriedOutNo, validationOptions: {errorElementClass: 'checkError' }" />
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="buttonstylecontai">
+        <div class="buttonstyle" data-bind="click: CloseClick">Close</div>
+    </div>
+
+</div>
+
+
+
+

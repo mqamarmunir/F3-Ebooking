@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsVehicleRegisteration.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsVehicleRegisteration.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsVehicleRegisteration.xsd" id="dsVehicleRegisteration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsVehicleRegisteration">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblVehicle">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="VehicleID" type="xs:int" />
+              <xs:element minOccurs="0" name="VehicleTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="StationID" type="xs:int" />
+              <xs:element minOccurs="0" name="VehicleCallSign" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblVehicleType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" minOccurs="0" name="VehicleTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="VehicleType">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblStation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" minOccurs="0" name="StationID" type="xs:int" />
+              <xs:element minOccurs="0" name="Station">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblUser">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="UserID" type="xs:long" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:tblVehicleType" />
+      <xs:field xpath="mstns:VehicleTypeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" name="tblStation_Constraint1">
+      <xs:selector xpath=".//mstns:tblStation" />
+      <xs:field xpath="mstns:StationID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="tblVehicleType_tblVehicle" msdata:parent="tblVehicleType" msdata:child="tblVehicle" msdata:parentkey="VehicleTypeID" msdata:childkey="VehicleTypeID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="tblStation_tblVehicle" msdata:parent="tblStation" msdata:child="tblVehicle" msdata:parentkey="StationID" msdata:childkey="StationID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

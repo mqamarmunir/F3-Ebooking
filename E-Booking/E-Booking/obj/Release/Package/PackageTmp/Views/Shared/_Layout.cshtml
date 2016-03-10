@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>E-Booking</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+
+    <link href="@Url.Content("~/Content/jquery.steps.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquery.qtip.min.css")" rel="stylesheet" type="text/css" />
+
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/respond.js")" type="text/javascript"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.11.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.steps.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.qtip.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/KnockoutModels/Common.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        @functions{
+             public string TokenHeaderValue()
+             {
+                 string cookieToken, formToken;
+                 AntiForgery.GetTokens(null, out cookieToken, out formToken);
+                 return cookieToken + ":" + formToken;
+             }
+         }
+
+        getUserName = function (userid) {
+            //alert(userid);
+            //var userName;
+            @if(!User.Identity.IsAuthenticated){
+              Url.Action("Index", "Journey");
+            }
+            $.ajax({
+                url: '@Url.Action("GetUserDetails", "AccountWebAPI", new { httproute = "" })',
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                data: { userid: userid },
+                
+                success: function (result) {
+                    $("#lblUserName").text(result.FirstName + ' ' + result.Surname);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                   // HideProgressBar();
+                }
+
+            });
+            
+            
+        }
+
+    $(function () {
+
+        HomeClick = function () {
+            window.location.replace('@Url.Action("Index", "Journey")');
+        }
+
+        ErrorDialogClick = function () {
+            debugger;
+            if ($(".erriText").text().toLowerCase().indexOf('authorization has been denied') >= 0 || $(".erriText").text().toLowerCase().indexOf('unauthorized attempt to e-booking') >= 0)
+            {
+                $("#ErrorDialog").dialog("close");
+                window.location.reload();
+            }
+            $("#ErrorDialog").dialog("close");
+        }
+
+        LogOutClick = function () {
+
+            $.ajax({
+
+                url: '@Url.Action("LogOutUser", "AccountWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "POST",
+
+                data: ko.toJSON(self.LoginUser),
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+
+                success: function (result, status, xhr) {
+
+                    if (xhr.status == 200)
+                        window.location.replace('@Url.Action("Index", "Journey")');
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                }
+            });
+        };
+    });
+    </script>
+    <style>
+        .wizard > .actions > ul{padding-left:10px;}
+        .wizard > .actions {text-align: left;}
+    </style>
+    <noscript>Please Enable JavaScript in your Brower settings for best user Experience.</noscript>
+</head>
+<body>
+    <div id="divheader">
+        <div class="blueborder">
+            <div class="slider-inner">
+                <div class="da-slider">
+                    <a href="#" data-bind="click: HomeClick, clickBubble: false">
+                        <div class="leftlogo"></div>
+                    </a>
+                    <div class="topheaderheading">
+                        <div class="da-slide da-slide-current">
+                            <h2>
+                                <span class="ebookingheading">eBooking System</span>
+                                <br>
+                            </h2>
+                            <p>
+                                <span class="topbannertext">
+                                    Welcome to the Isle of Wight Ambulance Service
+                                    Patient Transport Services (Non-Emergency)
+                                    ‘E’ Booking System
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bannertoprightcon">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <script>getUserName(@User.Identity.Name)</script>
+                            @*<script>var xyz=getUserName(@User.Identity.Name)</script>*@ 
+                             <div class="bantrtitle"><a href="#" class="toprlink" data-bind="click: HomeClick, clickBubble: false">Home</a></div>
+                            <div class="bantrtitle">|</div>
+                            <div class="bantrtitle"><a href="#" class="toprlink" data-bind="click: LogOutClick, clickBubble: false">Log Out</a></div>
+                            <div class="bantrtitle">|</div>
+                            <div class="bantrtitle"><b>Welcome: &nbsp;</b><span class="welcometitle" id="lblUserName"></span>  </div>                      
+                        }
+                    </div>
+                    <div class="rightlogo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ErrorDialog" class="popup-bg">
+        <div class="popup-headerred">
+            <div class='popup-header-text'>EBOOKING</div>
+        </div>
+        <div class="popup-body-innder">
+            <div class="pop-up-text-main" style="margin-top:5px;"><span style="font-size:20px; font-weight:bold;">SORRY! </span> an error has occurred. We apologise for any inconvenience caused.
+You will be able to view any journeys requested on the home page ‘view journeys’ button’
+.
+                <span style="color: red; font-size: 13px;" class="erriText"></span>
+                @*;left: 13px;position: absolute;top: 80px; display:none*@
+            </div>
+            <div class="popup-button" style="margin-left:0;" data-bind="click: ErrorDialogClick, clickBubble: false">Ok</div>
+        </div>
+    </div>
+    <div id="ajaxLoadingBar">
+        <div class="disabledBackground"></div>
+        <div class="waitingContents">
+            <div style="position:relative">
+                <p class="waitText">
+                    <strong>
+                        eBooking System
+                    </strong>
+                    <br />
+                    Please Wait
+                </p>
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <footer class="footergraybar" style="">
+        <div class="footergraybar">
+            <div class="da-slide da-slide-current">
+                <div class="footergraybartxt">&copy; @DateTime.Now.Year - E-Booking Copyright 2014 V 1.7.0004</div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

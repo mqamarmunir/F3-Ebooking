@@ -1,0 +1,970 @@
+﻿@using ignoubuddy.helpers;
+<script src="~/Scripts/json2.js"></script>
+<script src="~/Scripts/json2.min.js"></script>
+<script src="@Url.Content("~/Scripts/knockout-3.2.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/LoginModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Placeholder.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/java.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/DropdownModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/Common.js")" type="text/javascript"></script>
+<script src="~/Scripts/KnockoutModels/CancelReasonsModel.js"></script>
+<script src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
+@*<script src="~/Scripts/jquery.mask.min.js"></script>*@
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script src="~/Scripts/KnockoutModels/PatientModel.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script>
+
+    @functions{
+        public string TokenHeaderValue()
+        {
+            string cookieToken, formToken;
+            AntiForgery.GetTokens(null, out cookieToken, out formToken);
+            return cookieToken + ":" + formToken;
+        }
+     }
+
+    $(document).ready(function () {
+        $("#ReferenceNumberSearchDialog input").mask("99999999");
+        //$("#txtPatientNHSNumber").mask('999 999 9999');
+        ////$("#txtPatientIsleOfWightNo").mask('IW999999');
+        //$("#txtPatientIsleOfWightNo").mask('IW000000', { placeholder: "IW______" });
+    });
+
+    function LoginViewModel() {
+        //debugger;
+        //debugger;
+        var self = this;
+        var Refno = ko.observable('');
+        self.LoginUser = new LoginModel();
+        /////////////////////////////////pange//////////////
+        self.DropDown = new DropdownModel();
+        self.CancelReason = new CancelReasonsModel();
+        self.Patient = new PatientModel();
+
+        ShowProgressBar();
+        $.ajax({
+            url: '@Url.Action("GetAllDropdowns", "Dropdown")',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (dropdownlists) {
+                ko.utils.arrayForEach(dropdownlists, function (dropdowns) {
+                    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+                        if (dropdown.CancelReasonId && dropdown.CancelReasonName) {
+                            // alert(dropdown);
+                            self.DropDown.CancelReason.push(new CancelReasonModel(dropdown));
+                        }
+                    });
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var errorMessage = '';
+                $('#message').html(jqXHR.responseText);
+                ShowErrorMessage();
+            },
+            complete: function () {
+                //alert('complete');
+                HideProgressBar();
+            }
+        });
+
+        onEnter = function (d, e) {
+            if (e.keyCode == 13) {
+                //alert('I am here');
+                LoginClick();
+                // return true;
+                //return false;
+            }
+            return true;
+        }
+        ////////////////////////////////////----////////////
+        chkPrivatePatientClick = function ()
+        {
+           
+            if (self.LoginUser.PrivatePatient()) {
+                self.LoginUser.NHSEligibilityCriteria(false);
+                self.LoginUser.PrivatePatient(true);
+
+            }
+            else {
+                self.LoginUser.PrivatePatient(false);
+            }
+            return true;
+           // alert($(this));
+            //if($(this))
+        }
+        chkNHSElicgibilityClick = function () {
+            if (self.LoginUser.NHSEligibilityCriteria()) {
+                self.LoginUser.PrivatePatient(false);
+                self.LoginUser.NHSEligibilityCriteria(true);
+
+            }
+            else {
+                self.LoginUser.NHSEligibilityCriteria(false);
+            }
+            return true;
+        }
+        if ($("#hdnAuthorizedUserName").val() && $("#hdnAuthorizedUserName").val() != '')
+            self.LoginUser.IsAuthorized(true);
+        else
+            self.LoginUser.IsAuthorized(false);
+
+        LoginClick = function () {
+           
+            if (!IsValidKnockoutModel(self.LoginUser)) {
+                debugger;
+                if ($("#txtLoginUserPassword").text().length<1)
+                    $("#txtLoginUserPassword").addClass("fieldError");
+                else
+                    $("#txtLoginUserPassword").removeClass("fieldError");
+                return;
+
+            }
+            ShowProgressBar();
+            $.ajax({
+
+                url: '@Url.Action("LogInUser", "AccountWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "POST",
+
+                data: ko.toJSON(self.LoginUser),
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                },
+
+                success: function (result, status, xhr) {
+                    if (xhr.status == 200 && jQuery.isNumeric(result)) {
+
+                        //$("#hdUserID").val(result);
+                        //debugger;
+                        window.location.reload(true);
+                        // alert($("#hdUserID").val());
+                        // $("#hdUserID").val(result);
+                        //alert($("#hdUserID").val());
+
+                    }
+                    else if (xhr.status == 200 && result == false) {
+                        // debugger;
+                        $("#txtLoginUserPassword").removeClass("fieldError");
+                        $(".loginError").fadeIn();
+                    }
+                    else {
+                        // debugger;
+                        $("#txtLoginUserPassword").removeClass("fieldError");
+                        self.LoginUser.Password('');
+                        $(".loginError").text(result);
+                        $(".loginError").fadeIn();
+                        setTimeout('$(".loginError").fadeOut()', 5000);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        };
+
+        RequestNewUserClick = function () {
+            window.location.replace('@Url.Action("Signup", "Account")');
+        };
+
+        RecordNotFoundOkClick = function () {
+
+            $("#RecordNotFoundDialog").dialog("close");
+            $("#ReferenceNumberSearchDialog").dialog("open");
+
+        }
+        RecordNotEditableOkClick = function () {
+            $("#RecordNotEditableDialog").dialog("close");
+            proceedtoCancellation();
+            //$("#RecordNotEditableDialog").dialog("close");
+            //$("#ReferenceNumberSearchDialog").dialog("open");
+
+        }
+        changeReason = function () {
+            //alert($("#cancelReasons option:selected").text().indexOf('Other'));
+            if ($("#cancelReasons option:selected").text().indexOf('Other') >= 0) {
+                // alert('condtion true');
+                $("#txtCancelReason").prop('disabled', false);
+            }
+            else {
+                $("#txtCancelReason").prop('disabled', true);
+            }
+        }
+
+        ForgotPasswordClick = function () {
+            debugger;
+            
+            self.LoginUser.IsPasswordForgotten(false);
+            $("#ForgetPasswordDialog input").removeClass("fieldError");
+            $("#ForgetPasswordDialog").dialog("open");
+            $("html").css({ overflow: "hidden" });
+        };
+
+        NewJourneyClick = function () {
+            if (!IsValidKnockoutModel(self.LoginUser)) {
+                IsCheckBoxHasError();
+                return;
+            }
+            $("#NewJourneyAcceptanceDialog").dialog("open");
+            $("html").css({ overflow: "hidden" });
+        };
+
+        IsCheckBoxHasError = function () {
+            $("input:checkbox").each(function () {
+                if ($(this).hasClass("checkError")) {
+                    $(this).siblings("span.checkbox").addClass("checkError");
+                }
+                else {
+                    $(this).siblings("span.checkbox").removeClass("checkError");
+                }
+            });
+        };
+
+        AmendExistingJourneyClick = function () {
+            //if (!IsValidKnockoutModel(self.LoginUser)) {
+            //    //IsCheckBoxHasError();
+            //    return;
+            //}
+            $("#hdAmendCancel").val("Amend");
+            $("#AmendJourneyAcceptanceDialog").dialog("open");
+            $("html").css({ overflow: "hidden" });
+        };
+
+        CancelJourneyClick = function () {
+
+            //if (!IsValidKnockoutModel(self.LoginUser)) {
+            //    IsCheckBoxHasError();
+            //    return;
+            //}
+            $("#hdAmendCancel").val("Cancel");
+            $("#CancelJourneyAcceptanceDialog").dialog("open");
+            $("html").css({ overflow: "hidden" });
+        };
+        CancellationReasonCloseClick = function () {
+            $("#CancelJourneyReasonDialog").dialog("close");
+            $("#ReferenceNumberSearchDialog").dialog("open");
+        }
+
+        CancellationReasonSaveClick = function () {
+            //debugger;
+            if (!IsValidKnockoutModel(self.CancelReason))
+                return;
+
+            if (self.CancelReason.is24HourCancellation()) {
+                $("#CancelJourneyReasonDialog").dialog("close");
+                $("#RecordNotEditableDialog").dialog("open");
+            }
+            else {
+                proceedtoCancellation();
+            }
+            
+        }
+        proceedtoCancellation = function () {
+            var referenceno = $("#ReferenceNumberSearchDialog input").val();
+            var cancelReasonText = $("#cancelReasons option:selected").text().indexOf('Other') <= 0 ? $("#cancelReasons option:selected").text() : $("#txtCancelReason").val();
+            var cancelReasonId = $("#cancelReasons option:selected").val();
+            var localis24hourCancellation = self.CancelReason.is24HourCancellation()?'1':'0';
+            //var refData=referenceno.toString()+','+cancelReasonText.toString()+','+cancelReasonId.toString();
+            ShowProgressBar();
+            $.ajax({
+                url: '@Url.Action("", "CancelJourneyWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+
+                type: "POST",
+
+                data: JSON.stringify([referenceno, cancelReasonText, cancelReasonId,localis24hourCancellation]),
+
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                beforeSend: function (xhr) {
+
+                },
+                success: function (result) {
+                    if (result == true) {
+                        //alert('result true');
+                        $("#CancellationReasonSaveSuccessDialog").dialog("open");
+                        $("#CancelJourneyReasonDialog").dialog("close");
+                        $("#ReferenceNumberSearchDialog input").val('');
+                        //alert('Successfully Cancelled');
+                        // $("#ReferenceNumberSearchDialog").dialog("close");
+                        // $("#CancelJourneyReasonDialog").dialog("open");
+
+                    }
+                    else
+                        $(".refNumberError").css("display", "block");
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //alert('in Error');
+                    debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+
+            });
+        }
+        CancellationReasonSaveSuccessYesClick = function () {
+            $("#CancellationReasonSaveSuccessDialog").dialog("close");
+        }
+        ViewJourneysClick = function () {
+            window.location.replace('@Url.Action("JourneyGrid", "Journey")');
+        }
+
+        NewJourneyAcceptanceClick = function () {
+
+            $("#NewJourneyAcceptanceDialog").dialog("close");
+            //alert($("#hdUserID").val());
+            //var nowdate = new DateTime();
+            //alert(nowdate);
+            // window.location.replace(Html.EncodedActionLink("RequesterDetails", "RequestereDetails", "Account", new { user = User.Identity.Name }, null));
+
+            window.location.replace('@Url.Action("RequesterDetails", "Account", new { q = System.DateTime.Now.ToString("ddmmyy_hhmmss") + "_11" + @User.Identity.Name + "_5465424_" + @User.Identity.Name + "=="})' + '&PrivatePatient=' + self.LoginUser.PrivatePatient());
+
+        }
+
+        NewJourneyDeclineClick = function () {
+            $("#NewJourneyAcceptanceDialog").dialog("close");
+            $("#NewJourneyAbandonConfirmationDialog").dialog("open");
+        }
+        NewJourneyDeclineYesClick = function () {
+            //$("#NewJourneyAcceptanceDialog").dialog("close");
+            $("#NewJourneyAbandonConfirmationDialog").dialog("close");
+        }
+        NewJourneyDeclineNoClick = function () {
+            $("#NewJourneyAcceptanceDialog").dialog("open");
+            $("#NewJourneyAbandonConfirmationDialog").dialog("close");
+        }
+        AmendJourneyAcceptanceClick = function () {
+            $("#AmendJourneyAcceptanceDialog").dialog("close");
+            $("#ReferenceNumberSearchDialog").dialog("open");
+        }
+
+        CancelJourneyAcceptanceClick = function () {
+            $("#CancelJourneyAcceptanceDialog").dialog("close");
+            $("#ReferenceNumberSearchDialog").dialog("open");
+        }
+        ReferenceNumberSearchCloseClick = function () {
+            $("#ReferenceNumberSearchDialog input").val('');
+            $("#ReferenceNumberSearchDialog").dialog("close");
+            $("html").css({ overflow: "auto" });
+        }
+        ReferenceNumberSearchClick = function (obj, event) {
+            // debugger;
+
+
+            var refNumber = $("#ReferenceNumberSearchDialog input").val();
+            if (refNumber == '') {
+                $(".refNumberError").css("display", "none");
+                $("#ReferenceNumberSearchDialog input").addClass("fieldError");
+            }
+            else {
+                ShowProgressBar();
+                $.ajax({
+
+                    url: '@Url.Action("SearchList", "JourneyWebAPI", new { httproute = "" })',
+
+                    contentType: "application/json;charset=utf-8",
+
+                    type: "GET",
+
+                    data: { refNumber: refNumber },
+
+                    headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                    async: false,
+                    beforeSend: function (xhr) {
+
+                    },
+                    success: function (result) {
+                        if (result == false) {
+                            $("#ReferenceNumberSearchDialog input").val('');
+                            $("#ReferenceNumberSearchDialog").dialog("close");
+                            $("#RecordNotFoundDialog").dialog("open");
+                            //alert('Record Not Found for Amendment/Cancellation.');
+                        }
+
+                        else {
+                            //alert(JSON.stringify(result));
+                            // alert(result.Patient.BookingDateTime);
+                            var bookingDateTime = new Date(result.Patient.BookingDateTime);
+                            //  var appointmentDateTime = getDateTime(result.Patient.JourneyDate, result.Patient.AppointmentTimeId);
+                            var journeyDate = new Date(result.Patient.JourneyDate);
+                            // alert(journeyDate);
+                            var datenow = new Date();
+                            //alert(datenow - appointmentDateTime);
+                            var diffinhours = (journeyDate - datenow) / 1000 / 60 / 60;
+                            // alert(diffinhours);
+                            if (diffinhours < 24) {
+                                self.CancelReason.is24HourCancellation(true);
+                                //$("#RecordNotEditableDialog").dialog("open");
+                                @*$("#ReferenceNumberSearchDialog").dialog("close");
+                                self.Patient.BookingNo(result.Patient.BookingNo);
+                                self.Patient.FirstName(result.Patient.FirstName);
+                                self.Patient.Surname(result.Patient.Surname);
+
+
+                                if ($("#hdAmendCancel").val() == 'Cancel') {
+                                    //console.log(result.Patient.FirstName + result.Patient.Surname);
+                                    //self.Patient.BookingNo(result.Patient.BookingNo);
+                                    //self.Patient.FirstName(result.Patient.FirstName);
+                                    //self.Patient.Surname(result.Patient.Surname);
+                                    $("#RecordNotEditableDialog").dialog("close");
+                                    $("#ReferenceNumberSearchDialog").dialog("close");
+                                    $("#CancelJourneyReasonDialog").dialog("open");
+                                }
+                                else {
+                                    var refNumber = $("#ReferenceNumberSearchDialog input").val();
+                                    var nowdate = new Date();
+
+                                    window.location.replace('@Url.Action("Journey", "Journey")?q=' + nowdate.setHours(15).toString() + '_' + parseInt(refNumber) * 498 + '_' + 56 * 74 + '_&q1=1_==');
+                                }
+
+                                RecordNotEditableOkClick();*@
+                                //alert('The changes are accepted in Booked Journeys atleast before 24 hours of Journey Date. No changes could be made online after that.');
+                                //$("#ReferenceNumberSearchDialog input").val('');
+
+                              //  return;
+                            }
+                            //if (datenow > appointmentDateTime)
+                            //{
+                            //    alert('Transfer has already been made!!!');
+                            //    $("#ReferenceNumberSearchDialog input").val('');
+                            //    return;
+                            //}
+                            //alert('result true');
+                            //alert($("#hdAmendCancel").val());
+                            if ($("#hdAmendCancel").val() == 'Cancel') {
+                                //console.log(result.Patient.FirstName + result.Patient.Surname);
+                                self.Patient.BookingNo(result.Patient.BookingNo);
+                                self.Patient.FirstName(result.Patient.FirstName);
+                                self.Patient.Surname(result.Patient.Surname);
+                                $("#ReferenceNumberSearchDialog").dialog("close");
+                                $("#CancelJourneyReasonDialog").dialog("open");
+                            }
+                            else {
+
+                                var nowdate = new Date();
+                                if (self.CancelReason.is24HourCancellation()) {
+                                    window.location.replace('@Url.Action("Journey", "Journey")?q=' + nowdate.setHours(15).toString() + '_' + parseInt(refNumber) * 498 + '_' + 56 * 74 + '_&q1=1_==');
+                                }
+                                else {
+
+                                    window.location.replace('@Url.Action("Journey", "Journey")?q=' + nowdate.setHours(15).toString() + '_' + parseInt(refNumber) * 498 + '_' + 56 * 74 + '_==');
+                                }
+                            }
+                        }
+
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        var errorMessage = '';
+                        $('#message').html(jqXHR.responseText);
+                        ShowErrorMessage();
+                    },
+                    complete: function () {
+                        HideProgressBar();
+                    }
+                });
+            }
+        }
+        getDateTime = function (date, timeid) {
+            // alert('I am called');
+            var rettime;
+            $.ajax({
+                url: '@Url.Action("GetAppointmentTime", "AccountWebAPI", new  {httproute="" })',
+                data: { id: timeid },
+                type: "Get",
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                async: false,
+                success: function (result) {
+                    // alert(result);
+
+                    var datestandard = new Date(date);
+                    // alert(datestandard.setHours(result.substring(0, 2)));
+                    rettime = datestandard.setHours(result.substring(0, 2));
+                    // alert(rettime);
+
+                    //alert($.datepicker.formatDate('getDate', new Date(date)));//.setHours(result);
+                    //alert($.datepicker());
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+
+                },
+                complete: function () {
+                    //HideProgressBar();
+                }
+            });
+            return rettime;
+        }
+        EmailSentSuccessDialogOkClick = function () {
+            $("#EmailSentSuccessDialog").dialog("close");
+           // window.location.reload();
+        }
+        SendEmailClick = function () {
+            // alert(self.LoginUser.IsPasswordForgotten());
+            // alert(self.LoginUser.Email().length > 0);
+            debugger;
+            if (!self.LoginUser.Email.isValid()) {
+
+               $("#ForgetPasswordDialog input").addClass("fieldError");
+            }
+            else {
+                ShowProgressBar();
+                if (self.LoginUser.Email.isValid()) {
+                    $.ajax({
+                        url: '@Url.Action("ValidateandSendEmail", "AccountWebAPI", new { httproute=""})',
+                        data: { EmailAddress: self.LoginUser.Email() },
+                        type: 'GET',
+                        success: function (result) {
+                            debugger;
+                            if (result == 'true') {
+                                //alert(result);
+                                $("#ForgetPasswordDialog").dialog("close");
+                                self.LoginUser.Email('');
+                                self.LoginUser.IsPasswordForgotten(true);
+                                $("html").css({ overflow: "auto" });
+                                $(".errEmail").css("display", "none");
+                                $("#EmailSentSuccessDialog").dialog("open");
+                                setTimeout('$("#EmailSentSuccessDialog").dialog("close");', 3000);
+                            }
+                            else {
+                                debugger;
+                                if (result.toString().indexOf('Relay Not Allowed')>-1) {
+                                    $(".errEmail").text('User is not allowed to send emails. Please contact administrator.');
+                                }
+                                else {
+                                    $(".errEmail").text(result.toString());
+                                }
+
+
+                                $(".errEmail").fadeIn();
+                                setTimeout('$(".errEmail").fadeOut();', 6000);
+
+                                //$(".errEmail").css("display", "block");
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            var errorMessage = '';
+                            $('#message').html(jqXHR.responseText);
+                            ShowErrorMessage();
+                        },
+                        complete: function () {
+                            HideProgressBar();
+                        }
+
+                    });
+
+
+                }
+            }
+        }
+        EmailCancelClick = function () {
+            // alert(self.LoginUser.IsPasswordForgotten());
+           
+            self.LoginUser.Email('');
+            self.LoginUser.IsPasswordForgotten(true);
+            $(".errEmail").fadeOut();
+           
+            $("#ForgetPasswordDialog").dialog("close");
+        }
+    }
+
+    $(function () {
+        $("#txtReferenceNumber").keypress(function (e) {
+            //alert('I am in');
+            if (e.keyCode == 13) {
+                ReferenceNumberSearchClick();
+                return false; // prevent the button click from happening
+            }
+        });
+
+        loginViewModel = new LoginViewModel();
+        //ko.validation.registerExtenders();
+        ko.applyBindings(loginViewModel);
+    });
+
+    function isValidEmailAddress(emailAddress) {
+        var pattern = new RegExp(/^([\w-]+(?:\.[\w-]+)*)@@((iow\.))?(nhs)\.(uk)$/i);
+        //var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+        return pattern.test(emailAddress);
+    };
+
+
+</script>
+<style>
+    .ui-widget-content {
+        background: rgb(244,251,255); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(244,251,255,1) 33%, rgba(209,238,255,1) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(33%,rgba(244,251,255,1)), color-stop(100%,rgba(209,238,255,1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, rgba(244,251,255,1) 33%,rgba(209,238,255,1) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, rgba(244,251,255,1) 33%,rgba(209,238,255,1) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, rgba(244,251,255,1) 33%,rgba(209,238,255,1) 100%); /* IE10+ */
+        background: linear-gradient(to bottom, rgba(244,251,255,1) 33%,rgba(209,238,255,1) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4fbff', endColorstr='#d1eeff',GradientType=0 ); /* IE6-9 */
+        background-color: #fff;
+        border: 1px solid #3388bc;
+        border-radius: 0px;
+        min-height: 200px;
+        width: 600px !important;
+        margin: 0px auto;
+        display: none;
+        top: 0;
+    }
+
+    .checkbox {
+        width: 19px !important;
+        height: 22px !important;
+    }
+
+    .checkError {
+        margin-left: 0px;
+    }
+</style>
+<div>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="graytopbar">
+            <div class="graytopcontainer">
+                <div class="contact_form col-sm-12 col-md-12 col-lg-12 leftmargin">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 col-lg-2" style="margin-top:10px; margin-bottom:-10px;" tabindex="0">
+                            <div class="loginfmtitle">Username:(Use personal NHS email address)</div>
+                            <input type="text" id="txtLoginUsername" name="txtLoginUserName" class="form-control-login" data-bind="value: LoginUser.UserName, showMessageToolTip: LoginUser.UserName" tabindex="1" />
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2">
+                            <div class="loginfmtitle">Password:</div>
+                            <input type="password" id="txtLoginUserPassword" name="txtLoginUserPassword" class="form-control-login" data-bind="textInput: LoginUser.Password, showMessageToolTip: LoginUser.Password , event: {keypress: onEnter}" tabindex="2" />
+                        </div>
+                        <div class="col-sm-12 col-md-3 col-lg-2 loginError" style="color:red;display:none;">
+                            <div class="loginfmtitle"></div>
+                            <div>The username or password is incorrect.</div>
+                        </div>
+                        <div class="btn-container-login">
+                            <div class="topgraybutton" data-bind="click: LoginClick" tabindex="3">Login </div>
+                            <div class="request-link"><a href="#" data-bind="click: RequestNewUserClick" tabindex="4">Request New User Account</a> | <a href="#" data-bind="click: ForgotPasswordClick" tabindex="5">Forgot Password ?</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+    <div class="container">
+        <!--[if lte IE 8 ]><div class="midcontentie8"><![endif]-->
+        <div class="midcontent">
+            <div class="bs-example-text">
+
+                <p><span class="blueheading">Important</span></p>
+                <p><b>Due to changes in patient needs, bookings or amendments will not be accepted more than 6 weeks in advance and with not less than 24 hours notice - without prior agreement.</b></p>
+
+                <div class="bullettxtheading" style="font-size:16px;">
+                    <p>Please contact the PTS service - using 01983 822099 Ext 3504 regarding</p>
+                </div>
+
+                <div style="width:100%; float:left; min-height: 102px; margin-top:20px; margin-bottom:20px;">
+                    <div class="bulletblue"></div>
+                    <div class="bullettxt">
+                        <p>Any trips with less than 24 hours notice</p>
+                    </div>
+                    <div class="bulletblue"></div>
+                    <div class="bullettxt">
+                        <p>Any amendment for a journey in less than 24 hours.</p>
+                    </div>
+                    <div class="bulletblue"></div>
+                    <div class="bullettxt">
+                        <p>A Risk Assessment is required - where there is less than 72 hours notice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        @if (User.Identity.IsAuthenticated)
+        {
+            
+        <div class="bluebar">
+            <div class="bluebartxt">NHS Eligibility Criteria for Patient Transport Services (PTS) (As per DoH 2007)</div>
+        </div>
+        <div class="midcontenttxt">
+            <div class="text-main-div">
+                <div>
+                    By completing this booking, you confirm that the medical condition of the patient is such that they require the skills or support of PTS staff on / after the journey, and / or where it would be detrimental to the patients condition or recovery, if they were to travel by other means. Where the patients medical condition impacts on their mobility to such an extent, that they would be unable to access healthcare and / or it would be detrimental to the patients condition or recovery to travel by other means. Where children are being conveyed, the accompanying person must be a recognised parent or guardian.
+                    <div style="width:100%; float:left; min-height: 70px; margin-top:20px; margin-bottom:0px;">
+                        <div style="width:25%; float:left;  min-height: 70px;"></div>
+                        <div style="width:75%; float:left;  min-height: 70px;">
+
+                            <input type="checkbox" id="chkLoginUserNHSEligibilityCriteria" name="chkLoginUserNHSEligibilityCriteria" tabindex="6" class="styled" data-bind="value: LoginUser.NHSEligibilityCriteria, checked: LoginUser.NHSEligibilityCriteria, validationOptions: {errorElementClass: 'checkError' }, showMessageToolTip: LoginUser.NHSEligibilityCriteria, event:{click:chkNHSElicgibilityClick}" />@*enable: !LoginUser.PrivatePatient()*@
+                            <span style="float:left; padding-left:15px">I Confirm that the patient is eligible for NHS Transport.</span><span class="label-red-text">*</span> <b>OR</b> <br />
+
+                            <input type="checkbox" class="styled" id="chkLoginUserPrivatePatient" name="chkLoginUserPrivatePatient" tabindex="7" data-bind="value: LoginUser.PrivatePatient, checked: LoginUser.PrivatePatient, validationOptions: {errorElementClass: 'checkError' }, showMessageToolTip: LoginUser.PrivatePatient ,event:{click:chkPrivatePatientClick}" />@*enable: !LoginUser.NHSEligibilityCriteria(),*@
+                            <span style="float:left; padding-left:15px">The patient is a Private (paying) Patients.</span><span class="label-red-text">*</span>  <br />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="hdnAuthorizedUserName" value="@User.Identity.Name" />
+             <div class="bs-example-text">
+
+            <div class="bullettxtheading">
+                <p>If this is an Emergency Transfer to a mainland medical facility for ongoing definitive care, which requires a time critical transfer due to nature of the patients medical condition</p>
+            </div>
+            <div class="bullettxtheading">
+                <p>Please Contact the Integrated Care HUB by telephone to request transport.</p>
+            </div>
+
+        </div>
+        <div class="bottombuttcontain">
+                <div align="center">
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutbluenewoo"></div>
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutblue" data-bind="click: NewJourneyClick" tabindex="8" style="width:12%">New Journey</div>
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutblue" data-bind="click: AmendExistingJourneyClick" tabindex="9" style="width:16%">Amend Existing Journey</div>
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutblue" data-bind="click: CancelJourneyClick" tabindex="10" style="width:11%">Cancel Journey</div>
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutblue" data-bind="click: ViewJourneysClick" tabindex="11" style="width:10%"> View Journeys</div>
+                    <div class="botbutbluegap"></div>
+                    <div class="botbutbluenewoo"></div>
+                    <div class="botbutbluegap"></div>
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>
+
+<div class="ppopchecknewone">
+    <div id="NewJourneyAcceptanceDialog">
+        <div class="popup-header">
+            <div class='popup-header-text'>Important</div>
+        </div>
+        <div class="popupredtxt">
+            PLEASE ENSURE YOUR JOURNEY REQUEST IS ACCURATE AND TIMELY. The PTS service reserves the right to cross charge your department for any additional costs incurred as a result of
+        </div>
+        <div class="bullettop">
+            <ul style="text-transform:none;">
+                <li>Inaccurate / incomplete booking information </li>
+                <li>Incorrect transport type selection </li>
+                <li>Amendments requested within 24 hours </li>
+                <li>Cancellation requested within 24 hours</li>
+                <li>Invalid journey (e.g. failure to notify change of patient status) </li>
+                <li>Risk assessment not requested with 72 hours notice</li>
+            </ul>
+        </div>
+        <div class="popup-button" data-bind="click: NewJourneyAcceptanceClick, clickBubble: false">Confirm acceptance and proceed</div>
+        <div class="popup-button" data-bind="click: NewJourneyDeclineClick, clickBubble: false">No abandon booking</div>
+    </div>
+</div>
+
+<div class="ppopchecknewone">
+    <div id="NewJourneyAbandonConfirmationDialog">
+        <div class="popup-header">
+            <div class='popup-header-text'>Are You Sure?</div>
+        </div>
+        <div class="popupredtxt">
+            Do you wish to abandon the current booking?
+        </div>
+
+        <div class="popup-button" data-bind="click: NewJourneyDeclineYesClick, clickBubble: false">Yes</div>
+        <div class="popup-button" data-bind="click: NewJourneyDeclineNoClick, clickBubble: false">No</div>
+    </div>
+</div>
+<div class="ppopchecknewone">
+    <div id="CancellationReasonSaveSuccessDialog">
+        <div class="popup-header">
+            <div class='popup-header-text'>E-Booking</div>
+        </div>
+        <div class="popupgreentxt">
+            Journey cancelled successfully.
+        </div>
+
+        <div class="popup-button" data-bind="click: CancellationReasonSaveSuccessYesClick, clickBubble: false">Ok</div>
+
+    </div>
+</div>
+
+<div id="AmendJourneyAcceptanceDialog">
+    <div class="popup-header">
+        <div class='popup-header-text'>Important</div>
+    </div>
+    <div class="popupredtxt">
+        JOURNEY AMENDMENTS WITH  LESS THAN 24 HOURS NOTIFICATION
+    </div>
+    <div class="bullettop">
+        <ul>
+            <li>It may not be possible to accommodate amendments and may invalidate the trip.</li>
+            <li><u>Additional Charges</u> will be incurred.</li>
+        </ul>
+    </div>
+    <div class="popup-button" data-bind="click: AmendJourneyAcceptanceClick, clickBubble: false">Confirm acceptance and proceed</div>
+</div>
+
+<div id="CancelJourneyAcceptanceDialog">
+    <div class="popup-headeryellow">
+        <div class='popup-header-text'>Warning</div>
+    </div>
+    <div class="popupredtxt">
+        CANCELLATIONS WITH LESS THAN 24 HOURS NOTIFICATION
+    </div>
+    <div class="bullettop">
+        <ul>
+            <li>The <u>full charge</u> for the journey will be incurred by the requesting department.</li>
+        </ul>
+    </div>
+    <div class="popup-button" data-bind="click: CancelJourneyAcceptanceClick, clickBubble: false">Confirm acceptance and proceed</div>
+</div>
+
+<div id="RecordNotFoundDialog">
+    <div class="popup-headerred">
+        <div class='popup-header-text'>EBooking</div>
+    </div>
+    <div class="popupiconerror"></div>
+    <div class="popupredtxt">
+        Record Not Found for Amendment/Cancellation
+    </div>
+
+    <div class="popup-button" data-bind="click: RecordNotFoundOkClick, clickBubble: false">Ok</div>
+</div>
+<div id="RecordNotEditableDialog">
+    <div class="popup-headerred">
+        <div class='popup-header-text'>EBooking</div>
+    </div>
+    <div class="popupiconerror"></div>
+    <div class="popupredtxt">
+        THERE ARE LESS THAN 24 HOURS TO TRIP TIME
+        YOU MUST CONTACT THE PTS DISPATCHER
+        ON 01983 822088 ext 3504
+
+    </div>
+    <div>
+        <button type="button" class="btn-warning" data-bind="click: RecordNotEditableOkClick, clickBubble: false">PLEASE CONFIRM CALL HAS BEEN MADE</button>
+    </div>
+</div>
+
+<div id="ReferenceNumberSearchDialog">
+    <div class="popup-header">
+        <div class='popup-header-text'>Reference Number</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="width: 100%;">
+            <div class="popupforgotpass" style="margin-left:0;height:40px;">Reference Number:</div>
+            <input id="txtReferenceNumber" type="text" class="form-control" title="This is required field." style="width:100%;" />
+            <span style="color:red; display:none; margin-top:-15px;font-size:15px;" class="refNumberError">Invalid reference Number.</span>
+        </div>
+        <div class="popup-buttonhome" data-bind="click: ReferenceNumberSearchCloseClick, clickBubble: false" style="float:right">Cancel</div>
+        <div class="popup-buttonhome" data-bind="click: ReferenceNumberSearchClick, clickBubble: false" style="float:right">Search</div>
+
+    </div>
+</div>
+
+<div id="CancelJourneyReasonDialog">
+    <div class="popup-header">
+        <div class='popup-header-text'>Cancellation Reason</div>
+    </div>
+    
+
+    <div class="popup-body-innder">
+
+        <div style="width:100%; float:left;">
+            <div style="float: left; width: 25%;">
+                <label style="color: #000; width: 100%; "> Reference No.: </label>
+            </div>
+            <div style="float: left; width:25%;">
+                <label style="color: #000; width: 100%; color: #007ac3;" data-bind="text:Patient.BookingNo"> </label>
+            </div>
+            <div style="float: left; width: 25%; ">
+                <label style="color: #000; width: 100%; "> Patient Name: </label>
+            </div>
+            <div style="float: left; width: 25%; color: #007ac3;">
+                <label style="color: #000; width: 100%; color: #007ac3;" data-bind="text:Patient.FullName"> </label>
+            </div>
+        </div>
+        @*<div style="width:100%; float:left;">
+            <div style="float: left; width: 25%;">
+                <label style="color: #000; width: 100%; "> Value </label>
+            </div>
+            <div style="float: left; width:25%;">
+                <label style="color: #000; width: 100%; color: #007ac3;" data-bind="text:Patient.BookingNo"> </label>
+            </div>
+            <div style="float: left; width: 25%; ">
+                <label style="color: #000; width: 100%; "> Value </label>
+            </div>
+            <div style="float: left; width: 25%; ">
+                <label style="color: #000; width: 100%; color: #007ac3;" data-bind="text:Patient.BookingNo"> </label>
+            </div>
+        </div>*@
+        <div style="width: 100%; height: 1px; background-color: #007ac3; float:left; margin-top:5px; margin-bottom:5px;"></div>
+
+   
+        <div class="pop-up-text-main" style="width: 100%;">
+            <div class="popupforgotpass" style="margin-left:0;height:40px;">Cancellation Reason:</div>
+            @*<input type="text" class="form-control" title="This is required field." style="width:100%;" />*@
+            <select id="cancelReasons" class="form-control" data-bind="options:DropDown.CancelReason, optionsValue:'CancelReasonId', optionsText:'CancelReasonName',value:CancelReason.CancelReasonId, optionsCaption:'Choose...', showMessageTooltip:CancelReason.CancelReasonId"></select>
+            <div data-bind="visible:CancelReason.CancelReasonId()=='8'">
+                <div class="popupforgotpass" style="margin-left:0;height:40px;">
+                    Reason:
+                </div>
+                <input type="text" id="txtCancelReason" class="form-control" data-bind="value:CancelReason.cancelReasonName, enable:CancelReason.CancelReasonId()==8" />
+
+            </div>
+        </div>
+        <div class="popup-buttonhome" data-bind="click: CancellationReasonCloseClick, clickBubble: false" style="float:right">Close</div>
+        <div class="popup-buttonhome" data-bind="click: CancellationReasonSaveClick, clickBubble: false" style="float:right">Save</div>
+
+    </div>
+</div>
+
+<div id="ForgetPasswordDialog">
+    <div class="popup-header">
+        <div class='popup-header-text'>Forgotten Password</div>
+    </div>
+    <div class="popup-body-innder">
+        <div class="pop-up-text-main" style="width:100%">
+            <div class="popupforgotpass" style="margin-left:0;height:40px;">Your email address</div>
+            <div class="">
+                <input type="text" data-bind="value:LoginUser.Email" class="form-control" style="float: left; width:100%;" />
+
+                <span style="color: red; font-size: 13px;left: 13px;position: absolute;top: 80px; display:none" class="errEmail">Invalid Email Address</span>
+
+            </div>
+
+        </div>
+        <div class="popup-buttonhome" data-bind="click: SendEmailClick, clickBubble: false">Send Password</div>
+        <div class="popup-buttonhome" data-bind="click: EmailCancelClick, clickBubble: false">Cancel</div>
+    </div>
+</div>
+<div id="EmailSentSuccessDialog">
+    <div class="popup-headergreen">
+        <div class='popup-header-text'>EBooking</div>
+    </div>
+    <div class="popupiconsuccessful"></div>
+    <div class="popupgreentxtnew">
+       Email sent.
+    </div>
+
+    <div class="popup-button" data-bind="click: EmailSentSuccessDialogOkClick, clickBubble: false">OK</div>
+
+</div>
+<div style="display:none">
+    <input id="hdAmendCancel" type="hidden" value="Amend" />
+    <input id="hdUserID" type="hidden" />
+</div>

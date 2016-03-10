@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsPbx.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsPbx.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsPbx.xsd" id="dsPbx" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsPbx">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblPbxCall">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="CallId" type="xs:int" />
+              <xs:element minOccurs="0" name="PbxCallId" type="xs:string" />
+              <xs:element name="MachineId" type="xs:int" />
+              <xs:element minOccurs="0" name="CallerNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CallSource">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CallerName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Location">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="ExtensionNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="ReceiveTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="WaitTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="AnswerTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CallDuration">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CallStatus" type="xs:int" />
+              <xs:element minOccurs="0" name="CallType" type="xs:int" />
+              <xs:element minOccurs="0" name="Operator" type="xs:int" />
+              <xs:element minOccurs="0" name="RefNo" type="xs:int" />
+              <xs:element minOccurs="0" name="AreaID" type="xs:int" />
+              <xs:element minOccurs="0" default="false" name="CallBackDone" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ExtraField1" type="xs:string" />
+              <xs:element minOccurs="0" name="ExtraField2" type="xs:string" />
+              <xs:element minOccurs="0" name="ExtraField3" type="xs:string" />
+              <xs:element minOccurs="0" name="LineNo" type="xs:string" />
+              <xs:element minOccurs="0" name="SiteID" type="xs:string" />
+              <xs:element minOccurs="0" name="IsIncoming" type="xs:boolean" />
+              <xs:element minOccurs="0" name="CloseTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="Location1" type="xs:string" />
+              <xs:element minOccurs="0" name="Location2" type="xs:string" />
+              <xs:element minOccurs="0" name="Location3" type="xs:string" />
+              <xs:element minOccurs="0" name="Location4" type="xs:string" />
+              <xs:element minOccurs="0" name="Location5" type="xs:string" />
+              <xs:element minOccurs="0" name="Location6" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:tblPbxCall" />
+      <xs:field xpath="mstns:CallId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

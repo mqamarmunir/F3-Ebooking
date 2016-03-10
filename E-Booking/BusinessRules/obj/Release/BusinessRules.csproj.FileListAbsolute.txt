@@ -1,0 +1,10 @@
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\BusinessRules.dll.config
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\BusinessRules.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\BusinessRules.XmlSerializers.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\BusinessRules.pdb
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\E-Booking.Models.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\bin\Release\E-Booking.Models.pdb
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\obj\Release\BusinessRules.csprojResolveAssemblyReference.cache
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\obj\Release\BusinessRules.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\obj\Release\BusinessRules.pdb
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\BusinessRules\obj\Release\BusinessRules.XmlSerializers.dll

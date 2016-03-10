@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.DiscoveryDocumentReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?disco" filename="wsCall.disco" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsPatientAddressandContact" filename="dsPatientAddressandContact.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?wsdl" filename="wsCall.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsTemplates" filename="dsTemplates.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsAddressNew" filename="dsAddressNew.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsMajorIncident" filename="dsMajorIncident.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsCall" filename="dsCall.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsCallNew" filename="dsCallNew.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsPatient" filename="dsPatient.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsDataProtection" filename="dsDataProtection.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsContactInfo" filename="dsContactInfo.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsPbx" filename="dsPbx.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsCall.asmx?schema=dsFirstResponder" filename="dsFirstResponder.xsd" />
+  </Results>
+</DiscoveryClientResultsFile>

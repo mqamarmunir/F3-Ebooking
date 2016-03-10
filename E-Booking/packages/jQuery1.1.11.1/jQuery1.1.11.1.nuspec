@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>jQuery1</id>
+    <version>1.11.1</version>
+    <title>jQuery1</title>
+    <authors>jQuery Foundation,  Inc.</authors>
+    <owners>jQuery Foundation,  Inc.</owners>
+    <licenseUrl>http://jquery.org/license</licenseUrl>
+    <projectUrl>http://jquery.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>JQuery has split into two versions.
+      JQuery 2.x does not support IE6/7/8 Any longer. If you plan to support browsers before IE9 you must use JQuery 1.x
+      Updating JQuery will update your package to version 2+ of JQuery. This package is JQuery1 and can be installed along with jQuery in the same project. 
+      At the top of your View you would then include a directive for example like this.
+      
+      
+          &lt;!--[if lt IE 9]&gt;
+            &lt;script src="Scripts/jquery-1.11.1.js"&gt;&lt;/script&gt;
+          &lt;![endif]--&gt;
+          &lt;!--[if gte IE 9]&gt;&lt;!--&gt;
+            &lt;script src="Scripts/jquery-2.1.1.js"&gt;&lt;/script&gt;
+          &lt;!--&lt;![endif]--&gt;
+      
+      
+      According to JQuery there will be new versions of JQuery 1.x in the future.  This package will be updated to reflect that change and ease deployment.
+      
+      Updated in this minor update is better support for Project using SCC.  
+      The Powershell script will now CHECK OUT the _references file
+      if it isn't already checked out before modification.
+      
+      If you have JQuery 2 installed. This Package will use more a specific regex to
+      modify the _references file to not remove JQuery 2 references and will correctly
+      remove and add references for JQuery 1 in the event you uninstall-package JQuery1
+      
+      dking@netpoweron.com</description>
+    <summary>JQuery version 1.x that is designed to be installed next to JQuery 2+ latest which has dropped support for older browsers before IE 9.</summary>
+    <language>en-US</language>
+    <tags>JQuery</tags>
+  </metadata>
+</package>

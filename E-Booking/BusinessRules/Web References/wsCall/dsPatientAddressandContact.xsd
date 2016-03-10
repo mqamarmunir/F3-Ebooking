@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsPatientAddressandContact.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsPatientAddressandContact.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsPatientAddressandContact.xsd" id="dsPatientAddressandContact" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsPatientAddressandContact">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PatientContact">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:Caption="ClientID" name="ContactID" type="xs:int" />
+              <xs:element msdata:Caption="ClientID" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="ContactName" type="xs:string" />
+              <xs:element minOccurs="0" name="CellNo" type="xs:string" />
+              <xs:element minOccurs="0" name="PhoneNo" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="RelationShipID" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="SendAlert" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsPrimaryContact" type="xs:boolean" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertesAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Patient">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:Caption="ClientID" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="TitleID" type="xs:short" />
+              <xs:element msdata:Caption="FirstName" name="Title">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FirstName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SurName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="FullName" type="xs:string" />
+              <xs:element name="GenderID" type="xs:short" />
+              <xs:element msdata:Caption="GenderID" minOccurs="0" name="Gender" type="xs:string" />
+              <xs:element minOccurs="0" name="DOB" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="NationalID" type="xs:string" />
+              <xs:element minOccurs="0" name="AgeUnit">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="" name="NHSNO" type="xs:string" />
+              <xs:element minOccurs="0" name="ContactNo" type="xs:string" />
+              <xs:element minOccurs="0" name="ContactNo2" type="xs:string" />
+              <xs:element minOccurs="0" name="ContactNo3" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertesAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Age" type="xs:int" />
+              <xs:element minOccurs="0" name="DeceasedDate" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsChoroanicDisease" type="xs:boolean" />
+              <xs:element minOccurs="0" name="NextofKin">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MapPatientAddress">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PatientAddressID" type="xs:int" />
+              <xs:element msdata:Caption="ClientID" name="PatientID" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AddressID" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsPrimaryAddress" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AddressLine1" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AddressLine2" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AddressLine3" type="xs:string" />
+              <xs:element minOccurs="0" name="AddressLine4" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="PostCode" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="TownID" type="xs:int" />
+              <xs:element minOccurs="0" name="CountyID" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="CountryID" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="FullAddress" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="URPN" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:string" />
+              <xs:element minOccurs="0" name="InsertesAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedByName" type="xs:string" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsDeleted" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="Easting" type="xs:double" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="Northing" type="xs:double" />
+              <xs:element minOccurs="0" name="GridReference" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Address">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="AddressID" type="xs:int" />
+              <xs:element minOccurs="0" name="AddressLine1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine2">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine3">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine4">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element minOccurs="0" name="TownID" type="xs:string" />
+              <xs:element minOccurs="0" name="CountyID" type="xs:string" />
+              <xs:element minOccurs="0" name="CountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="FullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="URPN" type="xs:string" />
+              <xs:element minOccurs="0" name="AddressTypeID" type="xs:string" />
+              <xs:element name="IsPublicAddress" type="xs:int" />
+              <xs:element minOccurs="0" name="PostCodeID" type="xs:int" />
+              <xs:element minOccurs="0" default="1" name="Easting" type="xs:double" />
+              <xs:element minOccurs="0" default="1" name="Northing" type="xs:double" />
+              <xs:element minOccurs="0" default="Null" name="GridReference" type="xs:string" />
+              <xs:element name="InsertedBy" type="xs:int" />
+              <xs:element name="UpdatedBy" type="xs:int" />
+              <xs:element name="InsertedAt" type="xs:dateTime" />
+              <xs:element name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PublicAddressTitle" type="xs:string" />
+              <xs:element minOccurs="0" name="PublicAddressCode" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsPrimaryAddress" type="xs:boolean" />
+              <xs:element minOccurs="0" name="AddressdataId" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint11">
+      <xs:selector xpath=".//mstns:PatientContact" />
+      <xs:field xpath="mstns:ContactID" />
+    </xs:unique>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:Patient" />
+      <xs:field xpath="mstns:PatientID" />
+    </xs:unique>
+    <xs:unique msdata:PrimaryKey="true" name="MapPatientAddressKey1">
+      <xs:selector xpath=".//mstns:MapPatientAddress" />
+      <xs:field xpath="mstns:PatientAddressID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="Address_Constraint1">
+      <xs:selector xpath=".//mstns:Address" />
+      <xs:field xpath="mstns:AddressID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="Patient_PatientContact" msdata:parent="Patient" msdata:child="PatientContact" msdata:parentkey="PatientID" msdata:childkey="PatientID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="Patient_MapPatientAddress" msdata:parent="Patient" msdata:child="MapPatientAddress" msdata:parentkey="PatientID" msdata:childkey="PatientID" />
+      <msdata:Relationship name="Address_MapPatientAddress" msdata:parent="Address" msdata:child="MapPatientAddress" msdata:parentkey="AddressID" msdata:childkey="AddressID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

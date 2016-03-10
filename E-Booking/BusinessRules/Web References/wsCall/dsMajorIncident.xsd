@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsMajorIncident.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsMajorIncident.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsMajorIncident.xsd" id="dsMajorIncident" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsMajorIncident">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblMajorIncidentLayer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:Caption="LayerId" minOccurs="0" name="LayerID" type="xs:int" />
+              <xs:element minOccurs="0" default="Null" name="LayerName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CaseID" type="xs:string" />
+              <xs:element minOccurs="0" name="Status" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblMajorIncidentPushPin">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="PushPinID" type="xs:int" />
+              <xs:element msdata:Caption="LayerId" minOccurs="0" name="LayerID" type="xs:int" />
+              <xs:element minOccurs="0" default="Null" name="PushPinName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="Null" name="LocationName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element minOccurs="0" default="Null" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="VehicleID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:tblMajorIncidentLayer" />
+      <xs:field xpath="mstns:LayerID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblMajorIncidentPushPin_Constraint1">
+      <xs:selector xpath=".//mstns:tblMajorIncidentPushPin" />
+      <xs:field xpath="mstns:PushPinID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

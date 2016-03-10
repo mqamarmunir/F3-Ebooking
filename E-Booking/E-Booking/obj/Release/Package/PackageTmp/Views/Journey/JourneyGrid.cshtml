@@ -1,0 +1,409 @@
+﻿<script src="@Url.Content("~/Scripts/knockout-3.2.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.mapping.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.simpleGrid.3.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/GridPagedModelQamar.js")" type="text/javascript"></script>
+
+
+
+
+<script src="~/Scripts/jquery-ui-1.11.2.min.js"></script>
+<script src="~/Scripts/jquery.qtip.min.js"></script>
+<script src="~/Scripts/KnockoutModels/knockout.tooltip.js"></script>
+
+<script src="~/Scripts/Knockout.bindings.orderable.js"></script>
+<style type="text/css">
+    .gridView {
+        margin-bottom: 50px;
+    }
+
+        .gridView .gridPager {
+            padding: 10px 10px 0 10px;
+            overflow: hidden;
+            margin-top: -20px;
+            color: #FFF;
+            position: relative;
+            background-color: #007ac3;
+        }
+
+        .gridView .nav-buttons a {
+            text-decoration: none;
+            padding: 3px 15px;
+            background-color: #FFF;
+            color: #333;
+            font-size: 13px;
+        }
+
+            .gridView .nav-buttons a.disabled {
+                color: #BBB;
+                background: #EEE;
+                cursor: default;
+            }
+
+        .gridView .pagerInfo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .gridView .link {
+            border: 1px solid #AAA;
+            padding: 5px 10px;
+            font-size: 12px;
+            background: #007ac3;
+            text-align: center;
+            color: #FFF;
+            display: inline-block;
+        }
+
+            .gridView .link:hover {
+                background-color: #379CD7;
+                cursor: pointer;
+            }
+
+        .gridView tr.alt {
+            background: #EEEEEE;
+        }
+
+    #ui-datepicker-div {
+        display: none;
+    }
+
+    .table {
+        width: 100%;
+    }
+
+    th a {
+        display: block;
+        color: white;
+    }
+
+    .desc {
+        background: url(../Images/desc.png) top right no-repeat;
+        height:24px;
+    }
+
+    .asc {
+        background: url(../Images/asc.png) top right no-repeat;
+        height: 24px;
+    }
+    
+</style>
+
+<script>
+
+    @functions{
+          public string TokenHeaderValue()
+          {
+              string cookieToken, formToken;
+              AntiForgery.GetTokens(null, out cookieToken, out formToken);
+              return cookieToken + ":" + formToken;
+          }
+      }
+    $(function () {
+
+        $("#txtBookingDateFrom").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            maxDate: new Date(),
+            // maxDate: '+2y',
+            onSelect: function (date) {
+
+                var selectedDate = new Date($("#txtBookingDateFrom").datepicker('getDate'));
+                //alert(selectedDate);
+                // selecteddate();
+                var msecsInADay = 86400000;
+                var endDate = new Date(selectedDate + msecsInADay);
+                //  alert(endDate);
+                $("#txtBookingDateTo").datepicker("option", "minDate", endDate);
+                $("#txtBookingDateTo").datepicker("option", "maxDate", new Date());
+
+            }
+
+
+        });
+        $("#txtBookingDateTo").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            maxDate: new Date()
+        });
+        var currentdate = new Date();
+        currentdate.setDate(currentdate.getDate() - 3);
+        //alert(currentdateminus3);
+        $("#txtBookingDateFrom").datepicker("setDate", currentdate);
+        $("#txtBookingDateTo").datepicker("setDate", new Date());
+
+        $("#txtBookingDateTo").datepicker("option", "minDate", new Date($("#txtBookingDateFrom").datepicker('getDate')));
+        //$("#txtBookingDateFrom").datepicker({ maxDate: new Date() });
+        //$("#txtBookingDateFrom").datepicker("option", "dateFormat", "dd/mm/yy");
+        // $("#txtBookingDateTo").datepicker({ maxDate: new Date() });
+
+        //$("#txtBookingDateTo").datepicker("option", "dateFormat", "dd/mm/yy");
+
+        //$("#txtBookingDateFrom").datepicker("option", "showAnim", "slide");
+        //$("#txtBookingDateTo").datepicker("option", "showAnim", "slide");
+
+    })
+    //$(document).ready(function () {
+    //    $("#txtBookingDateTo").load(function () {
+    //        debugger;
+    //        var selectedDate = new Date($("#txtBookingDateFrom").datepicker('getDate'));
+    //        //alert(selectedDate);
+    //        // selecteddate();
+    //        var msecsInADay = 86400000;
+    //        var endDate = new Date(selectedDate + msecsInADay);
+    //        //  alert(endDate);
+    //        $("#txtBookingDateTo").datepicker("option", "minDate", endDate);
+    //        // $("#txtBookingDateTo").datepicker("option", "maxDate", new Date());
+    //    });
+    //});
+    function WizardViewModel() {
+        var dateFrom = getDate($("#txtBookingDateFrom").datepicker('getDate'));
+        var dateTo = getDate($("#txtBookingDateTo").datepicker('getDate'));
+        //alert(dateFrom);
+        var self = this;
+        self.gridView = new GridPagedModelQamar();
+        ShowProgressBar();
+
+        $.ajax({
+            url: '@Url.Action("GetList", "JourneyWebAPI", new { httproute = "" })',
+
+            contentType: "application/json;charset=utf-8",
+            async:false,
+            type: "GET",
+            data: { qdateFrom: dateFrom, qdateTo: dateTo },
+            headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+            success: function (result) {
+
+                ko.utils.arrayForEach(result, function (dropdown) {
+                    //alert(JSON.stringify(dropdown.Patient));
+                    self.gridView.items.push(new addItems(dropdown.Patient));
+                });
+                // alert(self.gridView.items());
+                //alert(dropdown);
+                //self.gridView.items(result);
+                //ko.utils.arrayForEach(result, function (dropdowns) {
+                //    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+
+                //        if (dropdown.DepartmentId && dropdown.DepartmentName) {
+                //            self.CollectionAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                //            self.DestinationAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                //        }
+            },
+            error: function () { },
+            complete: function () { HideProgressBar(); }
+
+        });
+
+        //getDate = function (date) {
+        //    return $.datepicker.formatDate('dd/mm/yy', new Date(date));
+        //}
+        getJourneys = function () {
+
+            self.gridView.items([]);
+          //  debugger;
+            // $(".table table-bordered").find("tr:gt(0)").remove();
+            ShowProgressBar();
+            $.ajax({
+                url: '@Url.Action("GetList", "JourneyWebAPI", new { httproute = "" })',
+
+                contentType: "application/json;charset=utf-8",
+                async:false,
+                type: "GET",
+                data: { qdateFrom: getDate($("#txtBookingDateFrom").datepicker('getDate')), qdateTo: getDate($("#txtBookingDateTo").datepicker('getDate')) },
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+
+                success: function (result) {
+                    ko.utils.arrayForEach(result, function (dropdown) {
+                        //alert(JSON.stringify(dropdown.Patient));
+                        self.gridView.items.push(new addItems(dropdown.Patient));
+                    });
+                    vm.gridxxx(self.gridView.items());
+                   // bindViewmodel();
+                    //alert(self.gridView.items());
+                    //alert(dropdown);
+                    //self.gridView.items(result);
+                    //ko.utils.arrayForEach(result, function (dropdowns) {
+                    //    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+
+                    //        if (dropdown.DepartmentId && dropdown.DepartmentName) {
+                    //            self.CollectionAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                    //            self.DestinationAddress.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                    //        }
+                },
+                error: function () {
+                    debugger;
+                },
+                complete: function () {
+
+                    HideProgressBar();
+                }
+
+            });
+
+        }
+        
+
+        getDate = function (date) {
+            //debugger;
+            var xdate=new Date(date);
+            return $.datepicker.formatDate('dd M yy', xdate);//+' '+ xdate.getHours()+':'+xdate.getMinutes();
+        }
+
+        getDateTime = function (date) {
+            var xdate = new Date(date);
+            var timeafteroffsetadjustment=new Date(xdate.getTime()+xdate.getTimezoneOffset()*60*1000);
+            return $.datepicker.formatDate('dd/mm/yy', timeafteroffsetadjustment) + ' ' + pad(timeafteroffsetadjustment.getHours().toString(),2) + ':' + pad(timeafteroffsetadjustment.getMinutes().toString(),2);
+        }
+        function pad(str, max) {
+            str = str.toString();
+            return str.length < max ? pad("0" + str, max) : str;
+        }
+
+    }
+
+    $(function () {
+
+        //$('#txtBookingDateFrom, #txtBookingDateTo').bind("cut copy paste contextmenu", function (e) {
+        //    e.preventDefault();
+        //});
+        //$('#txtBookingDateFrom, #txtBookingDateTo').keydown(function (e) {
+        //    e.preventDefault();
+        //});
+        WizardViewModeling = new WizardViewModel();
+        ko.applyBindings(WizardViewModeling, $("#restoftheform")[0]);
+        ko.applyBindings(WizardViewModeling, $("#divheader")[0]);
+        vm = {
+            gridxxx: ko.mapping.fromJS(ko.observable(WizardViewModeling.gridView.items())
+        )
+        };
+      
+      //  alert(vm.gridxxx());
+        ko.applyBindings(vm, $("#tblRecords")[0]);
+     //   bindViewmodel();
+        
+
+   
+
+    })
+
+
+    // ShowProgressBar();
+    getDate = function (date) {
+        //alert(date);
+        return $.datepicker.formatDate('dd M yy', new Date(date));
+    }
+
+    function viewJourneyDetails(elem) {
+        //alert(elem.toString());
+        var refNumber = $(elem).parent("td").siblings("#BookingNo").text();
+        var nowdate = new Date();
+
+        // window.location.replace('Url.Action("JourneyPDF", "Journey")');
+        window.open('@Url.Action("JourneyView", "Journey")?q=' + nowdate.setHours(15).toString() + '_' + parseInt(refNumber) * 498 + '_' + 5.6 * 74 + '_==');
+        //window.location.replace('Url.Action("JourneyView", "Journey")?q=' + nowdate.setHours(15).toString() + '_' + parseInt(refNumber) * 498 +'_'+5.6*74+'_==');
+    }
+    onEnter = function (e) {
+        // alert('I am In');
+        if (e.keyCode == 13) {
+            //alert('I am here');
+            getJourneys();
+            // return true;
+            //return false;
+        }
+        //  return true;
+    }
+    
+
+    //$(document).ready(function () {
+    //    //debugger;
+    //    $("#tblRecords").tablesorter();
+    //});
+</script>
+
+
+<div class="request-heading">
+    <span class="mainheading">Journeys:</span>
+</div>
+<div class="container-fluid">
+    <div id="restoftheform" class="contact_form col-sm-8 col-md-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <label style="width:40%">Booking Date From</label>
+                <input style="width:60%" type="text" id="txtBookingDateFrom" name="txtBookingDateFrom" onkeypress="onEnter(event)" class="form-control" />
+
+            </div>
+            <div class="col-sm-4">
+                <label style="width:40%">Booking Date To</label>
+                <input style="width:60%" type="text" id="txtBookingDateTo" name="txtBookingDateTo" onkeypress="onEnter(event)" class="form-control" />
+
+            </div>
+            <div class="col-sm-4">
+                <div id="GetJourneys" data-bind="click:getJourneys" class="buttonstyle"><img src="~/Images/search.png" /></div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="gridView col-md-8">
+
+        @*<h3>Friends (<span data-bind="text:WizardViewModeling.gridView.items().length"></span>)</h3>*@
+        <table id="tblRecords" class="table table-bordered">
+            <thead>
+                <tr class="bluebarform">
+                    <th><a href="#" data-bind="orderable: {collection: 'gridxxx', field: 'BookingNo', defaultField: true, defaultDirection: 'desc'}" class="sorted desc">Booking #</a></th>@*<a href="javascript:void(0);" style="display:block;color:#FFF; text-decoration:none;">*@
+                    <th>CAD Case ID</th>
+                    <th><a href="#" data-bind="orderable: {collection: 'gridxxx', field: 'FirstName'}" class="">First Name</a></th>@*<a href="javascript:void(0);" style="display:block;color:#FFF; text-decoration:none;">*@
+                    <th><a href="#" data-bind="orderable: {collection: 'gridxxx', field: 'Surname'}" class="">Surname</a></th>
+                    <th>NHS Number</th>@*<a href="javascript:void(0);" style="display:block;color:#FFF; text-decoration:none;">*@
+                    <th>Isle of Wight No.</th>
+                    <th>Contact No.</th>
+                    <th><a href="#" data-bind="orderable: {collection: 'gridxxx', field: 'BookingStatusName'}" class="">Status</a></th>
+                    <th>Date/Time Requested</th>
+                    <th><a href="#" data-bind="orderable: {collection: 'gridxxx', field: 'JourneyDate'}" class="">Date of Journey</a></th>
+                    <th style="text-align:center;">View Detail</th>
+                </tr>
+            </thead>
+
+            <tbody data-bind="foreach:gridxxx">
+                <tr data-bind="css: {'bg-success':BookingStatusName()=='Accepted', 'bg-info':BookingStatusName().indexOf('Request')>=0,'bg-danger':BookingStatusName()=='Rejected'}">
+                    @*alt: ($index()%2)*@
+
+                    <td id="BookingNo" data-bind="text: BookingNo"></td>
+                    <td data-bind="text: CADCaseID"></td>
+                    <td data-bind="text: FirstName"></td>
+                    <td data-bind="text: Surname"></td>
+                    <td data-bind="text: NHSNumber"></td>
+                    <td id="IsleOfWightNo" data-bind="text: IsleOfWightNo"></td>
+                    <td data-bind="text: ContactTelephoneNo"></td>
+                    <td data-bind="text: BookingStatusName, tooltip: RejectionReason()"></td>
+                    <td data-bind="text: RequestDate()"></td>
+                    <td data-bind="text: JourneyDate()"></td>
+                    <td style="text-align: center;"><span class="link" onclick="viewJourneyDetails(this);">View Journey Details</span></td>
+                    @*<td style="display:none" data-bind="tooltip: { content: RejectionReason(), title: RejectionReason() }"> </td>*@
+
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        @*<div class="gridPager">
+                <p style="text-align:right" class="nav-buttons">
+                    <a data-bind="css: {'disabled': !previousPageEnabled()}, click: jumpToFirstPage" href=" javascript:void(0);">First</a> |
+                    <a data-bind="css: {'disabled': !previousPageEnabled()}, click: previousPage" href=" javascript:void(0);">Prev</a> |
+                    <a data-bind="css: {'disabled': !nextPageEnabled()}, click: nextPage" href=" javascript:void(0);">Next</a> |
+                    <a data-bind="css: {'disabled': !nextPageEnabled()}, click: jumpToLastPage" href=" javascript:void(0);">Last</a>
+                </p>
+                <p class="pagerInfo">
+                    Page <span data-bind="text: currentPage"></span>
+                    of <span data-bind="text: totalPages"></span> (<span data-bind="text: totalRecords"></span> Records)
+                </p>
+            </div>*@
+
+
+
+         
+    </div>
+</div>

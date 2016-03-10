@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ordnance Survey OS OnDemand WMTS</title>
+    <!-- This is for use with OS OnDemand WMTS -->
+    <script type="text/javascript">
+        "object" != typeof JSON && (JSON = {}), function () { "use strict"; function f(t) { return 10 > t ? "0" + t : t } function quote(t) { return escapable.lastIndex = 0, escapable.test(t) ? '"' + t.replace(escapable, function (t) { var e = meta[t]; return "string" == typeof e ? e : "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4) }) + '"' : '"' + t + '"' } function str(t, e) { var r, n, o, f, u, p = gap, a = e[t]; switch (a && "object" == typeof a && "function" == typeof a.toJSON && (a = a.toJSON(t)), "function" == typeof rep && (a = rep.call(e, t, a)), typeof a) { case "string": return quote(a); case "number": return isFinite(a) ? a + "" : "null"; case "boolean": case "null": return a + ""; case "object": if (!a) return "null"; if (gap += indent, u = [], "[object Array]" === Object.prototype.toString.apply(a)) { for (f = a.length, r = 0; f > r; r += 1) u[r] = str(r, a) || "null"; return o = 0 === u.length ? "[]" : gap ? "[\n" + gap + u.join(",\n" + gap) + "\n" + p + "]" : "[" + u.join(",") + "]", gap = p, o } if (rep && "object" == typeof rep) for (f = rep.length, r = 0; f > r; r += 1) "string" == typeof rep[r] && (n = rep[r], o = str(n, a), o && u.push(quote(n) + (gap ? ": " : ":") + o)); else for (n in a) Object.prototype.hasOwnProperty.call(a, n) && (o = str(n, a), o && u.push(quote(n) + (gap ? ": " : ":") + o)); return o = 0 === u.length ? "{}" : gap ? "{\n" + gap + u.join(",\n" + gap) + "\n" + p + "}" : "{" + u.join(",") + "}", gap = p, o } } "function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function () { return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null }, String.prototype.toJSON = Number.prototype.toJSON = Boolean.prototype.toJSON = function () { return this.valueOf() }); var cx, escapable, gap, indent, meta, rep; "function" != typeof JSON.stringify && (escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, meta = { "\b": "\\b", "	": "\\t", "\n": "\\n", "\f": "\\f", "\r": "\\r", '"': '\\"', "\\": "\\\\" }, JSON.stringify = function (t, e, r) { var n; if (gap = "", indent = "", "number" == typeof r) for (n = 0; r > n; n += 1) indent += " "; else "string" == typeof r && (indent = r); if (rep = e, e && "function" != typeof e && ("object" != typeof e || "number" != typeof e.length)) throw Error("JSON.stringify"); return str("", { "": t }) }), "function" != typeof JSON.parse && (cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, JSON.parse = function (text, reviver) { function walk(t, e) { var r, n, o = t[e]; if (o && "object" == typeof o) for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (n = walk(o, r), void 0 !== n ? o[r] = n : delete o[r]); return reviver.call(t, e, o) } var j; if (text += "", cx.lastIndex = 0, cx.test(text) && (text = text.replace(cx, function (t) { return "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4) })), /^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, "@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:\s*\[)+/g, ""))) return j = eval("(" + text + ")"), "function" == typeof reviver ? walk({ "": j }, "") : j; throw new SyntaxError("JSON.parse") }) }();
+    </script>
+
+    <style>
+        html, body {
+            margin: 0;
+            height: 99.5%;
+            background-color: rgb(194, 217, 247);
+        }
+
+        #map {
+            height: 100%;
+            border: 1px solid #808080;
+        }
+
+        div.olControlScaleLine {
+            font-size: 10pt;
+            left: auto;
+            bottom: 10px;
+            right: 500px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- The div below holds the map -->
+    <div id="map"></div>
+    <script type="text/javascript">
+        // Define the osMap variable
+
+        var osMap, scaleBar;
+
+        // This function creates the map and is called by the div in the HTML
+        function eBookingDrawPoint(lat, long) {
+           
+            callmefromwinfrom(lat, long);
+            $(".loadingMap").hide();
+        }
+
+        function callmefromwinfrom(showMe1, showMe2) {
+            //set bounds for the map - this will also be our max extent//
+            //set bounds for the map - this will also be our max extent//
+            var bounds = new OpenLayers.Bounds(0, 0, 700000, 1344000);
+
+            //Set map parameters//
+            var options = {
+                tileSize: new OpenLayers.Size(250, 250),
+                products: ["CS01", "CS02", "CS03", "CS04", "CS05", "CS06", "CS07", "CS08", "CS09"],
+                units: "m",
+                maxResolution: 896,
+                numZoomLevels: 10,
+                restrictedExtent: bounds,
+                maxExtent: new OpenLayers.Bounds(0, 0, 700000, 1344000)
+            };
+
+            // Create new map
+
+            osMap = new OpenSpace.Map('map', options);
+
+            setglobaloptions();
+
+            addSearchBox(0);
+
+            OpenLayers.Console.log("addedControl");
+
+            // Edit current StyleMap styles to your StyleMap value
+
+            osMap.getVectorLayer().styleMap.styles.select.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles.temporary.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles['default'].defaultStyle.strokeWidth = 4;
+
+            var vlayer = osMap.getVectorLayer();
+
+            osMap.setCenter(new OpenSpace.MapPoint(showMe1, showMe2), 10);
+
+            //  // Assign a new markers layer to a variable
+
+            var markers = new OpenLayers.Layer.Markers("Markers");
+
+            //  // Add the layer to the map
+
+            osMap.addLayer(markers);
+
+
+            //  // Create a variable to hold a map position
+
+            var pos = new OpenSpace.MapPoint(showMe1, showMe2);
+
+            //  // Add a marker with that position
+
+            var marker = new OpenLayers.Marker(pos);
+            markers.addMarker(marker);
+        }
+        ///////////////////Draw Circle////////////////////
+
+        function DrawCircle(showMe1, showMe2, Distance){
+
+            //set bounds for the map - this will also be our max extent//
+            //set bounds for the map - this will also be our max extent//
+            var bounds = new OpenLayers.Bounds(0, 0, 700000, 1344000);
+
+            //Set map parameters//
+            var options = {
+                tileSize: new OpenLayers.Size(250, 250),
+                products: ["CS01", "CS02", "CS03", "CS04", "CS05", "CS06", "CS07", "CS08", "CS09"],
+                units: "m",
+                maxResolution: 896,
+                numZoomLevels: 10,
+                restrictedExtent: bounds,
+                maxExtent: new OpenLayers.Bounds(0, 0, 700000, 1344000)
+            };
+
+            // Create new map
+
+            osMap = new OpenSpace.Map('map', options);
+
+            setglobaloptions();
+
+            addSearchBox(0);
+
+            OpenLayers.Console.log("addedControl");
+
+            // Edit current StyleMap styles to your StyleMap value
+
+            osMap.getVectorLayer().styleMap.styles.select.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles.temporary.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles['default'].defaultStyle.strokeWidth = 4;
+
+            var vlayer = osMap.getVectorLayer();
+
+            osMap.setCenter(new OpenSpace.MapPoint(showMe1, showMe2), 10);
+
+            //  // Assign a new markers layer to a variable
+
+            var markers = new OpenLayers.Layer.Markers("Markers");
+
+            vector_layer = new OpenLayers.Layer.Vector("radius layer"); // CREATE A VECTOR LAYER
+
+
+            osMap.addLayer(vector_layer);
+
+            osMap.addLayer(markers);
+            var origin = new OpenLayers.Geometry.Point(showMe1, showMe2);
+            //  // Create a variable to hold a map position
+            var circle = new OpenLayers.Geometry.Polygon.createRegularPolygon(origin, Distance, 50);
+
+            vector_layer.addFeatures(new OpenLayers.Feature.Vector(circle));
+
+            //var pos = new OpenSpace.MapPoint(showMe1, showMe2);
+            var pos = new OpenSpace.MapPoint(369822.0, 428165.0);
+
+            //  // Add a marker with that position
+
+            var marker = new OpenLayers.Marker(pos);
+            markers.addMarker(marker);
+
+
+        }
+
+
+
+        //////////////////////////////////////////////////
+
+
+
+
+
+        function drawTripRoutes(showMe1, showMe2, showMe3, showMe4) {
+
+            //set bounds for the map - this will also be our max extent//
+            //set bounds for the map - this will also be our max extent//
+            var bounds = new OpenLayers.Bounds(0, 0, 700000, 1344000);
+
+            //Set map parameters//
+            var options = {
+                tileSize: new OpenLayers.Size(250, 250),
+                products: ["CS01", "CS02", "CS03", "CS04", "CS05", "CS06", "CS07", "CS08", "CS09"],
+                units: "m",
+                maxResolution: 896,
+                numZoomLevels: 10,
+                restrictedExtent: bounds,
+                maxExtent: new OpenLayers.Bounds(0, 0, 700000, 1344000)
+            };
+
+            // Create new map
+
+            osMap = new OpenSpace.Map('map', options);
+
+            setglobaloptions();
+
+            addSearchBox(0);
+
+            OpenLayers.Console.log("addedControl");
+
+            // Edit current StyleMap styles to your StyleMap value
+
+            osMap.getVectorLayer().styleMap.styles.select.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles.temporary.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles['default'].defaultStyle.strokeWidth = 4;
+
+            var vlayer = osMap.getVectorLayer();
+
+            osMap.setCenter(new OpenSpace.MapPoint(((showMe1 + showMe3) / 2), ((showMe2 + showMe4) / 2)), 6);
+
+            vectorLayer = new OpenLayers.Layer.Vector("Vector Layer");
+
+            // Define the line style
+
+            var style_green = { strokeColor: "#4285f4", strokeOpacity: 1, strokeWidth: 5 };
+
+            // Push points into array variable(named 'points')
+
+            var points = [];
+            points.push(new OpenLayers.Geometry.Point(showMe1, showMe2));
+            points.push(new OpenLayers.Geometry.Point(showMe3, showMe4));
+
+            // Create a polyline feature from the array of points
+
+            osMap.addLayer(vectorLayer);
+
+            var lineString = new OpenLayers.Geometry.LineString(points);
+            var lineFeature = new OpenLayers.Feature.Vector(lineString, null, style_green);
+            vectorLayer.addFeatures([lineFeature]);
+
+            var markers = new OpenLayers.Layer.Markers("Markers");
+
+            //  // Add the layer to the map
+
+            osMap.addLayer(markers);
+
+            var pos = new OpenSpace.MapPoint(showMe1, showMe2);
+            osMap.createMarker(pos, null, "Source Address");
+
+            var pos = new OpenSpace.MapPoint(showMe3, showMe4);
+            osMap.createMarker(pos, null, "Destination Adresss");
+        }
+
+        function drawMarkers(obj) {
+            //set bounds for the map - this will also be our max extent//
+            //set bounds for the map - this will also be our max extent//
+            var bounds = new OpenLayers.Bounds(0, 0, 700000, 1344000);
+
+            //Set map parameters//
+            var options = {
+                tileSize: new OpenLayers.Size(250, 250),
+                products: ["CS01", "CS02", "CS03", "CS04", "CS05", "CS06", "CS07", "CS08", "CS09"],
+                units: "m",
+                maxResolution: 896,
+                numZoomLevels: 10,
+                restrictedExtent: bounds,
+                maxExtent: new OpenLayers.Bounds(0, 0, 700000, 1344000)
+            };
+
+            // Create new map
+
+            osMap = new OpenSpace.Map('map', options);
+
+            setglobaloptions();
+
+            addSearchBox(0);
+
+            OpenLayers.Console.log("addedControl");
+
+            // Edit current StyleMap styles to your StyleMap value
+
+            osMap.getVectorLayer().styleMap.styles.select.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles.temporary.defaultStyle.strokeWidth = 4;
+            osMap.getVectorLayer().styleMap.styles['default'].defaultStyle.strokeWidth = 4;
+
+            var vlayer = osMap.getVectorLayer();
+
+            obj = JSON.parse(obj);
+
+            var latCenter = 0;
+            var lngCenter = 0;
+
+            var markers = new OpenLayers.Layer.Markers("Markers");
+            osMap.addLayer(markers);
+
+            var vector_layer = new OpenLayers.Layer.Vector("radius layer");
+            osMap.addLayer(vector_layer);
+
+            for (i = 0; i < obj.length; i++) {
+
+                size = new OpenLayers.Size(33, 45);
+                offset = new OpenLayers.Pixel(-16, -36);
+                icon = new OpenSpace.Icon('https://openspace.ordnancesurvey.co.uk/osmapapi/img_versions/img_1.0.1/OS/images/markers/marker_' + obj[i][2].Value + '.png', size, offset);
+
+                latCenter = latCenter + parseFloat(obj[i][0].Value);
+                lngCenter = lngCenter + parseFloat(obj[i][1].Value);
+
+                var pos = new OpenSpace.MapPoint(obj[i][0].Value, obj[i][1].Value);
+                osMap.createMarker(pos, icon);
+
+                if (i == (obj.length - 1)) {
+                    osMap.setCenter(new OpenSpace.MapPoint((latCenter/obj.length), (lngCenter/obj.length)), 7);
+                    var origin = new OpenLayers.Geometry.Point((latCenter/obj.length), (lngCenter/obj.length));
+                    var circle = new OpenLayers.Geometry.Polygon.createRegularPolygon(origin, 450, 50);
+                    vector_layer.addFeatures(new OpenLayers.Feature.Vector(circle));
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

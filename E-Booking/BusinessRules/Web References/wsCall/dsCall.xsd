@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsCall.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsCall.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsCall.xsd" id="dsCall" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsCall">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Call">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="CallID" type="xs:int" />
+              <xs:element minOccurs="0" name="StationID" type="xs:int" />
+              <xs:element minOccurs="0" default="7" name="MachineStationID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallSource" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="CallDateTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CallerIsPatient" type="xs:boolean" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="MarkAsDeleted" type="xs:boolean" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="Token" type="xs:int" />
+              <xs:element minOccurs="0" name="CustomerReference">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="InsertedAt" type="xs:dateTime" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CallerName" type="xs:string" />
+              <xs:element minOccurs="0" name="PhoneFaxEmail" type="xs:string" />
+              <xs:element default="false" name="IsComplexSchedule" type="xs:boolean" />
+              <xs:element minOccurs="0" name="CallTimeTaken">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="ReturnCallID" type="xs:int" />
+              <xs:element minOccurs="0" name="RelationshipID" type="xs:int" />
+              <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+              <xs:element minOccurs="0" name="HourID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsUnlimitedSchedule" type="xs:boolean" />
+              <xs:element minOccurs="0" name="XMLStructure" type="xs:string" />
+              <xs:element minOccurs="0" name="CSD" type="xs:boolean" />
+              <xs:element minOccurs="0" name="SilentMode" type="xs:boolean" />
+              <xs:element minOccurs="0" name="MachineID" type="xs:string" />
+              <xs:element minOccurs="0" name="UserLoggingID" type="xs:long" />
+              <xs:element minOccurs="0" name="NewCallIDFromDB" type="xs:long" />
+              <xs:element minOccurs="0" name="ExternalService" type="xs:int" />
+              <xs:element minOccurs="0" name="CallerID" type="xs:int" />
+              <xs:element minOccurs="0" name="DispositionTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="Notes" type="xs:string" />
+              <xs:element minOccurs="0" name="AmbulanceServiceID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventOther">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" name="TripEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="ProcedureCodeID" type="xs:short" />
+              <xs:element minOccurs="0" name="TypeOfServiceID" type="xs:short" />
+              <xs:element minOccurs="0" name="IsTypeOfServiceChange" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="IsOutsource" type="xs:boolean" />
+              <xs:element minOccurs="0" name="OutSourceCompanyId" type="xs:int" />
+              <xs:element minOccurs="0" name="IsEmergency" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ComplaintsOther">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="InfectionControlOther">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="" name="Code">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="false" name="IsOnHold" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DispatchGroup">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AssistanceProvided" type="xs:boolean" />
+              <xs:element minOccurs="0" name="AssistanceDetail">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="WillCall" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ReturnTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="WillCallReturn" type="xs:boolean" />
+              <xs:element minOccurs="0" name="HasReturnTrip" type="xs:boolean" />
+              <xs:element minOccurs="0" name="AdminstrativeCharges" type="xs:double" />
+              <xs:element minOccurs="0" name="MileageCharges" type="xs:double" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventEscortRequirement">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="EscortRequirementID" type="xs:int" />
+              <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+              <xs:element minOccurs="0" default="0" name="Amount" type="xs:double" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventComplaint">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="ComplaintID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventClinicalRequirement">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="ClinicalItemID" type="xs:int" />
+              <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+              <xs:element minOccurs="0" default="0" name="Amount" type="xs:double" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PickAndDropRoute">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="PickAndDropRouteID" type="xs:int" />
+              <xs:element minOccurs="0" name="TripEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="AddressID" type="xs:int" />
+              <xs:element minOccurs="0" name="AddressPointID" type="xs:int" />
+              <xs:element minOccurs="0" name="CollectionTimeFrom" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CollectionTimeTo" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="AppointmentTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="WaitTime" type="xs:int" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element minOccurs="0" name="AddressPoint">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine2">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine3">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine4">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CityID" type="xs:int" />
+              <xs:element minOccurs="0" name="StateOrProvinceID" type="xs:int" />
+              <xs:element minOccurs="0" name="CountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="SequenceNo" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="IsAddressUpdated" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PostCodeID" type="xs:int" />
+              <xs:element minOccurs="0" name="AreaID" type="xs:int" />
+              <xs:element minOccurs="0" default="false" name="isPublicaddress" type="xs:boolean" />
+              <xs:element minOccurs="0" name="SubPostCodeID" type="xs:int" />
+              <xs:element minOccurs="0" name="PublicAddressTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="Easting" type="xs:double" />
+              <xs:element minOccurs="0" name="Northing" type="xs:double" />
+              <xs:element minOccurs="0" name="GridReference" type="xs:string" />
+              <xs:element minOccurs="0" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="ZoneID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropAddressID" type="xs:long" />
+              <xs:element minOccurs="0" name="DropAddressLine1" type="xs:string" />
+              <xs:element minOccurs="0" name="DropAddressLine2" type="xs:string" />
+              <xs:element minOccurs="0" name="DropTown" type="xs:string" />
+              <xs:element minOccurs="0" name="DropCountry" type="xs:string" />
+              <xs:element minOccurs="0" name="DropPostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="DropLongitude" type="xs:double" />
+              <xs:element minOccurs="0" name="DropLatitude" type="xs:double" />
+              <xs:element minOccurs="0" name="DropTownID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropCountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropFullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="UPRN" type="xs:string" />
+              <xs:element minOccurs="0" name="AddressTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropUPRN" type="xs:string" />
+              <xs:element minOccurs="0" name="DropAddressTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropIsPublicAddress" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DropEasting" type="xs:double" />
+              <xs:element minOccurs="0" name="DropNorthing" type="xs:double" />
+              <xs:element minOccurs="0" name="DropGridReference" type="xs:string" />
+              <xs:element minOccurs="0" name="FullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="TownID" type="xs:int" />
+              <xs:element minOccurs="0" name="PostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="DropCounty" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventInfectionControl">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="InfectionTypeID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventVehicleRequested">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="VehicleTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="NoOfVehicles" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CallEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" minOccurs="0" name="CallEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallType" type="xs:unsignedByte" />
+              <xs:element minOccurs="0" name="PaymentPlanID" type="xs:int" />
+              <xs:element minOccurs="0" default="0" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="PaymentOption" type="xs:boolean" />
+              <xs:element minOccurs="0" name="CustomerID" type="xs:int" />
+              <xs:element minOccurs="0" name="Notes">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:ReadOnly="true" minOccurs="0" default="false" name="IsRecordLock" type="xs:boolean" />
+              <xs:element minOccurs="0" name="CSVDocumentIDs" type="xs:string" />
+              <xs:element minOccurs="0" name="PatientName" type="xs:string" />
+              <xs:element minOccurs="0" name="IncidentTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="EstimatedTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsEstimated" type="xs:boolean" />
+              <xs:element minOccurs="0" name="EstimatedNoOfPatients" type="xs:int" />
+              <xs:element minOccurs="0" name="NoOfPatientsToTreat" type="xs:int" />
+              <xs:element minOccurs="0" default="false" name="IsMIPlan" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PaymentType" type="xs:short" />
+              <xs:element minOccurs="0" name="PaymentDescription" type="xs:string" />
+              <xs:element minOccurs="0" maxOccurs="unbounded" name="TripEvent">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="TripEventID" type="xs:int" />
+                    <xs:element minOccurs="0" name="CallEventID" type="xs:int" />
+                    <xs:element name="TripEventTypeID" type="xs:short" />
+                    <xs:element minOccurs="0" name="ReferenceTripEventID" type="xs:int" />
+                    <xs:element minOccurs="0" name="TripDateTimeFrom" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="TripDateTimeTo" type="xs:dateTime" />
+                    <xs:element msdata:Caption="RecurrenceData" minOccurs="0" name="RecursionData" type="xs:base64Binary" />
+                    <xs:element minOccurs="0" name="ParentTripEventID" type="xs:int" />
+                    <xs:element name="IsInUse" type="xs:boolean" />
+                    <xs:element minOccurs="0" default="" name="Notes">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:maxLength value="1000" />
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="IsPendingReturnFixed" type="xs:int" />
+                    <xs:element minOccurs="0" name="PendingReturnTime" type="xs:dateTime" />
+                    <xs:element minOccurs="0" name="JourneyTypeID" type="xs:int" />
+                    <xs:element minOccurs="0" name="AppointmentTimeID" type="xs:int" />
+                    <xs:element minOccurs="0" name="IsUrgentReturn" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Repatriation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" default="0" name="CallEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsAirsideLiftRequired" type="xs:boolean" />
+              <xs:element minOccurs="0" name="FlightArrivalTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="FlightNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="FlightDetails">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventAssetType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TripEventID" type="xs:int" />
+              <xs:element name="AssetTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="AssetTransfer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CallEventID" type="xs:int" />
+              <xs:element name="SourceContactPerson">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DestContactPerson">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SourceContactNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="DestContactNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Item_x0020_Name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+              <xs:element minOccurs="0" name="PaymentType" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EmergencyPatient">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="EmergencyPatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="CalleventID" type="xs:int" />
+              <xs:element minOccurs="0" name="ProQACaseID">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="DispatchLevel" type="xs:short" />
+              <xs:element minOccurs="0" name="Notes" type="xs:string" />
+              <xs:element minOccurs="0" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" default="&quot;&quot;" name="PathwaysXml" type="xs:string" />
+              <xs:element minOccurs="0" default="true" name="IsProQA" type="xs:boolean" />
+              <xs:element minOccurs="0" default="&quot;&quot;" name="DispositionCode" type="xs:string" />
+              <xs:element minOccurs="0" name="DispositionCodeDescription" type="xs:string" />
+              <xs:element minOccurs="0" name="ReConfigured" type="xs:string" />
+              <xs:element minOccurs="0" name="PathwaysStatus" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MapEmergencyPatientComplaint">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EmergencyPatientID" type="xs:int" />
+              <xs:element name="ComplaintID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ProQADetails">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementStep="-1" name="ID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallID" type="xs:int" />
+              <xs:element minOccurs="0" name="FlagID" type="xs:int" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="EmergencyPatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="Time" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblPatientIDTypes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="EmergencyPatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="TypeValue">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblFlagCaseAssociation">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="CaseID" type="xs:int" />
+              <xs:element minOccurs="0" name="FlagID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblFlags">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" name="FlagID" type="xs:int" />
+              <xs:element minOccurs="0" name="ApplyTo" type="xs:int" />
+              <xs:element minOccurs="0" name="ApplyToDescription" type="xs:string" />
+              <xs:element minOccurs="0" name="FieldValue">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+              <xs:element minOccurs="0" default="Null" name="Category" type="xs:string" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="FlagImageId" type="xs:int" />
+              <xs:element minOccurs="0" name="AddressID" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblCallSourceInfoReply">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="ReplyID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallID" type="xs:int" />
+              <xs:element minOccurs="0" name="InfoID" type="xs:int" />
+              <xs:element minOccurs="0" name="Reply">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblCallBack">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CallID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsCallBack" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="After">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="At">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="CallBackType" type="xs:boolean" />
+              <xs:element minOccurs="0" name="CallBackDone" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" minOccurs="0" name="TripEventTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallType" type="xs:int" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="UserID" type="xs:int" />
+              <xs:element minOccurs="0" name="CategoryType" type="xs:int" />
+              <xs:element minOccurs="0" name="IsMajorIncident" type="xs:boolean" />
+              <xs:element minOccurs="0" name="MarkAsDeleted" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PathwaysInfo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="ID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="PatientID" type="xs:int" />
+              <xs:element minOccurs="0" name="PathwayXML" type="xs:string" />
+              <xs:element minOccurs="0" name="UserID" type="xs:int" />
+              <xs:element minOccurs="0" name="MachineID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEvent1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="TripEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="CallID" type="xs:int" />
+              <xs:element name="TripEventTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="TripDateTimeFrom" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="TripDateTimeTo" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="AppointmentTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ParentTripEventID" type="xs:int" />
+              <xs:element msdata:Caption="RecurrenceData" minOccurs="0" name="RecursionData" type="xs:base64Binary" />
+              <xs:element msdata:Caption="IsInUse" name="IsRecordLock" type="xs:boolean" />
+              <xs:element minOccurs="0" default="" name="Notes">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:Caption="IsPendingReturnFixed" minOccurs="0" name="IsPendingTrip" type="xs:int" />
+              <xs:element msdata:Caption="IsPendingReturnFixed" minOccurs="0" name="IsExported" type="xs:int" />
+              <xs:element minOccurs="0" name="IsPendingReturnFixed" type="xs:int" />
+              <xs:element minOccurs="0" name="PendingReturnTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ExportedTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="TripNo" type="xs:int" />
+              <xs:element msdata:Caption="JourneyTypeID" minOccurs="0" name="UnitRankingStatus" type="xs:int" />
+              <xs:element minOccurs="0" name="isClosed" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsVehicleUnavaliable" type="xs:boolean" />
+              <xs:element minOccurs="0" name="JourneyTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="AppointmentTimeID" type="xs:int" />
+              <xs:element minOccurs="0" name="AppointmentDurationID" type="xs:int" />
+              <xs:element msdata:Caption="AddressID" minOccurs="0" name="PickAddressID" type="xs:int" />
+              <xs:element msdata:Caption="AddressLine1" minOccurs="0" name="PickAddressLine1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:Caption="AddressLine2" minOccurs="0" name="PickAddressLine2">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="PickTown" type="xs:string" />
+              <xs:element minOccurs="0" name="PickCounty" type="xs:string" />
+              <xs:element minOccurs="0" name="PickPostCode" type="xs:string" />
+              <xs:element msdata:Caption="Longitude" minOccurs="0" name="PickLongitude" type="xs:double" />
+              <xs:element msdata:Caption="Latitude" minOccurs="0" name="PickLatitude" type="xs:double" />
+              <xs:element msdata:Caption="CityID" minOccurs="0" name="PickTownID" type="xs:int" />
+              <xs:element msdata:Caption="StateOrProvinceID" minOccurs="0" name="PickCountyID" type="xs:int" />
+              <xs:element minOccurs="0" name="PickFullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="PickURPN" type="xs:string" />
+              <xs:element msdata:Caption="CountryID" minOccurs="0" name="PickAddressTypeID" type="xs:int" />
+              <xs:element msdata:Caption="Longitude" minOccurs="0" name="PickEasting" type="xs:double" />
+              <xs:element msdata:Caption="Latitude" minOccurs="0" name="PickNorthing" type="xs:double" />
+              <xs:element minOccurs="0" name="PickGridReference" type="xs:string" />
+              <xs:element msdata:Caption="AreaID" minOccurs="0" name="PickCountryID" type="xs:int" />
+              <xs:element msdata:Caption="isPublicaddress" minOccurs="0" default="false" name="PickIsPublicAddress" type="xs:boolean" />
+              <xs:element msdata:Caption="isPublicaddress" minOccurs="0" default="false" name="PickIsPatientHomeAddress" type="xs:boolean" />
+              <xs:element msdata:Caption="ZoneID" minOccurs="0" name="PickFacilityID" type="xs:int" />
+              <xs:element msdata:Caption="ZoneID" minOccurs="0" name="PickDepartmentID" type="xs:int" />
+              <xs:element minOccurs="0" name="PickPhoneNo" type="xs:string" />
+              <xs:element minOccurs="0" name="PickExtention" type="xs:string" />
+              <xs:element minOccurs="0" name="DropAddressID" type="xs:long" />
+              <xs:element minOccurs="0" name="DropAddressLine1" type="xs:string" />
+              <xs:element minOccurs="0" name="DropAddressLine2" type="xs:string" />
+              <xs:element minOccurs="0" name="DropTown" type="xs:string" />
+              <xs:element minOccurs="0" name="DropCountry" type="xs:string" />
+              <xs:element minOccurs="0" name="DropPostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="DropLongitude" type="xs:double" />
+              <xs:element minOccurs="0" name="DropLatitude" type="xs:double" />
+              <xs:element minOccurs="0" name="DropTownID" type="xs:int" />
+              <xs:element msdata:Caption="DropCountryID" minOccurs="0" name="DropCountyID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropFullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="DropAddressTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropEasting" type="xs:double" />
+              <xs:element minOccurs="0" name="DropNorthing" type="xs:double" />
+              <xs:element minOccurs="0" name="DropGridReference" type="xs:string" />
+              <xs:element minOccurs="0" name="DropCountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropIsPublicAddress" type="xs:boolean" />
+              <xs:element minOccurs="0" default="false" name="DropIsPatientHomeAddress" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DropFacilityID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropDepartmentID" type="xs:int" />
+              <xs:element minOccurs="0" name="DropPhoneNo" type="xs:string" />
+              <xs:element minOccurs="0" name="DropExtention" type="xs:string" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="LastStatusID" type="xs:int" />
+              <xs:element minOccurs="0" name="LastStatusTime" type="xs:dateTime" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="LastStatusBy" type="xs:int" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="LastStatusReason" type="xs:string" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="InsertedAt" type="xs:dateTime" />
+              <xs:element msdata:ReadOnly="true" minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CollectionTimeFrom" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="CollectionTimeTo" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ReferenceTripEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="LastStatusNotes" type="xs:string" />
+              <xs:element minOccurs="0" name="IsOutSource" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsEmergency" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsOnHold" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DropURPN" type="xs:string" />
+              <xs:element minOccurs="0" name="IsForMainlandRepatriation" type="xs:boolean" />
+              <xs:element minOccurs="0" name="TransportRequestReasonID" type="xs:int" />
+              <xs:element minOccurs="0" name="TransportSelectionID" type="xs:int" />
+              <xs:element minOccurs="0" name="TripAction" type="xs:short" />
+              <xs:element minOccurs="0" name="ReturnTripDateTimeFrom" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ReturnTripDateTimeTo" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="DropCounty" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TripEventOther1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" name="TripEventID" type="xs:int" />
+              <xs:element minOccurs="0" name="ProcedureCodeID" type="xs:short" />
+              <xs:element minOccurs="0" name="TypeOfServiceID" type="xs:short" />
+              <xs:element minOccurs="0" name="IsTypeOfServiceChange" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ComplaintsOther">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="InfectionControlOther">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" default="" name="Code">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="OutSourceCompanyId" type="xs:int" />
+              <xs:element msdata:Caption="IsOnHold" minOccurs="0" default="False" name="OldCode" type="xs:string" />
+              <xs:element minOccurs="0" name="DispatchGroup">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AssistanceProvided" type="xs:boolean" />
+              <xs:element minOccurs="0" name="AssistanceDetail">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="5000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="WillCall" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ReturnTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="WillCallReturn" type="xs:boolean" />
+              <xs:element minOccurs="0" name="HasReturnTrip" type="xs:boolean" />
+              <xs:element minOccurs="0" name="AdminstrativeCharges" type="xs:double" />
+              <xs:element minOccurs="0" name="MileageCharges" type="xs:double" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsRiskAssessmentRequired" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="PropertyRiskAssessment" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="PatientRiskAssessment" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsFullManualHandling" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="SpecialRequirement" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsPatientInfectious" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="InfectionID" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="TravellingWithOwnOxygen" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="EscortTravelling" type="xs:boolean" />
+              <xs:element minOccurs="0" name="EscortType" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="EscortNumber" type="xs:int" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="Bariatric" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="FullLegPlaster" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="ElectricWheelChair" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="WheelChairLegExtention" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="WaterFlow" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="DNACPR" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Diabetic" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="NuclearMedicine" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="NonofAboveAllergy" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="TrainedPersonRequired" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="WhilstLayingDown" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="OxygenTherapyRequired" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="HasDisability" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="IsAdmissionToNursing" type="xs:boolean" />
+              <xs:element minOccurs="0" name="VisitToHospitalorHospice" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="VisitToandFromResidentialCareHome" type="xs:boolean" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AuthorizingConsultant" type="xs:string" />
+              <xs:element msdata:Caption="DataColumn1" minOccurs="0" name="AuthorizingPractice" type="xs:string" />
+              <xs:element minOccurs="0" name="PatientWeight" type="xs:double" />
+              <xs:element minOccurs="0" name="PatientWeightDate" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:Call" />
+      <xs:field xpath="mstns:CallID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventOther_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventOther" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventEscortRequirement_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventEscortRequirement" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:EscortRequirementID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventComplaint_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventComplaint" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:ComplaintID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventClinicalRequirement_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventClinicalRequirement" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:ClinicalItemID" />
+    </xs:unique>
+    <xs:unique name="Constraint3">
+      <xs:selector xpath=".//mstns:PickAndDropRoute" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:SequenceNo" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="PickAndDropRoute_Constraint1">
+      <xs:selector xpath=".//mstns:PickAndDropRoute" />
+      <xs:field xpath="mstns:PickAndDropRouteID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventInfectionControl_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventInfectionControl" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:InfectionTypeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventVehicleRequested_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventVehicleRequested" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:VehicleTypeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEvent" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" name="CallEvent_Constraint1">
+      <xs:selector xpath=".//mstns:CallEvent" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="Repatriation_Constraint1">
+      <xs:selector xpath=".//mstns:Repatriation" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventAssetType_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventAssetType" />
+      <xs:field xpath="mstns:TripEventID" />
+      <xs:field xpath="mstns:AssetTypeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="AssetTransfer_Constraint1">
+      <xs:selector xpath=".//mstns:AssetTransfer" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="EmergencyPatient_Constraint1">
+      <xs:selector xpath=".//mstns:EmergencyPatient" />
+      <xs:field xpath="mstns:EmergencyPatientID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="ProQADetails_Constraint1">
+      <xs:selector xpath=".//mstns:ProQADetails" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblFlags_Constraint1">
+      <xs:selector xpath=".//mstns:tblFlags" />
+      <xs:field xpath="mstns:FlagID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblCallSourceInfoReply_Constraint1">
+      <xs:selector xpath=".//mstns:tblCallSourceInfoReply" />
+      <xs:field xpath="mstns:ReplyID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" name="TripEventType_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventType" />
+      <xs:field xpath="mstns:TripEventTypeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" name="PathwaysInfo_Constraint1">
+      <xs:selector xpath=".//mstns:PathwaysInfo" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEvent1_Constraint1">
+      <xs:selector xpath=".//mstns:TripEvent1" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="TripEventOther1_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventOther1" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:unique>
+    <xs:keyref msdata:UpdateRule="None" name="Call_tblProQADetails" refer="mstns:Constraint1">
+      <xs:selector xpath=".//mstns:ProQADetails" />
+      <xs:field xpath="mstns:CallID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="EmergencyPatient_tblMapEmergencyPatientComplaint" refer="mstns:EmergencyPatient_Constraint1">
+      <xs:selector xpath=".//mstns:MapEmergencyPatientComplaint" />
+      <xs:field xpath="mstns:EmergencyPatientID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="FK_CallEvent_EmergencyPatient" refer="mstns:CallEvent_Constraint1">
+      <xs:selector xpath=".//mstns:EmergencyPatient" />
+      <xs:field xpath="mstns:CalleventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="tblAssetTransfer_CallEvent" refer="mstns:CallEvent_Constraint1">
+      <xs:selector xpath=".//mstns:AssetTransfer" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInAssetType" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventAssetType" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="CallEventIDInRepatriation" refer="mstns:CallEvent_Constraint1">
+      <xs:selector xpath=".//mstns:Repatriation" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="CallID" refer="mstns:Constraint1">
+      <xs:selector xpath=".//mstns:CallEvent" />
+      <xs:field xpath="mstns:CallID" />
+    </xs:keyref>
+    <xs:keyref msdata:IsNested="true" msdata:UpdateRule="None" name="CallEventIDInTripEvent" refer="mstns:CallEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEvent" />
+      <xs:field xpath="mstns:CallEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInVehicleRequested" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventVehicleRequested" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInInfectionControl" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventInfectionControl" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInPickAndDropRoute" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:PickAndDropRoute" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInClinicalRequirement" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventClinicalRequirement" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInComplaint" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventComplaint" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDInEscortRequirement" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventEscortRequirement" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+    <xs:keyref msdata:UpdateRule="None" name="TripEventIDOther" refer="mstns:TripEvent_Constraint1">
+      <xs:selector xpath=".//mstns:TripEventOther" />
+      <xs:field xpath="mstns:TripEventID" />
+    </xs:keyref>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="ReferenceTripEventID" msdata:parent="TripEvent" msdata:child="TripEvent" msdata:parentkey="TripEventID" msdata:childkey="ReferenceTripEventID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="ParentTripEventID" msdata:parent="TripEvent" msdata:child="TripEvent" msdata:parentkey="TripEventID" msdata:childkey="ParentTripEventID" />
+      <msdata:Relationship name="EmergencyPatient_tblPatientIDTypes" msdata:parent="EmergencyPatient" msdata:child="tblPatientIDTypes" msdata:parentkey="EmergencyPatientID" msdata:childkey="EmergencyPatientID" />
+      <msdata:Relationship name="EmergencyPatient_ProQADetails" msdata:parent="EmergencyPatient" msdata:child="ProQADetails" msdata:parentkey="EmergencyPatientID" msdata:childkey="EmergencyPatientID" />
+      <msdata:Relationship name="Call_tblCallSourceInfoReply" msdata:parent="Call" msdata:child="tblCallSourceInfoReply" msdata:parentkey="CallID" msdata:childkey="CallID" />
+      <msdata:Relationship name="Call_tblCallBack" msdata:parent="Call" msdata:child="tblCallBack" msdata:parentkey="CallID" msdata:childkey="CallID" />
+      <msdata:Relationship name="Call_TripEvent1" msdata:parent="Call" msdata:child="TripEvent1" msdata:parentkey="CallID" msdata:childkey="CallID" />
+      <msdata:Relationship name="TripEvent1_TripEventOther1" msdata:parent="TripEvent1" msdata:child="TripEventOther1" msdata:parentkey="TripEventID" msdata:childkey="TripEventID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

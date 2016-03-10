@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsFirstResponder.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsFirstResponder.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsFirstResponder.xsd" id="dsFirstResponder" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsFirstResponder">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblFirstResponderContacts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="ContactID" type="xs:int" />
+              <xs:element msdata:AutoIncrement="true" minOccurs="0" name="FirstResponderID" type="xs:int" />
+              <xs:element minOccurs="0" name="Email">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="MobileNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PhoneNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblFirstResponderWorkingAreaTimings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" name="WorkingAreaTimeID" type="xs:int" />
+              <xs:element msdata:AutoIncrement="true" minOccurs="0" name="FirstResponderID" type="xs:int" />
+              <xs:element minOccurs="0" name="Area">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PostCode">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Latitude" type="xs:string" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:string" />
+              <xs:element minOccurs="0" name="Address">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="FromTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ToTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="WeekDays">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="SubPostCode" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblFirstResponder">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" name="FirstResponderID" type="xs:int" />
+              <xs:element minOccurs="0" name="FirstName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Surname">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="TypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Gender" type="xs:boolean" />
+              <xs:element minOccurs="0" name="DOB" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="Image" type="xs:base64Binary" />
+              <xs:element minOccurs="0" name="CreatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="CreatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblResponderAvailability">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="AvailabilityID" type="xs:int" />
+              <xs:element minOccurs="0" name="ResponderID" type="xs:int" />
+              <xs:element minOccurs="0" name="IsAvailable" type="xs:boolean" />
+              <xs:element minOccurs="0" name="FromTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="ToTime" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UrgentTypeID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:tblFirstResponderContacts" />
+      <xs:field xpath="mstns:ContactID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblFirstResponderWorkingAreaTimings_Constraint1">
+      <xs:selector xpath=".//mstns:tblFirstResponderWorkingAreaTimings" />
+      <xs:field xpath="mstns:WorkingAreaTimeID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblFirstResponder_Constraint1">
+      <xs:selector xpath=".//mstns:tblFirstResponder" />
+      <xs:field xpath="mstns:FirstResponderID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblResponderAvailability_Constraint1">
+      <xs:selector xpath=".//mstns:tblResponderAvailability" />
+      <xs:field xpath="mstns:AvailabilityID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="tblFirstResponder_tblFirstResponderWorkingAreaTimings" msdata:parent="tblFirstResponder" msdata:child="tblFirstResponderWorkingAreaTimings" msdata:parentkey="FirstResponderID" msdata:childkey="FirstResponderID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="tblFirstResponder_tblFirstResponderContacts" msdata:parent="tblFirstResponder" msdata:child="tblFirstResponderContacts" msdata:parentkey="FirstResponderID" msdata:childkey="FirstResponderID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

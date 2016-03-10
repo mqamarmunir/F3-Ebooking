@@ -1,0 +1,2635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://cad.valentiatech.com/" xmlns:s1="urn://just.a.test/UsernamePasswordAuthorization" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://cad.valentiatech.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://cad.valentiatech.com/">
+      <s:element name="SearchTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchTitleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchTitleResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TitleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTitleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateTitleResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTitle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TitleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTitleResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchAppointementTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AppointmentTime" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchAppointementTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchAppointementTimeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAppointmentTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppointmentID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AppointmentTime" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAppointmentTimeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateAppointmentTimeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAppointmentTime">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppointmentId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAppointmentTimeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchAppointmentDuration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AppointmentDuration" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchAppointmentDurationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchAppointmentDurationResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAppointmentDuration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppointmentDurationID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AppointmentDuration" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DurationType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAppointmentDurationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateAppointmentDurationResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAppointmentDuration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AppointmentId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAppointmentDurationResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchGPPractice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GPPractice" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchGPPracticeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchGPPracticeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddOrUpdateGPPractice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GPPracticeID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AddressID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PracticeName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FullAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Easting" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Northing" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="GridReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UPRN" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Longitutde" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="Telephone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddOrUpdateGPPracticeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeletePractice">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PracticeId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeletePracticeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchRelationship">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Relationship" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchRelationshipResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchRelationshipResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateRelationship">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RealtionshipID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Relationship" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateRelationshipResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateRelationshipResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRelationship">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RelationshipID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRelationshipResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchFacilityType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FacilityType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFacilityTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFacilityTypeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateFacilityType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FacilityTypeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="FacilityType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateFacilityTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateFacilityTypeResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFacilityAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FacilityAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFacilityAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFacilityAddressResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateFacilityAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FacilityAddressID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AddressID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="FacilityType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="FacilityName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Address4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FullAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Easting" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Northing" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="GridReference" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="UPRN" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Latitude" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Longitutde" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="TelePhone" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateFacilityAddressResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteFacilityAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddressId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFacilityAddressResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchReasonForTransport">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TransportReason" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchReasonForTransportResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchReasonForTransportResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTransportReason">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TransportReasonID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransportReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTransportReasonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateTransportReasonResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTransportReason">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ReasonId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTransportReasonResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchTransportSelection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TransportSelection" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchTransportSelectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchTransportSelectionResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTransportSelection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TransportSelectionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="TransportSelection" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateTransportSelectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateTransportSelectionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTransportSelection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SelectionId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTransportSelectionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchInfectious">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Infectious" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchInfectiousResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchInfectiousResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateInfectious">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InfectiousID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Infectious" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateInfectiousResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateInfectiousResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteInfection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InfectionId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteInfectionResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchEscortType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EscortType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchEscortTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchEscortTypeResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateEscortType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="EscortTypeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="EscortType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NoOfEscort" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateEscortTypeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteEscort">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="EscortId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteEscortResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchReasonForRejection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReasonForRejection" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchReasonForRejectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchReasonForRejectionResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateReasonForRejection">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RejectionID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="RejectionReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateReasonForRejectionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateReasonForRejectionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRejectionList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RejectionID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRejectionListResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchReasonForCancellation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReasonForCancellation" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchReasonForCancellationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchReasonForCancellationResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateCancelReason">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CancelReasonID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="CancelReason" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateCancelReasonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateCancelReasonResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCancellationReason">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CancellationID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCancellationReasonResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SearchClinicianRole">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ClinicianRole" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchClinicianRoleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchClinicianRoleResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAuthenticationRole">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AuthenticationRoleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticationRole" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ModifiedBy" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddORUpdateAuthenticationRoleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddORUpdateAuthenticationRoleResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAuthRole">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RoleId" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteAuthRoleResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="LoadCache">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TableNames" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoadCacheResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoadCacheResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateWebUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="Active" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="isDeleted" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="PositionID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="GenderTitleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="FName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SurName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="DepartmentID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="PostalAddress" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="SerrviceID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContactTelNo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FacilityID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Extension" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateWebUserResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetUserDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserDetailsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateJourney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ds">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="userid" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateJourneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="refNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourney">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BookingId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingStatus" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingDateFrom" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingDateTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourneyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJourneyResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourneys_FilteredOn_JourneyDate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BookingId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingStatus" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="JourneyDateFrom" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="JourneyDateTo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourneys_FilteredOn_JourneyDateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJourneys_FilteredOn_JourneyDateResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeJourneyStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BookingId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="BookingNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CancelReasonText" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="statusID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="updatedby" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="CaseStatudID" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="is24HourAmendment" nillable="true" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeJourneyStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ChangeJourneyStatusResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckDuplicateAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Address" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CheckDuplicateAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckDuplicateAddressResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFlagspatient_Address">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Patientid" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AddressId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFlagspatient_AddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFlagspatient_AddressResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFlagAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="_URPN" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFlagAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFlagAddressResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmailAddress">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmailAddress" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckEmailAddressResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckEmailAddressResult" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="_username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="_pasword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPatient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nhsNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchPatientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchPatientResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourneyPDF">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJourneyPDFResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJourneyPDFResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoUserExists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoUserExistsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DoUserExistsResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallNotes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CallId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCallNotesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCallNotesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="urn://just.a.test/UsernamePasswordAuthorization">
+      <s:element name="UsernamePasswordHeader" nillable="true" type="s1:UsernamePasswordSoapHeader" />
+      <s:complexType name="UsernamePasswordSoapHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchTitle" />
+  </wsdl:message>
+  <wsdl:message name="SearchTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthorizationHeaderMessage">
+    <wsdl:part name="Authorization" element="s1:UsernamePasswordHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTitle" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTitleSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTitle" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTitleSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTitleResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchAppointementTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchAppointementTime" />
+  </wsdl:message>
+  <wsdl:message name="SearchAppointementTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchAppointementTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAppointmentTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAppointmentTime" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAppointmentTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAppointmentTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAppointmentTimeSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteAppointmentTime" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAppointmentTimeSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteAppointmentTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchAppointmentDurationSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchAppointmentDuration" />
+  </wsdl:message>
+  <wsdl:message name="SearchAppointmentDurationSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchAppointmentDurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAppointmentDurationSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAppointmentDuration" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAppointmentDurationSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAppointmentDurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAppointmentDurationSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteAppointmentDuration" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAppointmentDurationSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteAppointmentDurationResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchGPPracticeSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchGPPractice" />
+  </wsdl:message>
+  <wsdl:message name="SearchGPPracticeSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchGPPracticeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddOrUpdateGPPracticeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddOrUpdateGPPractice" />
+  </wsdl:message>
+  <wsdl:message name="AddOrUpdateGPPracticeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddOrUpdateGPPracticeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeletePracticeSoapIn">
+    <wsdl:part name="parameters" element="tns:DeletePractice" />
+  </wsdl:message>
+  <wsdl:message name="DeletePracticeSoapOut">
+    <wsdl:part name="parameters" element="tns:DeletePracticeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchRelationshipSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchRelationship" />
+  </wsdl:message>
+  <wsdl:message name="SearchRelationshipSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchRelationshipResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateRelationshipSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateRelationship" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateRelationshipSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateRelationshipResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRelationshipSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteRelationship" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRelationshipSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteRelationshipResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchFacilityTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFacilityType" />
+  </wsdl:message>
+  <wsdl:message name="SearchFacilityTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFacilityTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateFacilityTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateFacilityType" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateFacilityTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateFacilityTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchFacilityAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFacilityAddress" />
+  </wsdl:message>
+  <wsdl:message name="SearchFacilityAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFacilityAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateFacilityAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateFacilityAddress" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateFacilityAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateFacilityAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFacilityAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteFacilityAddress" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFacilityAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteFacilityAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForTransportSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchReasonForTransport" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForTransportSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchReasonForTransportResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTransportReasonSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTransportReason" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTransportReasonSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTransportReasonResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTransportReasonSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTransportReason" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTransportReasonSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTransportReasonResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchTransportSelectionSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchTransportSelection" />
+  </wsdl:message>
+  <wsdl:message name="SearchTransportSelectionSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchTransportSelectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTransportSelectionSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTransportSelection" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateTransportSelectionSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateTransportSelectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTransportSelectionSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTransportSelection" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTransportSelectionSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTransportSelectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchInfectiousSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchInfectious" />
+  </wsdl:message>
+  <wsdl:message name="SearchInfectiousSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchInfectiousResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateInfectiousSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateInfectious" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateInfectiousSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateInfectiousResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteInfectionSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteInfection" />
+  </wsdl:message>
+  <wsdl:message name="DeleteInfectionSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteInfectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchEscortTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchEscortType" />
+  </wsdl:message>
+  <wsdl:message name="SearchEscortTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchEscortTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateEscortTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateEscortType" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateEscortTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateEscortTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEscortSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteEscort" />
+  </wsdl:message>
+  <wsdl:message name="DeleteEscortSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteEscortResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForRejectionSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchReasonForRejection" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForRejectionSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchReasonForRejectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateReasonForRejectionSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateReasonForRejection" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateReasonForRejectionSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateReasonForRejectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRejectionListSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteRejectionList" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRejectionListSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteRejectionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForCancellationSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchReasonForCancellation" />
+  </wsdl:message>
+  <wsdl:message name="SearchReasonForCancellationSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchReasonForCancellationResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateCancelReasonSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateCancelReason" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateCancelReasonSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateCancelReasonResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCancellationReasonSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCancellationReason" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCancellationReasonSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCancellationReasonResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchClinicianRoleSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchClinicianRole" />
+  </wsdl:message>
+  <wsdl:message name="SearchClinicianRoleSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchClinicianRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAuthenticationRoleSoapIn">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAuthenticationRole" />
+  </wsdl:message>
+  <wsdl:message name="AddORUpdateAuthenticationRoleSoapOut">
+    <wsdl:part name="parameters" element="tns:AddORUpdateAuthenticationRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAuthRoleSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteAuthRole" />
+  </wsdl:message>
+  <wsdl:message name="DeleteAuthRoleSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteAuthRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoadCacheSoapIn">
+    <wsdl:part name="parameters" element="tns:LoadCache" />
+  </wsdl:message>
+  <wsdl:message name="LoadCacheSoapOut">
+    <wsdl:part name="parameters" element="tns:LoadCacheResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateWebUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AddorUpdateWebUser" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateWebUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AddorUpdateWebUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserDetails" />
+  </wsdl:message>
+  <wsdl:message name="GetUserDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateJourneySoapIn">
+    <wsdl:part name="parameters" element="tns:AddorUpdateJourney" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateJourneySoapOut">
+    <wsdl:part name="parameters" element="tns:AddorUpdateJourneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneySoapIn">
+    <wsdl:part name="parameters" element="tns:GetJourney" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneySoapOut">
+    <wsdl:part name="parameters" element="tns:GetJourneyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneys_FilteredOn_JourneyDateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetJourneys_FilteredOn_JourneyDate" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneys_FilteredOn_JourneyDateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetJourneys_FilteredOn_JourneyDateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeJourneyStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeJourneyStatus" />
+  </wsdl:message>
+  <wsdl:message name="ChangeJourneyStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeJourneyStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckDuplicateAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckDuplicateAddress" />
+  </wsdl:message>
+  <wsdl:message name="CheckDuplicateAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckDuplicateAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchFlagspatient_AddressSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFlagspatient_Address" />
+  </wsdl:message>
+  <wsdl:message name="SearchFlagspatient_AddressSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFlagspatient_AddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchFlagAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFlagAddress" />
+  </wsdl:message>
+  <wsdl:message name="SearchFlagAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFlagAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailAddressSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckEmailAddress" />
+  </wsdl:message>
+  <wsdl:message name="CheckEmailAddressSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckEmailAddressResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchPatientSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchPatient" />
+  </wsdl:message>
+  <wsdl:message name="SearchPatientSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchPatientResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneyPDFSoapIn">
+    <wsdl:part name="parameters" element="tns:GetJourneyPDF" />
+  </wsdl:message>
+  <wsdl:message name="GetJourneyPDFSoapOut">
+    <wsdl:part name="parameters" element="tns:GetJourneyPDFResponse" />
+  </wsdl:message>
+  <wsdl:message name="DoUserExistsSoapIn">
+    <wsdl:part name="parameters" element="tns:DoUserExists" />
+  </wsdl:message>
+  <wsdl:message name="DoUserExistsSoapOut">
+    <wsdl:part name="parameters" element="tns:DoUserExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCallNotesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCallNotes" />
+  </wsdl:message>
+  <wsdl:message name="GetCallNotesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCallNotesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="wsEBookingSoap">
+    <wsdl:operation name="SearchTitle">
+      <wsdl:input message="tns:SearchTitleSoapIn" />
+      <wsdl:output message="tns:SearchTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTitle">
+      <wsdl:input message="tns:AddORUpdateTitleSoapIn" />
+      <wsdl:output message="tns:AddORUpdateTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTitle">
+      <wsdl:input message="tns:DeleteTitleSoapIn" />
+      <wsdl:output message="tns:DeleteTitleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointementTime">
+      <wsdl:input message="tns:SearchAppointementTimeSoapIn" />
+      <wsdl:output message="tns:SearchAppointementTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentTime">
+      <wsdl:input message="tns:AddORUpdateAppointmentTimeSoapIn" />
+      <wsdl:output message="tns:AddORUpdateAppointmentTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentTime">
+      <wsdl:input message="tns:DeleteAppointmentTimeSoapIn" />
+      <wsdl:output message="tns:DeleteAppointmentTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointmentDuration">
+      <wsdl:input message="tns:SearchAppointmentDurationSoapIn" />
+      <wsdl:output message="tns:SearchAppointmentDurationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentDuration">
+      <wsdl:input message="tns:AddORUpdateAppointmentDurationSoapIn" />
+      <wsdl:output message="tns:AddORUpdateAppointmentDurationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentDuration">
+      <wsdl:input message="tns:DeleteAppointmentDurationSoapIn" />
+      <wsdl:output message="tns:DeleteAppointmentDurationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchGPPractice">
+      <wsdl:input message="tns:SearchGPPracticeSoapIn" />
+      <wsdl:output message="tns:SearchGPPracticeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddOrUpdateGPPractice">
+      <wsdl:input message="tns:AddOrUpdateGPPracticeSoapIn" />
+      <wsdl:output message="tns:AddOrUpdateGPPracticeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePractice">
+      <wsdl:input message="tns:DeletePracticeSoapIn" />
+      <wsdl:output message="tns:DeletePracticeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchRelationship">
+      <wsdl:input message="tns:SearchRelationshipSoapIn" />
+      <wsdl:output message="tns:SearchRelationshipSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateRelationship">
+      <wsdl:input message="tns:AddORUpdateRelationshipSoapIn" />
+      <wsdl:output message="tns:AddORUpdateRelationshipSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRelationship">
+      <wsdl:input message="tns:DeleteRelationshipSoapIn" />
+      <wsdl:output message="tns:DeleteRelationshipSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityType">
+      <wsdl:input message="tns:SearchFacilityTypeSoapIn" />
+      <wsdl:output message="tns:SearchFacilityTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityType">
+      <wsdl:input message="tns:AddORUpdateFacilityTypeSoapIn" />
+      <wsdl:output message="tns:AddORUpdateFacilityTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityAddress">
+      <wsdl:input message="tns:SearchFacilityAddressSoapIn" />
+      <wsdl:output message="tns:SearchFacilityAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityAddress">
+      <wsdl:input message="tns:AddORUpdateFacilityAddressSoapIn" />
+      <wsdl:output message="tns:AddORUpdateFacilityAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFacilityAddress">
+      <wsdl:input message="tns:DeleteFacilityAddressSoapIn" />
+      <wsdl:output message="tns:DeleteFacilityAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForTransport">
+      <wsdl:input message="tns:SearchReasonForTransportSoapIn" />
+      <wsdl:output message="tns:SearchReasonForTransportSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportReason">
+      <wsdl:input message="tns:AddORUpdateTransportReasonSoapIn" />
+      <wsdl:output message="tns:AddORUpdateTransportReasonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportReason">
+      <wsdl:input message="tns:DeleteTransportReasonSoapIn" />
+      <wsdl:output message="tns:DeleteTransportReasonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchTransportSelection">
+      <wsdl:input message="tns:SearchTransportSelectionSoapIn" />
+      <wsdl:output message="tns:SearchTransportSelectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportSelection">
+      <wsdl:input message="tns:AddORUpdateTransportSelectionSoapIn" />
+      <wsdl:output message="tns:AddORUpdateTransportSelectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportSelection">
+      <wsdl:input message="tns:DeleteTransportSelectionSoapIn" />
+      <wsdl:output message="tns:DeleteTransportSelectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchInfectious">
+      <wsdl:input message="tns:SearchInfectiousSoapIn" />
+      <wsdl:output message="tns:SearchInfectiousSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateInfectious">
+      <wsdl:input message="tns:AddORUpdateInfectiousSoapIn" />
+      <wsdl:output message="tns:AddORUpdateInfectiousSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInfection">
+      <wsdl:input message="tns:DeleteInfectionSoapIn" />
+      <wsdl:output message="tns:DeleteInfectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchEscortType">
+      <wsdl:input message="tns:SearchEscortTypeSoapIn" />
+      <wsdl:output message="tns:SearchEscortTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateEscortType">
+      <wsdl:input message="tns:AddORUpdateEscortTypeSoapIn" />
+      <wsdl:output message="tns:AddORUpdateEscortTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEscort">
+      <wsdl:input message="tns:DeleteEscortSoapIn" />
+      <wsdl:output message="tns:DeleteEscortSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForRejection">
+      <wsdl:input message="tns:SearchReasonForRejectionSoapIn" />
+      <wsdl:output message="tns:SearchReasonForRejectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateReasonForRejection">
+      <wsdl:input message="tns:AddORUpdateReasonForRejectionSoapIn" />
+      <wsdl:output message="tns:AddORUpdateReasonForRejectionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRejectionList">
+      <wsdl:input message="tns:DeleteRejectionListSoapIn" />
+      <wsdl:output message="tns:DeleteRejectionListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForCancellation">
+      <wsdl:input message="tns:SearchReasonForCancellationSoapIn" />
+      <wsdl:output message="tns:SearchReasonForCancellationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateCancelReason">
+      <wsdl:input message="tns:AddORUpdateCancelReasonSoapIn" />
+      <wsdl:output message="tns:AddORUpdateCancelReasonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCancellationReason">
+      <wsdl:input message="tns:DeleteCancellationReasonSoapIn" />
+      <wsdl:output message="tns:DeleteCancellationReasonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchClinicianRole">
+      <wsdl:input message="tns:SearchClinicianRoleSoapIn" />
+      <wsdl:output message="tns:SearchClinicianRoleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAuthenticationRole">
+      <wsdl:input message="tns:AddORUpdateAuthenticationRoleSoapIn" />
+      <wsdl:output message="tns:AddORUpdateAuthenticationRoleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAuthRole">
+      <wsdl:input message="tns:DeleteAuthRoleSoapIn" />
+      <wsdl:output message="tns:DeleteAuthRoleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadCache">
+      <wsdl:input message="tns:LoadCacheSoapIn" />
+      <wsdl:output message="tns:LoadCacheSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateWebUser">
+      <wsdl:input message="tns:AddorUpdateWebUserSoapIn" />
+      <wsdl:output message="tns:AddorUpdateWebUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <wsdl:input message="tns:GetUserDetailsSoapIn" />
+      <wsdl:output message="tns:GetUserDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateJourney">
+      <wsdl:input message="tns:AddorUpdateJourneySoapIn" />
+      <wsdl:output message="tns:AddorUpdateJourneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJourney">
+      <wsdl:input message="tns:GetJourneySoapIn" />
+      <wsdl:output message="tns:GetJourneySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneys_FilteredOn_JourneyDate">
+      <wsdl:input message="tns:GetJourneys_FilteredOn_JourneyDateSoapIn" />
+      <wsdl:output message="tns:GetJourneys_FilteredOn_JourneyDateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeJourneyStatus">
+      <wsdl:input message="tns:ChangeJourneyStatusSoapIn" />
+      <wsdl:output message="tns:ChangeJourneyStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckDuplicateAddress">
+      <wsdl:input message="tns:CheckDuplicateAddressSoapIn" />
+      <wsdl:output message="tns:CheckDuplicateAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagspatient_Address">
+      <wsdl:input message="tns:SearchFlagspatient_AddressSoapIn" />
+      <wsdl:output message="tns:SearchFlagspatient_AddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagAddress">
+      <wsdl:input message="tns:SearchFlagAddressSoapIn" />
+      <wsdl:output message="tns:SearchFlagAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmailAddress">
+      <wsdl:input message="tns:CheckEmailAddressSoapIn" />
+      <wsdl:output message="tns:CheckEmailAddressSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <wsdl:input message="tns:SearchPatientSoapIn" />
+      <wsdl:output message="tns:SearchPatientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneyPDF">
+      <wsdl:input message="tns:GetJourneyPDFSoapIn" />
+      <wsdl:output message="tns:GetJourneyPDFSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoUserExists">
+      <wsdl:input message="tns:DoUserExistsSoapIn" />
+      <wsdl:output message="tns:DoUserExistsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCallNotes">
+      <wsdl:input message="tns:GetCallNotesSoapIn" />
+      <wsdl:output message="tns:GetCallNotesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="wsEBookingSoap" type="tns:wsEBookingSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchTitle">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchTitle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTitle">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateTitle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTitle">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteTitle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointementTime">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchAppointementTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentTime">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateAppointmentTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentTime">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteAppointmentTime" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointmentDuration">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentDuration">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentDuration">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchGPPractice">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchGPPractice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddOrUpdateGPPractice">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddOrUpdateGPPractice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePractice">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeletePractice" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchRelationship">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchRelationship" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateRelationship">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateRelationship" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRelationship">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteRelationship" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityType">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchFacilityType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityType">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateFacilityType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFacilityAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForTransport">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchReasonForTransport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportReason">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateTransportReason" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportReason">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteTransportReason" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchTransportSelection">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchTransportSelection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportSelection">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateTransportSelection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportSelection">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteTransportSelection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInfectious">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchInfectious" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateInfectious">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateInfectious" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInfection">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteInfection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchEscortType">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchEscortType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateEscortType">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateEscortType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEscort">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteEscort" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForRejection">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchReasonForRejection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateReasonForRejection">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateReasonForRejection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRejectionList">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteRejectionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForCancellation">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchReasonForCancellation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateCancelReason">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateCancelReason" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCancellationReason">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteCancellationReason" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchClinicianRole">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchClinicianRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAuthenticationRole">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddORUpdateAuthenticationRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header wsdl:required="true" message="tns:AuthorizationHeaderMessage" part="Authorization" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAuthRole">
+      <soap:operation soapAction="http://cad.valentiatech.com/DeleteAuthRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadCache">
+      <soap:operation soapAction="http://cad.valentiatech.com/LoadCache" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateWebUser">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddorUpdateWebUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetUserDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateJourney">
+      <soap:operation soapAction="http://cad.valentiatech.com/AddorUpdateJourney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourney">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetJourney" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneys_FilteredOn_JourneyDate">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetJourneys_FilteredOn_JourneyDate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeJourneyStatus">
+      <soap:operation soapAction="http://cad.valentiatech.com/ChangeJourneyStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckDuplicateAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/CheckDuplicateAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagspatient_Address">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchFlagspatient_Address" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchFlagAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmailAddress">
+      <soap:operation soapAction="http://cad.valentiatech.com/CheckEmailAddress" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchPatient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneyPDF">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetJourneyPDF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoUserExists">
+      <soap:operation soapAction="http://cad.valentiatech.com/DoUserExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallNotes">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetCallNotes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="wsEBookingSoap12" type="tns:wsEBookingSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchTitle">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTitle">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTitle">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteTitle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointementTime">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchAppointementTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentTime">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateAppointmentTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentTime">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteAppointmentTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchAppointmentDuration">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAppointmentDuration">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppointmentDuration">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteAppointmentDuration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchGPPractice">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchGPPractice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddOrUpdateGPPractice">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddOrUpdateGPPractice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePractice">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeletePractice" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchRelationship">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchRelationship" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateRelationship">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateRelationship" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRelationship">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteRelationship" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityType">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchFacilityType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityType">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateFacilityType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFacilityAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateFacilityAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFacilityAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteFacilityAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForTransport">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchReasonForTransport" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportReason">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateTransportReason" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportReason">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteTransportReason" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchTransportSelection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchTransportSelection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateTransportSelection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateTransportSelection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTransportSelection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteTransportSelection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInfectious">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchInfectious" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateInfectious">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateInfectious" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteInfection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteInfection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchEscortType">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchEscortType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateEscortType">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateEscortType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteEscort">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteEscort" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForRejection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchReasonForRejection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateReasonForRejection">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateReasonForRejection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRejectionList">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteRejectionList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchReasonForCancellation">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchReasonForCancellation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateCancelReason">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateCancelReason" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCancellationReason">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteCancellationReason" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchClinicianRole">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchClinicianRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddORUpdateAuthenticationRole">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddORUpdateAuthenticationRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAuthRole">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DeleteAuthRole" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadCache">
+      <soap12:operation soapAction="http://cad.valentiatech.com/LoadCache" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateWebUser">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddorUpdateWebUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserDetails">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetUserDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateJourney">
+      <soap12:operation soapAction="http://cad.valentiatech.com/AddorUpdateJourney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourney">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetJourney" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneys_FilteredOn_JourneyDate">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetJourneys_FilteredOn_JourneyDate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeJourneyStatus">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ChangeJourneyStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckDuplicateAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/CheckDuplicateAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagspatient_Address">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchFlagspatient_Address" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFlagAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchFlagAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckEmailAddress">
+      <soap12:operation soapAction="http://cad.valentiatech.com/CheckEmailAddress" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPatient">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchPatient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJourneyPDF">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetJourneyPDF" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoUserExists">
+      <soap12:operation soapAction="http://cad.valentiatech.com/DoUserExists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCallNotes">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetCallNotes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="wsEBooking">
+    <wsdl:port name="wsEBookingSoap" binding="tns:wsEBookingSoap">
+      <soap:address location="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsEBooking.asmx" />
+    </wsdl:port>
+    <wsdl:port name="wsEBookingSoap12" binding="tns:wsEBookingSoap12">
+      <soap12:address location="http://localhost/CareMonXCADEmergencyV9_x/CADServices/wsEBooking.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

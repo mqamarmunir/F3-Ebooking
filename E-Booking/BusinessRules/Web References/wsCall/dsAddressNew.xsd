@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsAddressNew.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsAddressNew.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsAddressNew.xsd" id="dsAddressNew" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsAddressNew">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Address">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="AddressID" type="xs:int" />
+              <xs:element minOccurs="0" name="AddressLine1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine2">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine3">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="122" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="AddressLine4">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="PostCode" type="xs:string" />
+              <xs:element minOccurs="0" name="Longitude" type="xs:double" />
+              <xs:element minOccurs="0" name="Latitude" type="xs:double" />
+              <xs:element minOccurs="0" name="TownID" type="xs:string" />
+              <xs:element minOccurs="0" name="CountyID" type="xs:string" />
+              <xs:element minOccurs="0" name="CountryID" type="xs:int" />
+              <xs:element minOccurs="0" name="FullAddress" type="xs:string" />
+              <xs:element minOccurs="0" name="URPN" type="xs:string" />
+              <xs:element minOccurs="0" name="AddressTypeID" type="xs:string" />
+              <xs:element name="IsPublicAddress" type="xs:int" />
+              <xs:element minOccurs="0" name="PostCodeID" type="xs:int" />
+              <xs:element minOccurs="0" default="1" name="Easting" type="xs:double" />
+              <xs:element minOccurs="0" default="1" name="Northing" type="xs:double" />
+              <xs:element minOccurs="0" default="Null" name="GridReference" type="xs:string" />
+              <xs:element name="InsertedBy" type="xs:int" />
+              <xs:element name="UpdatedBy" type="xs:int" />
+              <xs:element name="InsertedAt" type="xs:dateTime" />
+              <xs:element name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsDeleted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="PublicAddressTitle" type="xs:string" />
+              <xs:element minOccurs="0" name="PublicAddressCode" type="xs:string" />
+              <xs:element minOccurs="0" name="AddressdataId" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:Address" />
+      <xs:field xpath="mstns:AddressID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

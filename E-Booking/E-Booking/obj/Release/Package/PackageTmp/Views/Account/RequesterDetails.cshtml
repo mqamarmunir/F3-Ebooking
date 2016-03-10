@@ -1,0 +1,317 @@
+﻿<script src="@Url.Content("~/Scripts/knockout-3.2.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/DropdownModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/RequesterModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.mapping.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.qtip.min.js")" type="text/javascript"></script>
+
+<script src="~/Scripts/Base64.js"></script>
+<script>
+
+    @functions{
+         public string TokenHeaderValue()
+         {
+             string cookieToken, formToken;
+             AntiForgery.GetTokens(null, out cookieToken, out formToken);
+             return cookieToken + ":" + formToken;
+         }
+     }
+    function dateReviver(key, value) {
+        var a;
+        if (typeof value === 'string') {
+            a = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
+            if (a) {
+                return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+                                +a[5], +a[6]));
+            }
+        }
+        return value;
+    };
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    function WizardViewModel() {
+
+        var self = this;
+        self.Dropdown = new DropdownModel();
+        self.Requester = new RequestertModel();
+        ShowProgressBar();
+        $.ajax({
+            url: '@Url.Action("GetAllDropdowns", "Dropdown")',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (dropdownlists) {
+
+                ko.utils.arrayForEach(dropdownlists, function (dropdowns) {
+                    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+                        //if (dropdown.FacilityId && dropdown.FacilityName)
+                        //    self.Dropdown.Facilities.push(new FacilityModel(dropdown));
+                        //else if (dropdown.DepartmentId && dropdown.DepartmentName) {
+                        //    self.Dropdown.Departments.push(new DepartmentModel(dropdown));
+                        //}
+                        if (dropdown.ServiceTypeId && dropdown.ServiceTypeName)
+                            self.Dropdown.ServiceTypes.push(new ServiceTypeModel(dropdown));
+                        else if (dropdown.AuthorisingRoleId && dropdown.AuthorisingRoleName)
+                            self.Dropdown.AuthorisingRoles.push(new AuthorisingRoleModel(dropdown));
+                        else if (dropdown.TitleId && dropdown.TitleName)
+                            self.Dropdown.Titles.push(new TitleModel(dropdown));
+                        else if (dropdown.AppointmentTimeId && dropdown.AppointmentTimeName)
+                            self.Dropdown.AppointmentTimes.push(new AppointmentTimeModel(dropdown));
+                        else if (dropdown.RelationshipToPatientId && dropdown.RelationshipToPatientName)
+                            self.Dropdown.RelationshipToPatient.push(new RelationshipToPatientModel(dropdown));
+
+
+                    });
+                });
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                var errorMessage = '';
+                $('#message').html(jqXHR.responseText);
+                ShowErrorMessage();
+            },
+            complete: function () {
+                HideProgressBar();
+            }
+        });
+        //debugger;
+        ShowProgressBar();
+        debugger
+        var userid = getParameterByName('q');
+        userid = userid.split("_", 3);
+        userid = userid[2].substr(2);
+
+        var costcenter = Base64.decode(getParameterByName('q1'));
+        var subjectivecode = Base64.decode(getParameterByName('q2'));
+        var name = Base64.decode(getParameterByName('q3'));
+        var role = Base64.decode(getParameterByName('q4'));
+       // console.log(costcenter + ' ' + subjectivecode + ' ' + name + ' ' + role);
+        $.ajax({
+            url: '@Url.Action("GetUserDetails", "AccountWebAPI", new { httproute = "" })',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+            data: { userid: userid },
+            success: function (result) {
+                //alert(JSON.stringify(result));
+
+                if (result != true) {
+
+                    //alert(result.RequestDate);
+                    //var dates = JSON.parse(result, dateReviver);
+                    //alert(dates.RequestDate.toString());
+                    //  WizardViewModeling = new WizardViewModel();
+                    //  alert(WizardViewModeling);
+                    // ko.mapping.fromJS(result,{},WizardViewModel
+                    ko.mapping.fromJS(result, {}, self.Requester);
+                    $("#txtRequesterPosition").prop("disabled", true);
+                    $("#ddlRequesterTitle").prop("disabled", true);
+                    $("#txtRequesterFirstName").prop("disabled", true);
+                    $("#txtRequesterSurname").prop("disabled", true);
+                    $("#ddlRequesterDepartment").prop("disabled", true);
+                    $("#ddlRequesterServiceType").prop("disabled", true);
+                  //  $("#txtRequesterPostalAddress").prop("disabled", true);
+                    $("#txtRequesterEmail").prop("disabled", true);
+                    $("#txtRequesterContactTelNo").prop("disabled", true);
+                    $("#txtRequesterFacilityType").prop("disabled", true);
+                    self.Requester.CostCentre(costcenter);
+                    self.Requester.SubjectiveCode(subjectivecode);
+                    self.Requester.AuthorisingClinician(name);
+                    self.Requester.AuthorisingRoleId(role);
+                    if (self.Requester.facilityType().toString().toLowerCase().indexOf('hospital') < 0) {
+                        $("#lblRequesterFacilityType").text($("#lblRequesterFacilityType").text().replace('*', ''));
+                    }
+                    if (parseInt(self.Requester.FacilityId()) > 0) {
+                        $("#ddlRequesteFacility").prop("disabled", true);
+                    }
+                    else {
+                        self.Requester.FacilityId(result.FacilityId);
+                        $("#ddlRequesteFacility").prop("disabled", false);
+                    }
+                    //
+                    //$("#txtRequesterPostalAddress").prop("disabled", true);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var errorMessage = '';
+                $('#message').html(jqXHR.responseText);
+                ShowErrorMessage();
+            },
+            complete: function () {
+                HideProgressBar();
+            }
+        });
+
+    }
+    $(function () {
+        //debugger;
+
+        NextClick = function () {
+            //debugger;
+
+            if (IsValidKnockoutModel(WizardViewModeling.Requester))
+                window.location.replace('@Url.Action("Journey", "Journey")' + '?a=' + Base64.encode(WizardViewModeling.Requester.SubjectiveCode().toString()) + '&a1=' + Base64.encode(WizardViewModeling.Requester.CostCentre().toString()) + '&a2=' + Base64.encode(WizardViewModeling.Requester.AuthorisingClinician().toString()) + '&a3=' + Base64.encode(WizardViewModeling.Requester.AuthorisingRoleId().toString()) + '&PrivatePatient='+getParameterByName('PrivatePatient'));
+            else
+                $("html, body").animate({ scrollTop: $('.fieldError:visible').first().offset().top }, 600);
+
+        }
+
+        UpdateLoginDetailsClick = function () {
+            window.location.replace('@Url.Action("Signup", "Account", new { q = System.DateTime.Now.ToString("ddmmyy_hhmmss") + "_11" + Convert.ToInt32(@User.Identity.Name) * 498 + "_" + Convert.ToInt32(@User.Identity.Name) * 599+"==" })' + '&PrivatePatient=' + getParameterByName('PrivatePatient'));
+
+        }
+
+        WizardViewModeling = new WizardViewModel();
+        ko.applyBindings(WizardViewModeling);
+    });
+
+</script>
+<style>
+    .ui-widget-content {
+        background-color: #fff;
+        border: 5px solid #cccccc;
+        border-radius: 10px;
+        min-height: 200px;
+        width: 20% !important;
+        margin: 0px auto;
+        display: none;
+        top: 0;
+    }
+</style>
+<div id="wizard">
+    <div class="formcontaner">
+        <div class="request-heading">
+            <span class="mainheading">Requester Details:</span>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Date of Request *</label>
+                    <input type="text" id="txtRequesterRequestDate" name="txtRequesterRequestDate" class="form-control" data-bind="datepicker: Requester.RequestDate, datepickerOptions: {constrainInput: false, changeYear: true, changeMonth: true, dateFormat: 'dd/mm/yy', minDate: new Date(), maxDate:0 }, showMessageToolTip : Requester.RequestDate" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Staff Position *</label>
+                    <input type="text" id="txtRequesterPosition" name="txtRequesterPosition" class="form-control" data-bind="value: Requester.StaffPosition, showMessageToolTip : Requester.StaffPosition" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Title *</label>
+                    <select id="ddlRequesterTitle" name="ddlRequesterTitle" class="form-control" data-bind="options:Dropdown.Titles, optionsValue:'TitleId', optionsText:'TitleName', value:Requester.GenderTitleId, valueAllowUnset: true, optionsCaption: 'Choose...', showMessageToolTip: Requester.GenderTitleId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>First Name *</label>
+                    <input type="text" id="txtRequesterFirstName" name="txtRequesterFirstName" class="form-control" data-bind="value: Requester.FirstName, showMessageToolTip : Requester.FirstName" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Surname *</label>
+                    <input type="text" id="txtRequesterSurname" name="txtRequesterSurname" class="form-control" data-bind="value: Requester.Surname, showMessageToolTip : Requester.Surname" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Workplace - Facility Type *</label>
+                    <input type="text" id="txtRequesterFacilityType" name="txtRequesterFacilityType" class="form-control" data-bind="value: Requester.facilityType, enable:false, showMessageToolTip : Requester.facilityType" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Workplace - Facility *</label>
+                    <input type="text" id="txtRequesterFacilityName" name="txtRequesterFacilityDepartment" class="form-control" data-bind="value: Requester.FacilityName, enable:false, showMessageToolTip : Requester.FacilityName" />
+                    @*<label class="form-control" data-bind="text:Requester.FacilityName"></label>*@
+                    <select style="display:none" id="ddlRequesteFacility" class="form-control" name="ddlRequesteFacility" data-bind="options:Dropdown.Facilities, optionsValue:'FacilityId',enable:false, optionsText:'FacilityName', value:Requester.FacilityId, optionsCaption: 'Choose...', showMessageToolTip: Requester.FacilityId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label id="lblRequesterFacilityType">Workplace - Department *</label>
+                    <input type="text" id="txtRequesterFacilityDepartment" name="txtRequesterFacilityDepartment" class="form-control" data-bind="value: Requester.DepartmentName, enable:false, showMessageToolTip : Requester.DepartmentName" />
+                    @*<label class="form-control" data-bind="text:Requester.DepartmentName"></label>*@
+                    <select style="display:none" id="ddlRequesterDepartment" name="ddlRequesterDepartment" class="form-control" data-bind="options:Dropdown.Departments, optionsValue:'DepartmentId', optionsText:'DepartmentName', value:Requester.DepartmentId, valueAllowUnset: true, optionsCaption: 'Choose...', showMessageToolTip: Requester.DepartmentId"></select>
+
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Postal Address *</label>
+                    <input type="text" id="txtRequesterPostal" name="txtRequesterPostal" class="form-control" data-bind="value: Requester.PostalAddress, enable:false, showMessageToolTip : Requester.PostalAddress" />
+                    @*<input type="text" id="txtRequesterPostalAddress" name="txtRequesterPostalAddress" class="form-control" data-bind="value: Requester.PostalAddress, enable:false, showMessageToolTip : Requester.PostalAddress" />*@
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Service Type *</label>
+                    <select id="ddlRequesterServiceType" name="ddlRequesterServiceType" class="form-control" data-bind="options:Dropdown.ServiceTypes, optionsValue:'ServiceTypeId', optionsText:'ServiceTypeName', value:Requester.ServiceTypeId, valueAllowUnset: true, optionsCaption: 'Choose...', showMessageToolTip: Requester.ServiceTypeId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Cost Centre *</label>
+                    <input type="text" id="txtRequesterCostCentre" name="txtRequesterCostCentre" class="form-control" data-bind="value: Requester.CostCentre, showMessageToolTip : Requester.CostCentre" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Subjective Code *</label>
+                    <input type="text" id="txtRequesterSubjectiveCode" name="txtRequesterSubjectiveCode" class="form-control" data-bind="value: Requester.SubjectiveCode, showMessageToolTip : Requester.SubjectiveCode" />
+
+                </div>
+                
+
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Email Address *<br /></label>
+                    <input type="text" id="txtRequesterEmail" name="txtRequesterEmail" class="form-control" data-bind="value: Requester.EmailAddress, showMessageToolTip: Requester.EmailAddress" />
+                    <span class="formextratxt">(to be used for confirming booking acceptance – must be NHS.net email account)</span>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Contact Telephone Number *</label>
+                    <input type="text" id="txtRequesterContactTelNo" name="txtRequesterContactTelNo" class="form-control" data-bind="value: Requester.ContactTelNo, showMessageToolTip: Requester.ContactTelNo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Extension No.</label>
+                    <input type="text" id="txtRequesterExtension" name="txtRequesterExtension" class="form-control" data-bind="value: Requester.Extension, enable:false, showMessageToolTip: Requester.ContactTelNo" />
+                </div>
+            </div>
+        </div>
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Name of Authorising Clinician *</label>
+                    <input type="text" id="txtRequesterAuthorisingClinician" name="txtRequesterAuthorisingClinician" class="form-control" data-bind="value: Requester.AuthorisingClinician, showMessageToolTip: Requester.AuthorisingClinician" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Authorising Role *</label>
+                    <select id="ddlRequesterAuthorisingRole" name="ddlRequesterAuthorisingRole" class="form-control" data-bind="options:Dropdown.AuthorisingRoles, optionsValue:'AuthorisingRoleId', optionsText:'AuthorisingRoleName', value:Requester.AuthorisingRoleId, optionsCaption: 'Choose...', showMessageToolTip: Requester.AuthorisingRoleId"></select>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <span style="font-size:16px;margin-left: 18px; float:left; text-align:left;width:84%; color:#007ac3; font-weight:bold;"><u>NOTE:</u> Please verify details, if any are incorrect, please update your login information. Failure to maintain correct in-formation, may delay patient transport.</span>
+    <span class="mainheadingclick" style="font-size: 14px; float:left; margin-left: 10px; width:330px; text-align:left"><a href="#" class="whtlink" data-bind="click: UpdateLoginDetailsClick">Click here </a><span style="color: #fff; font-size: 14px;">&nbsp;- to update your 'requester' details</span></span>
+
+    <div class="buttonstylecontai">
+        <div class="buttonstyle" data-bind="click: NextClick">Next</div>
+    </div>
+</div>

@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.com/AuthenticationServices" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.com/AuthenticationServices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.com/AuthenticationServices">
+      <s:import namespace="http://tempuri.org/dsVehicleRegisteration.xsd" />
+      <s:import namespace="http://tempuri.org/dsVehicle.xsd" />
+      <s:import schemaLocation="http://localhost/CareMonXCADEmergencyV9_x/AuthenticationServices/wsAuthentication.asmx?schema=dsVehicle" namespace="http://tempuri.org/dsVehicle.xsd" />
+      <s:import schemaLocation="http://localhost/CareMonXCADEmergencyV9_x/AuthenticationServices/wsAuthentication.asmx?schema=dsVehicleRegisteration" namespace="http://tempuri.org/dsVehicleRegisteration.xsd" />
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Ping">
+        <s:complexType />
+      </s:element>
+      <s:element name="PingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PingResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMachineBySignature">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="signature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMachineBySignatureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMachineBySignatureResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLoginLogging">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="machineID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLoginLoggingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UserLoginLoggingResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogofLogging">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="logofDateTime" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserLogofLoggingResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AuthenticateForRegistration">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateForRegistrationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticateForRegistrationResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any namespace="http://tempuri.org/dsVehicleRegisteration.xsd" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateForRegistrationXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticateForRegistrationXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AuthenticateForRegistrationXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterVehicle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VehicleCallSign" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="VehicleType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Station" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RegistrationNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ModelNumber" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterVehicleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterVehicleResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any namespace="http://tempuri.org/dsVehicle.xsd" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterMachine">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Station" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MachineName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterMachineResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="SyncTablesForLocal">
+        <s:complexType />
+      </s:element>
+      <s:element name="SyncTablesForLocalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SyncTablesForLocalResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="PingSoapIn">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="PingSoapOut">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMachineBySignatureSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMachineBySignature" />
+  </wsdl:message>
+  <wsdl:message name="GetMachineBySignatureSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMachineBySignatureResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginLoggingSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLoginLogging" />
+  </wsdl:message>
+  <wsdl:message name="UserLoginLoggingSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLoginLoggingResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserLogofLoggingSoapIn">
+    <wsdl:part name="parameters" element="tns:UserLogofLogging" />
+  </wsdl:message>
+  <wsdl:message name="UserLogofLoggingSoapOut">
+    <wsdl:part name="parameters" element="tns:UserLogofLoggingResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateForRegistrationSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateForRegistration" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateForRegistrationSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateForRegistrationResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateForRegistrationXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:AuthenticateForRegistrationXML" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateForRegistrationXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:AuthenticateForRegistrationXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterVehicleSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterVehicle" />
+  </wsdl:message>
+  <wsdl:message name="RegisterVehicleSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterVehicleResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterMachineSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterMachine" />
+  </wsdl:message>
+  <wsdl:message name="RegisterMachineSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterMachineResponse" />
+  </wsdl:message>
+  <wsdl:message name="SyncTablesForLocalSoapIn">
+    <wsdl:part name="parameters" element="tns:SyncTablesForLocal" />
+  </wsdl:message>
+  <wsdl:message name="SyncTablesForLocalSoapOut">
+    <wsdl:part name="parameters" element="tns:SyncTablesForLocalResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input message="tns:PingSoapIn" />
+      <wsdl:output message="tns:PingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMachineBySignature">
+      <wsdl:input message="tns:GetMachineBySignatureSoapIn" />
+      <wsdl:output message="tns:GetMachineBySignatureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLoginLogging">
+      <wsdl:input message="tns:UserLoginLoggingSoapIn" />
+      <wsdl:output message="tns:UserLoginLoggingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserLogofLogging">
+      <wsdl:input message="tns:UserLogofLoggingSoapIn" />
+      <wsdl:output message="tns:UserLogofLoggingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistration">
+      <wsdl:input message="tns:AuthenticateForRegistrationSoapIn" />
+      <wsdl:output message="tns:AuthenticateForRegistrationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistrationXML">
+      <wsdl:input message="tns:AuthenticateForRegistrationXMLSoapIn" />
+      <wsdl:output message="tns:AuthenticateForRegistrationXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterVehicle">
+      <wsdl:input message="tns:RegisterVehicleSoapIn" />
+      <wsdl:output message="tns:RegisterVehicleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMachine">
+      <wsdl:input message="tns:RegisterMachineSoapIn" />
+      <wsdl:output message="tns:RegisterMachineSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SyncTablesForLocal">
+      <wsdl:input message="tns:SyncTablesForLocalSoapIn" />
+      <wsdl:output message="tns:SyncTablesForLocalSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/Ping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMachineBySignature">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/GetMachineBySignature" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLoginLogging">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/UserLoginLogging" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogofLogging">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/UserLogofLogging" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistration">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/AuthenticateForRegistration" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistrationXML">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/AuthenticateForRegistrationXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterVehicle">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/RegisterVehicle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMachine">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/RegisterMachine" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncTablesForLocal">
+      <soap:operation soapAction="http://www.com/AuthenticationServices/SyncTablesForLocal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMachineBySignature">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/GetMachineBySignature" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLoginLogging">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/UserLoginLogging" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserLogofLogging">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/UserLogofLogging" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistration">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/AuthenticateForRegistration" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AuthenticateForRegistrationXML">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/AuthenticateForRegistrationXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterVehicle">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/RegisterVehicle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterMachine">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/RegisterMachine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncTablesForLocal">
+      <soap12:operation soapAction="http://www.com/AuthenticationServices/SyncTablesForLocal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://localhost/CareMonXCADEmergencyV9_x/AuthenticationServices/wsAuthentication.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://localhost/CareMonXCADEmergencyV9_x/AuthenticationServices/wsAuthentication.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

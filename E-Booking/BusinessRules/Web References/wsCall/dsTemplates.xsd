@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsTemplates.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsTemplates.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsTemplates.xsd" id="dsTemplates" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsTemplates">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblFlowType">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="FlowTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="FlowTypeName" type="xs:string" />
+              <xs:element minOccurs="0" name="ApplicationType" type="xs:int" />
+              <xs:element minOccurs="0" name="IsValue" type="xs:boolean" />
+              <xs:element minOccurs="0" name="IsVehicle" type="xs:boolean" />
+              <xs:element minOccurs="0" name="VehicleTypeID" type="xs:int" />
+              <xs:element minOccurs="0" name="Description" type="xs:string" />
+              <xs:element minOccurs="0" name="IconID" type="xs:int" />
+              <xs:element minOccurs="0" name="IconImage" type="xs:base64Binary" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblTask">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="TaskID" type="xs:int" />
+              <xs:element minOccurs="0" name="TastTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="Name" type="xs:string" />
+              <xs:element minOccurs="0" name="Description" type="xs:string" />
+              <xs:element minOccurs="0" name="EmergenceyTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="InsertedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblTaskFlowMapping">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="TaskFlowMappingID" type="xs:short" />
+              <xs:element minOccurs="0" name="TaskID" type="xs:short" />
+              <xs:element minOccurs="0" name="FlowTypeID" type="xs:short" />
+              <xs:element minOccurs="0" name="Sequence" type="xs:string" />
+              <xs:element minOccurs="0" name="Optional" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Details" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblIcons">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="IconID" type="xs:int" />
+              <xs:element minOccurs="0" name="Icon" type="xs:base64Binary" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

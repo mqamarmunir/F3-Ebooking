@@ -1,0 +1,4 @@
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\bin\Debug\E-Booking.Models.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\bin\Debug\E-Booking.Models.pdb
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\obj\Debug\E-Booking.Models.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\obj\Debug\E-Booking.Models.pdb

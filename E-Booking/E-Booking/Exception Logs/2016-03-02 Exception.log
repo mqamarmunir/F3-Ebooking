@@ -1,0 +1,14 @@
+03/02/16 17:22:11	[]
+03/02/16 17:23:28	[]
+03/02/16 17:23:31	Exception Details: System.ArgumentOutOfRangeException: startIndex cannot be larger than length of string.
+Parameter name: startIndex
+   at System.String.Substring(Int32 startIndex, Int32 length)
+   at System.String.Substring(Int32 startIndex)
+   at EBooking.Controllers.JourneyWebAPIController.Post(CompositeModel journey) in d:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking\Controllers\JourneyWebAPIController.cs:line 49
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass13.<GetExecutor>b__c(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.<>c__DisplayClass5.<ExecuteAsync>b__4()
+   at System.Threading.Tasks.TaskHelpers.RunSynchronously[TResult](Func`1 func, CancellationToken cancellationToken)
+Source: mscorlib
+03/02/16 17:24:17	[]

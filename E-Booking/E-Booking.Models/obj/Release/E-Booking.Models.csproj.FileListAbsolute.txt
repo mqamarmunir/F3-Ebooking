@@ -1,0 +1,5 @@
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\bin\Release\E-Booking.Models.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\bin\Release\E-Booking.Models.pdb
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\obj\Release\E-Booking.Models.csprojResolveAssemblyReference.cache
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\obj\Release\E-Booking.Models.dll
+D:\Team Projects\IOW\CareMonXCADEmergency\CareMonXCADEmergency V9\CareMonXCADEmergencyV9_x\VERSION_9_0\E-Booking\E-Booking.Models\obj\Release\E-Booking.Models.pdb

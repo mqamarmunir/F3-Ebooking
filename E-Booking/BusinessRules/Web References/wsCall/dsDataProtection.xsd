@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/dsDataProtection.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:mstns="http://tempuri.org/dsDataProtection.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/dsDataProtection.xsd" id="dsDataProtection" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="dsDataProtection">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tblDataProtectionAttach">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="DocumentID" type="xs:int" />
+              <xs:element minOccurs="0" default="Null" name="DocumentName" type="xs:string" />
+              <xs:element minOccurs="0" name="Attachment" type="xs:base64Binary" />
+              <xs:element minOccurs="0" name="DataProtectionID" type="xs:int" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblDataProtectionDetail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="DataProtectionDetailID" type="xs:int" />
+              <xs:element minOccurs="0" name="CaseID" type="xs:int" />
+              <xs:element minOccurs="0" name="DataprotectionID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="tblDataProtectionLog">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="DataProtectionID" type="xs:int" />
+              <xs:element minOccurs="0" name="Description">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Insertedby" type="xs:int" />
+              <xs:element minOccurs="0" name="InsertedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UpdatedBy" type="xs:int" />
+              <xs:element minOccurs="0" name="UpdatedAt" type="xs:dateTime" />
+              <xs:element minOccurs="0" default="Null" name="CaseIDCSV" type="xs:string" />
+              <xs:element minOccurs="0" name="IsProtectAllData" type="xs:boolean" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:tblDataProtectionAttach" />
+      <xs:field xpath="mstns:DocumentID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblDataProtectionDetail_Constraint1">
+      <xs:selector xpath=".//mstns:tblDataProtectionDetail" />
+      <xs:field xpath="mstns:DataProtectionDetailID" />
+    </xs:unique>
+    <xs:unique msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true" name="tblDataProtectionLog_Constraint1">
+      <xs:selector xpath=".//mstns:tblDataProtectionLog" />
+      <xs:field xpath="mstns:DataProtectionID" />
+    </xs:unique>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="FK_tblDataProtectionAttach_tblDataProtectionLog" msdata:parent="tblDataProtectionLog" msdata:child="tblDataProtectionAttach" msdata:parentkey="DataProtectionID" msdata:childkey="DataProtectionID" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+      <msdata:Relationship name="FK_tblDataProtectionDetail_tblDataProtectionLog" msdata:parent="tblDataProtectionLog" msdata:child="tblDataProtectionDetail" msdata:parentkey="DataProtectionID" msdata:childkey="DataprotectionID" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

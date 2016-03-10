@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://cad.valentiatech.com/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://cad.valentiatech.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://cad.valentiatech.com/">
+      <s:element name="ValidateUser2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ipAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="machineSignature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUser2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateUser2Result">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrIPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrMachineSignature" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="AttemptsIn" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateUserResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintStationID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="pbytarrPicture" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPicturePath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsAdmin" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsMachineBlocked" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="iAttempts" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserAndLogInvalidEntry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrIPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrMachineSignature" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pcName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="machineName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="applicationType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AttemptsIn" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserAndLogInvalidEntryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="dummy" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintStationID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsAdmin" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsMachineBlocked" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="dsSettings">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="1" maxOccurs="1" name="iAttempts" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserForAmbulance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPassword" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrIPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrMachineSignature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserForAmbulanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateUserForAmbulanceResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintStationID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="pbytarrPicture" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPicturePath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsAdmin" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsMachineBlocked" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="nationalId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserForNationalId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrNationalId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrIPAddress" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrMachineSignature" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateUserForNationalIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateUserForNationalIdResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintStationID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="pbytarrPicture" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPicturePath" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsAdmin" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsMachineBlocked" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateWebUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateWebUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateWebUserResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pblnIsAdmin" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateWebUserEbooking">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pstrEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pstrPassword" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateWebUserEbookingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidateWebUserEbookingResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintUserID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pintRoleID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccessSettings">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserAccessSettingsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserAccessSettingsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFailedLogin">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Signature" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="StationID" nillable="true" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="IP" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FromDate" nillable="true" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="ToDate" nillable="true" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="PageIndex" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pPageSize" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pSortColumnIndex" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="pSortColumn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchFailedLoginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchFailedLoginResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchInvalidMachines">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="machineTypeID" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="FromDate" nillable="true" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="ToDate" nillable="true" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchInvalidMachinesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchInvalidMachinesResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterInvalidMachines">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InvalidMachineID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterInvalidMachinesResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ValidateUser2SoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUser2" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUser2SoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUser2Response" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUser" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserAndLogInvalidEntrySoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUserAndLogInvalidEntry" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserAndLogInvalidEntrySoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserAndLogInvalidEntryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserForAmbulanceSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUserForAmbulance" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserForAmbulanceSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserForAmbulanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserForNationalIdSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateUserForNationalId" />
+  </wsdl:message>
+  <wsdl:message name="ValidateUserForNationalIdSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateUserForNationalIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateWebUserSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateWebUser" />
+  </wsdl:message>
+  <wsdl:message name="ValidateWebUserSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateWebUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateWebUserEbookingSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateWebUserEbooking" />
+  </wsdl:message>
+  <wsdl:message name="ValidateWebUserEbookingSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateWebUserEbookingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccessSettingsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUserAccessSettings" />
+  </wsdl:message>
+  <wsdl:message name="GetUserAccessSettingsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserAccessSettingsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchFailedLoginSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchFailedLogin" />
+  </wsdl:message>
+  <wsdl:message name="SearchFailedLoginSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchFailedLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchInvalidMachinesSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchInvalidMachines" />
+  </wsdl:message>
+  <wsdl:message name="SearchInvalidMachinesSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchInvalidMachinesResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterInvalidMachinesSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterInvalidMachines" />
+  </wsdl:message>
+  <wsdl:message name="RegisterInvalidMachinesSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterInvalidMachinesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="RoleBasedSoap">
+    <wsdl:operation name="ValidateUser2">
+      <wsdl:input message="tns:ValidateUser2SoapIn" />
+      <wsdl:output message="tns:ValidateUser2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <wsdl:input message="tns:ValidateUserSoapIn" />
+      <wsdl:output message="tns:ValidateUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserAndLogInvalidEntry">
+      <wsdl:input message="tns:ValidateUserAndLogInvalidEntrySoapIn" />
+      <wsdl:output message="tns:ValidateUserAndLogInvalidEntrySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForAmbulance">
+      <wsdl:input message="tns:ValidateUserForAmbulanceSoapIn" />
+      <wsdl:output message="tns:ValidateUserForAmbulanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForNationalId">
+      <wsdl:input message="tns:ValidateUserForNationalIdSoapIn" />
+      <wsdl:output message="tns:ValidateUserForNationalIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUser">
+      <wsdl:input message="tns:ValidateWebUserSoapIn" />
+      <wsdl:output message="tns:ValidateWebUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUserEbooking">
+      <wsdl:input message="tns:ValidateWebUserEbookingSoapIn" />
+      <wsdl:output message="tns:ValidateWebUserEbookingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccessSettings">
+      <wsdl:input message="tns:GetUserAccessSettingsSoapIn" />
+      <wsdl:output message="tns:GetUserAccessSettingsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchFailedLogin">
+      <wsdl:input message="tns:SearchFailedLoginSoapIn" />
+      <wsdl:output message="tns:SearchFailedLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvalidMachines">
+      <wsdl:input message="tns:SearchInvalidMachinesSoapIn" />
+      <wsdl:output message="tns:SearchInvalidMachinesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterInvalidMachines">
+      <wsdl:input message="tns:RegisterInvalidMachinesSoapIn" />
+      <wsdl:output message="tns:RegisterInvalidMachinesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RoleBasedSoap" type="tns:RoleBasedSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateUser2">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateUser2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserAndLogInvalidEntry">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateUserAndLogInvalidEntry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForAmbulance">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateUserForAmbulance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForNationalId">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateUserForNationalId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUser">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateWebUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUserEbooking">
+      <soap:operation soapAction="http://cad.valentiatech.com/ValidateWebUserEbooking" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccessSettings">
+      <soap:operation soapAction="http://cad.valentiatech.com/GetUserAccessSettings" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFailedLogin">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchFailedLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvalidMachines">
+      <soap:operation soapAction="http://cad.valentiatech.com/SearchInvalidMachines" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterInvalidMachines">
+      <soap:operation soapAction="http://cad.valentiatech.com/RegisterInvalidMachines" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RoleBasedSoap12" type="tns:RoleBasedSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ValidateUser2">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateUser2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUser">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserAndLogInvalidEntry">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateUserAndLogInvalidEntry" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForAmbulance">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateUserForAmbulance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateUserForNationalId">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateUserForNationalId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUser">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateWebUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateWebUserEbooking">
+      <soap12:operation soapAction="http://cad.valentiatech.com/ValidateWebUserEbooking" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUserAccessSettings">
+      <soap12:operation soapAction="http://cad.valentiatech.com/GetUserAccessSettings" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchFailedLogin">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchFailedLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchInvalidMachines">
+      <soap12:operation soapAction="http://cad.valentiatech.com/SearchInvalidMachines" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterInvalidMachines">
+      <soap12:operation soapAction="http://cad.valentiatech.com/RegisterInvalidMachines" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RoleBased">
+    <wsdl:port name="RoleBasedSoap" binding="tns:RoleBasedSoap">
+      <soap:address location="http://localhost/CareMonXCADEmergencyV9_x/RoleBased/RoleBased.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RoleBasedSoap12" binding="tns:RoleBasedSoap12">
+      <soap12:address location="http://localhost/CareMonXCADEmergencyV9_x/RoleBased/RoleBased.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

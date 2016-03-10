@@ -1,0 +1,509 @@
+﻿<script src="@Url.Content("~/Scripts/knockout-3.2.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.modified.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/DropdownModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/KnockoutModels/SignupUserModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.qtip.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.mapping.js")" type="text/javascript"></script>
+<script src="~/Scripts/jquery.maskedinput.min.js"></script>
+<script>
+    @functions{
+    public string TokenHeaderValue()
+    {
+        string cookieToken, formToken;
+        AntiForgery.GetTokens(null, out cookieToken, out formToken);
+        return cookieToken + ":" + formToken;
+    }
+}
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+
+    function WizardViewModel() {
+
+        var self = this;
+        self.Dropdown = new DropdownModel();
+        self.SignupUser = new SignupUserModel();
+        var currentURL = (window.location.href).split('/');
+
+        if (currentURL[currentURL.length - 1] != 'Signup')
+            self.SignupUser.Id(currentURL[currentURL.length - 1]);
+        else
+            self.SignupUser.Id(0);
+        //debugger;
+        var userid = getParameterByName('q');
+        userid = userid.split("_", 3);
+        if (userid[2] != "" && typeof userid[2] != "undefined") {
+            userid = userid[2].substr(2) / 498;
+            self.SignupUser.Id(userid);
+        }
+        else {
+            self.SignupUser.Id(0);
+        }
+        //alert(userid);
+
+        ShowProgressBar();
+        $.ajax({
+            url: '@Url.Action("GetAllDropdowns", "Dropdown")',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function (dropdownlists) {
+
+                ko.utils.arrayForEach(dropdownlists, function (dropdowns) {
+                    ko.utils.arrayForEach(dropdowns, function (dropdown) {
+
+                        if (dropdown.DepartmentId && dropdown.DepartmentName && parseInt(userid) > 0) {
+                            //alert('I am Called');
+                            self.SignupUser.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                        }
+                        else if (dropdown.FacilityTypeId && dropdown.FacilityTypeName) {
+                            // alert(JSON.stringify(dropdown));
+                            if(parseInt(dropdown.FacilityTypeId)!=5)//Skip Other Address here on client request
+                                self.Dropdown.FacilityTypes.push(new FacilityTypeModel(dropdown));
+                        }
+                        else if (dropdown.ServiceTypeId && dropdown.ServiceTypeName)
+                            self.Dropdown.ServiceTypes.push(new ServiceTypeModel(dropdown));
+                        else if (dropdown.TitleId && dropdown.TitleName)
+                            self.Dropdown.Titles.push(new TitleModel(dropdown));
+                        else if (dropdown.AppointmentTimeId && dropdown.AppointmentTimeName)
+                            self.Dropdown.AppointmentTimes.push(new AppointmentTimeModel(dropdown));
+                        else if (dropdown.RelationshipToPatientId && dropdown.RelationshipToPatientName)
+                            self.Dropdown.RelationshipToPatient.push(new RelationshipToPatientModel(dropdown));
+                        else if (dropdown.YourPositionId && dropdown.YourPositionName)
+                            self.Dropdown.YourPosition.push(new YourPositionModel(dropdown));
+                        else if (dropdown.FacilityId && dropdown.FacilityName && parseInt(userid) > 0) {
+                            //debugger;
+                            if (parseInt(dropdown.FacilityId) != 132)//Skip Other Address here on client request
+                                self.SignupUser.Facilities.push(new FacilityModel(dropdown));
+                        }
+
+
+                    });
+                });
+                //debugger;
+                //self.Dropdown.FacilityTypes.removeAll();
+                //self.Dropdown.FacilityTypes.remove('Other Address');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //debugger;
+                var errorMessage = '';
+                $('#message').html(jqXHR.responseText);
+                ShowErrorMessage();
+            },
+            complete: function () {
+                HideProgressBar();
+            }
+        });
+        // ShowProgressBar();
+        if (self.SignupUser.Id() == 0) {
+
+        }
+        else {
+            $.ajax({
+                url: '../api/signupwebapi/get/' + self.SignupUser.Id(),
+                type: 'GET',
+                contentType: "application/Json; charset=utf-8",
+                //data:{userid:self.SignupUser.Id()},
+
+                success: function (result) {
+                    //debugger;
+                    //alert(JSON.stringify(result));
+                    if (result != true) {
+                        //alert(result.FacilityTypeID);
+
+                        ko.mapping.fromJS(result, {}, self.SignupUser);
+                        //alert(self.SignupUser.facilityTypeID());
+                        //self.SignupUser.FacilityId(result.FacilityId);
+                        //   getFacilityDepartments();
+                        // alert(self.SignupUser.FacilityDepartments[0]);
+                        // alert(result.DepartmentId);
+                        //self.SignupUser.DepartmentId(result.DepartmentId);
+                        // alert(self.SignupUser.DepartmentId());
+                        //   $("#txtSignupEmail").prop("disabled", true);
+                        //  $("#txtSignupConfirmEmail").prop("disabled", true);
+                        $("#txtSignupUsername").prop("disabled", true);
+                        //$("#txtSignupPassword").prop("disabled", true);
+                        //$("#txtSignupConfirmPassword").prop("disabled", true);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+        SaveClick = function () {
+
+            if (!IsValidKnockoutModel(WizardViewModeling.SignupUser)) {
+                $("html, body").animate({ scrollTop: $('.fieldError:visible').first().offset().top }, 600);
+                return;
+            }
+            ShowProgressBar();
+            //  alert(ko.toJSON(self.SignupUser));
+
+            $.ajax({
+                url: '@Url.Action("SaveUserDetails", "AccountWebAPI", new { httproute = "" })',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                data: ko.toJSON(self.SignupUser),
+                success: function (result) {
+                    if (result != true) {
+                        //alert(result);
+                        //debugger;
+                        //$('#message').text(JSON.stringify(result));
+                        //$('#message').fadeIn();
+                        $('.erriText').text(JSON.stringify(result));
+                        $('.erriText').fadeIn();
+                        ShowErrorMessage();
+                        setTimeout('$("#ErrorDialog").dialog("close")', 5000);
+
+
+                    }
+                    else {
+                        if (userid != "" && typeof userid != "undefined") {
+                            $("#UserSignUpUpdateSuccessDialog").dialog("open");
+                            //setTimeout('$("#UserSignUpUpdateSuccessDialog").dialog("close")', 2000);
+                            //setTimeout(UserSignupUpdateSuccessOkClick, 3000);
+                        }
+                        else {
+                            $("#UserSignUpSuccessDialog").dialog("open");
+                        }    //window.location.replace('Url.Action("index", "Journey")');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+
+        }
+
+        getDepartmentAddress = function () {
+            //alert(' Hurray I am called');
+            ShowProgressBar();
+            //debugger;
+            var facilityId = self.SignupUser.FacilityId();
+            //alert(facilityId);
+            if (facilityId != '' && typeof facilityId != 'undefined') {
+                $.ajax({
+                    url: '@Url.Action("GetAddress", "AccountWebAPI", new {httproute=""})',
+                    type: 'GET',
+                    headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                    data: { facilityid: facilityId, isFacilityDepartment: 'false' },
+                    success: function (result) {
+                        debugger;
+                        self.SignupUser.PostalAddress(result.FullAddress);
+                        $("#txtSignupPostalAddress").prop("disabled", true);
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //debugger;
+                        var errorMessage = '';
+                        $('#message').html(jqXHR.responseText);
+                        ShowErrorMessage();
+                    },
+                    complete: function () {
+                        HideProgressBar();
+                    }
+
+                });
+
+                // alert('self sign up user');
+                self.SignupUser.FacilityDepartments([]);
+                getFacilityDepartments();
+            }
+            else {
+                self.SignupUser.FacilityDepartments([]);
+                HideProgressBar();
+            }
+        }
+
+        getFacilities = function () {
+            //debugger;
+            ShowProgressBar();
+            var facilityTypeId = self.SignupUser.facilityTypeID();
+            if (facilityTypeId != '' && typeof facilityTypeId != 'undefined' && facilityTypeId != 4) {
+                //debugger;
+                //alert($("#lblCollectionDepartment").text());
+                $("#lblWorkPlaceDepartment").text($("#lblWorkPlaceDepartment").text().replace('*', ''));
+            }
+            else if (facilityTypeId == 4 && $("#lblWorkPlaceDepartment").text().indexOf('*') < 0) {
+                $("#lblWorkPlaceDepartment").text($("#lblWorkPlaceDepartment").text() + ' *');
+            }
+
+            if (facilityTypeId != '' && typeof facilityTypeId != 'undefined') {//to avoid sending call on Page load
+                $.ajax({
+                    url: '@Url.Action("GetFacilities", "DropDown")',
+                    type: 'GET',
+                    headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                    data: { facilityTypeId: facilityTypeId },
+                    success: function (result) {
+                        //alert(JSON.stringify(result));
+                        if (result != 'false') {
+                            //debugger;
+
+                            self.SignupUser.Facilities([]);
+                            self.SignupUser.FacilityDepartments([]);
+                            ko.utils.arrayForEach(result, function (dropdown) {
+                                //alert(dropdown);
+                                if (parseInt(dropdown.FacilityId) != 132) {
+                                    self.SignupUser.Facilities.push(new facilitiesModel(dropdown));
+                                }
+                            });
+
+
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        debugger;
+                        var errorMessage = '';
+                        $('#message').html(jqXHR.responseText);
+                        ShowErrorMessage();
+                    },
+                    complete: function () {
+                        HideProgressBar();
+                    }
+                });
+            }
+            else {
+                HideProgressBar();
+            }
+
+
+        }
+        getFacilityDepartments = function () {
+            //alert('I am called');
+            ShowProgressBar();
+            var facilityId = self.SignupUser.FacilityId();
+
+            $.ajax({
+                url: '@Url.Action("GetFacilityDepartments", "DropDown")',
+                type: 'GET',
+                headers: { 'RequestVerificationToken': '@TokenHeaderValue()' },
+                data: { facilityid: facilityId, isFacilityDepartment: 'false' },
+                success: function (result) {
+                    //alert(JSON.stringify(result));
+                    if (result != 'false') {
+
+                        ko.utils.arrayForEach(result, function (dropdown) {
+                            //alert(dropdown);
+                            self.SignupUser.FacilityDepartments.push(new facilityDepartmentsModel(dropdown));
+                        });
+
+
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // debugger;
+                    var errorMessage = '';
+                    $('#message').html(jqXHR.responseText);
+                    ShowErrorMessage();
+                },
+                complete: function () {
+                    HideProgressBar();
+                }
+            });
+        }
+
+        CancelClick = function () {
+            if (userid != "" && typeof userid != "undefined") {
+               window.location.replace('@Url.Action("RequesterDetails", "Account", new { q = System.DateTime.Now.ToString("ddmmyy_hhmmss") + "_11" + @User.Identity.Name + "_5465424_" + @User.Identity.Name + "=="})');
+                //setTimeout('$("#UserSignUpUpdateSuccessDialog").dialog("close")', 2000);
+                //setTimeout(UserSignupUpdateSuccessOkClick, 3000);
+            }
+            else {
+                window.location.replace('@Url.Action("index", "Journey")');
+            }    //window.location.replace('Url.Action("index", "Journey")');
+        }
+
+    }
+    UserSignupSuccessOkClick = function () {
+        window.location.replace('@Url.Action("index", "Journey")');
+    }
+    UserSignupUpdateSuccessOkClick = function () {
+        window.location.replace('@Url.Action("RequesterDetails", "Account", new { q = System.DateTime.Now.ToString("ddmmyy_hhmmss") + "_11" + @User.Identity.Name + "_5465424_" + @User.Identity.Name + "=="})'+'&PrivatePatient='+getParameterByName('PrivatePatient'));
+    }
+
+
+
+
+
+    
+
+
+    $(function () {
+        $('#txtSignupEmail, #txtSignupConfirmEmail, #txtSignupPassword, #txtSignupConfirmPassword ').bind("cut copy paste", function (e) {
+            e.preventDefault();
+        });
+        WizardViewModeling = new WizardViewModel();
+        ko.applyBindings(WizardViewModeling);
+    });
+
+
+
+</script>
+<div id="wizard">
+    <div class="formcontaner">
+        <div class="request-heading">
+            <span class="mainheading">NEW USER - LOGIN REGISTRATION INFORMATION:</span>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Your Position *</label>
+                    <select id="ddlPosition" name="ddlSignupTitle" class="form-control" data-bind="options:Dropdown.YourPosition, optionsValue:'YourPositionId', optionsText:'YourPositionName', value:SignupUser.Position, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.Position"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Title *</label>
+                    <select id="ddlSignupTitle" name="ddlSignupTitle" class="form-control" data-bind="options:Dropdown.Titles, optionsValue:'TitleId', optionsText:'TitleName', value:SignupUser.GenderTitleId, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.GenderTitleId"></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>First Name *</label>
+                    <input type="text" id="txtSignupFirstName" class="form-control" name="txtSignupFirstName" data-bind="value: SignupUser.FirstName, showMessageToolTip : SignupUser.FirstName" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Surname *</label>
+                    <input type="text" id="txtSignupSurname" class="form-control" name="txtSignupSurname" data-bind="value: SignupUser.Surname, showMessageToolTip : SignupUser.Surname" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Workplace - Facility Type *</label>
+                    <select id="ddlSignupFacilityType" class="form-control" name="ddlSignupFacilityType" data-bind="options:Dropdown.FacilityTypes, optionsValue:'FacilityTypeId', optionsText:'FacilityTypeName', value:SignupUser.facilityTypeID, event:{change:getFacilities()}, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.facilityTypeID"></select>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Workplace - Facility *</label>
+                    <select id="ddlSignupFacility" class="form-control" name="ddlSignupFacility" data-bind="options:SignupUser.Facilities, optionsValue:'FacilityId', optionsText:'FacilityName', value:SignupUser.FacilityId, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.FacilityId, event:{change:getDepartmentAddress}"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label id="lblWorkPlaceDepartment">Workplace - Department *</label>
+                    <select id="ddlSignupDepartment" class="form-control" name="ddlSignupDepartment" data-bind="options:SignupUser.FacilityDepartments, optionsValue:'DepartmentId', optionsText:'DepartmentName', value:SignupUser.DepartmentId, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.DepartmentId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Postal Address *</label>
+                    <input type="text" id="txtSignupPostalAddress" class="form-control" name="txtSignupPostalAddress" data-bind="value: SignupUser.PostalAddress, showMessageToolTip : SignupUser.PostalAddress" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Service Type *</label>
+                    <select id="ddlSignupServiceType" class="form-control" name="ddlSignupServiceType" data-bind="options:Dropdown.ServiceTypes, optionsValue:'ServiceTypeId', optionsText:'ServiceTypeName', value:SignupUser.ServiceTypeId, optionsCaption: 'Choose...', showMessageToolTip: SignupUser.ServiceTypeId"></select>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>E-mail Address *</label>
+                    <input type="text" id="txtSignupEmail" class="form-control" name="txtSignupEmail" data-bind="value: SignupUser.EmailAddress, showMessageToolTip: SignupUser.EmailAddress" />
+                    <span class="formextratxt">(to be used for confirming booking acceptance – must be NHS.net email account)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Confirm E-mail Address *</label>
+                    <input type="text" id="txtSignupConfirmEmail" class="form-control" name="txtSignupConfirmEmail" data-bind="value: SignupUser.ConfirmEmailAddress, showMessageToolTip: SignupUser.ConfirmEmailAddress" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Contact telephone number *</label>
+                    <input type="text" id="txtSignupContactTelNo" class="form-control" name="txtSignupContactTelNo" data-bind="value: SignupUser.ContactTelNo,  showMessageToolTip: SignupUser.ContactTelNo" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Extension number</label>
+                    <input type="text" id="txtSignupContactExtension" class="form-control" name="txtSignupExtension" data-bind="value: SignupUser.Extension,  showMessageToolTip: SignupUser.Extension" />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Your Login Username  *</label>@*(use personal NHS email address)*@
+                    <input type="text" id="txtSignupUsername" class="form-control" name="txtSignupUsername" data-bind="value: SignupUser.Username, showMessageToolTip: SignupUser.Username" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 inputfloat">
+                    <label>Password *</label>
+                    <input type="password" id="txtSignupPassword" class="form-control" name="txtSignupPassword" data-bind="value: SignupUser.Password, showMessageToolTip: SignupUser.Password" />
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_form col-sm-8 col-md-8">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label>Confirm Password *</label>
+                    <input type="password" id="txtSignupConfirmPassword" class="form-control" name="txtSignupConfirmPassword" data-bind="value: SignupUser.ConfirmPassword, showMessageToolTip: SignupUser.ConfirmPassword" />
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <input type="hidden" id="txtSignupUserId" class="form-control" name="txtSignupUserId" data-bind="value: SignupUser.Id" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="ppopchecknewone">*@
+    <div id="UserSignUpSuccessDialog">
+        <div class="popup-headergreen">
+            <div class='popup-header-text'>EBooking</div>
+        </div>
+        <div class="popupiconsuccessful"></div>
+        <div class="popupgreentxtnew">
+            User successfully added, please login to continue.
+        </div>
+
+        <div class="popup-button" data-bind="click: UserSignupSuccessOkClick, clickBubble: false">OK</div>
+        
+    </div>
+@*</div>*@
+@*<div class="ppopchecknewone">*@
+
+    <div id="UserSignUpUpdateSuccessDialog">
+
+        <div class="popup-headergreen">
+            <div class='popup-header-text'>EBooking</div>
+        </div>
+        <div class="popupiconsuccessful"></div>
+        <div class="popupgreentxtnew">
+            User information updated succesfully.
+        </div>
+
+        <div class="popup-button" data-bind="click: UserSignupUpdateSuccessOkClick, clickBubble: false">OK</div>
+    </div>
+
+@*</div>*@
+
+
+
+<div class="buttonstylecontai">
+    <div class="buttonstyle" data-bind="click: CancelClick">Cancel</div>
+    <div class="buttonstyle" data-bind="click: SaveClick">Save</div>
+</div>
+
+
