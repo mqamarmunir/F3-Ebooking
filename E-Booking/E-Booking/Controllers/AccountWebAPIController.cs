@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using EBooking.Models;
 using System.Web.Security;
 using EBooking.Utilities;
-using WebMatrix.WebData;
 using BusinessRules;
 using System.Data;
-using System.Globalization;
 using System.Net.Mail;
 using System.Configuration;
 //using E_Booking.Models;

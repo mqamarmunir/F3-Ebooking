@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Validation.Providers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using BusinessRules;
+
 namespace EBooking
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
